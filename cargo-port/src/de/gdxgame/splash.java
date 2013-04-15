@@ -30,10 +30,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 public class splash extends TabMainView
 {
+	private final long SPLASH_MIN_SHOW_TIME = 5000;
+
+	private long splashEndTime = 0;
+
 	public splash(float X, float Y, float Width, float Height, String Name)
 	{
 		super(X, Y, Width, Height, Name);
 		GL.that.addRenderView(this, GL.FRAME_RATE_FAST_ACTION);
+		splashEndTime = System.currentTimeMillis() + SPLASH_MIN_SHOW_TIME;
 	}
 
 	TextureAtlas atlas;
@@ -103,7 +108,7 @@ public class splash extends TabMainView
 			step++;
 		}
 
-		if (step <= 100) resetInitial();
+		if (step <= 101) resetInitial();
 	}
 
 	@Override
@@ -359,6 +364,9 @@ public class splash extends TabMainView
 	 */
 	private void ini_TabMainView()
 	{
+
+		if (splashEndTime > System.currentTimeMillis()) return;
+
 		Logger.DEBUG("ini_TabMainView");
 		GL.that.removeRenderView(this);
 		((GdxGame) GL.that).switchToMainView(new MainView(0f, 0f, width, height, "MainView"));
