@@ -3,6 +3,7 @@ package de.CB_SkinMaker;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -56,7 +57,11 @@ public class lunch extends JFrame
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	public static lunch that;
+
 	private JDesktopPane jDesktopPane1;
+	private WorkFrame jWorkFrame;
 	private JButton buttonLoad;
 	private JButton buttonNew;
 	private JLabel jLabel5;
@@ -103,6 +108,8 @@ public class lunch extends JFrame
 	 */
 	public lunch()
 	{
+		that = this;
+
 		setTitle("CB SkinMaker");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
@@ -161,6 +168,19 @@ public class lunch extends JFrame
 
 			}
 
+		}
+
+		{// Initial SkinMaker Label
+
+			JLabel jLabel1 = new JLabel();
+			jDesktopPane1.add(jLabel1, JLayeredPane.DEFAULT_LAYER);
+			// create new Font
+			Font font = new Font("Courier", Font.BOLD, 30);
+
+			jLabel1.setFont(font);
+			jLabel1.setText("Skin Maker");
+			jLabel1.setBounds(12, 80, 400, 200);
+			jLabel1.setForeground(new java.awt.Color(255, 255, 255));
 		}
 	}
 
@@ -320,6 +340,16 @@ public class lunch extends JFrame
 		}
 		System.out.println("Abbruch");
 		chooser.setVisible(false);
+	}
+
+	public void showWorkFrame(Settings settings)
+	{
+
+		jWorkFrame = new WorkFrame(settings);
+		jDesktopPane1.add(jWorkFrame, BorderLayout.CENTER);
+
+		jWorkFrame.setVisible(true);
+
 	}
 
 }

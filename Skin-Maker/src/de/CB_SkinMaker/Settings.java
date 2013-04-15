@@ -7,9 +7,10 @@ import java.io.PrintStream;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import CB_Core.FileUtil;
+
 public class Settings
 {
-	public static Settings that;
 
 	private String mWorkpath = null;
 	private String mDefaultSkin = null;
@@ -17,7 +18,7 @@ public class Settings
 
 	public Settings()
 	{
-		that = this;
+
 	}
 
 	public void save() throws JSONException, FileNotFoundException
@@ -41,5 +42,10 @@ public class Settings
 	public void setWorkspace(String workpath)
 	{
 		mWorkpath = workpath;
+	}
+
+	public String getName()
+	{
+		return FileUtil.GetFileNameWithoutExtension(mWorkpath);
 	}
 }
