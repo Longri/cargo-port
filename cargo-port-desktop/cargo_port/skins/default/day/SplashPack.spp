@@ -1,0 +1,84 @@
+
+SplashPack.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+logo-1
+  rotate: false
+  xy: 1, 688
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+logo-2
+  rotate: false
+  xy: 1, 688
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+logo-3
+  rotate: false
+  xy: 1, 430
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+logo-4
+  rotate: false
+  xy: 259, 688
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+logo-5
+  rotate: false
+  xy: 1, 172
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+logo-6
+  rotate: false
+  xy: 259, 430
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+logo-7
+  rotate: false
+  xy: 517, 688
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+logo-8
+  rotate: false
+  xy: 259, 172
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+splash-back
+  rotate: false
+  xy: 1, 1
+  size: 100, 169
+  orig: 100, 169
+  offset: 0, 0
+  index: -1
+btn-normal
+  rotate: false
+  xy: 517, 599
+  size: 84, 87
+  split: 15, 15, 21, 16
+  orig: 84, 87
+  offset: 0, 0
+  index: -1
+progress
+  rotate: false
+  xy: 775, 857
+  size: 84, 87
+  split: 15, 15, 21, 16
+  orig: 84, 87
+  offset: 0, 0
+  index: -1
