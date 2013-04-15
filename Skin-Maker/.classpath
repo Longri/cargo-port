@@ -7,11 +7,11 @@
 	<classpathentry exported="true" kind="lib" path="lib/looks-2.1.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/sjxp-2.2.jar"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CB_Translation_Base"/>
-	<classpathentry exported="true" kind="lib" path="/Cachebox Core/lib/gdx.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gdx-backend-lwjgl-natives.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gdx-backend-lwjgl.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gdx-natives.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gdx.jar"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GDX-Frame"/>
+	<classpathentry kind="lib" path="/GDX-Frame/libs/gdx.jar" sourcepath="/GDX-Frame/libs/gdx-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
