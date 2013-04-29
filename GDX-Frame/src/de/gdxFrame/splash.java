@@ -157,15 +157,6 @@ public class splash extends TabMainView
 
 		rec_FX2_Logo.setX(400);
 
-		// GC_Logo = new Image(rec_GC_Logo, "GC_Logo");
-		// GC_Logo.setDrawable(new SpriteDrawable(atlas.createSprite("gc_live")));
-		//
-		// Mapsforge_Logo = new Image(rec_Mapsforge_Logo, "Mapsforge_Logo");
-		// Mapsforge_Logo.setDrawable(new SpriteDrawable(atlas.createSprite("mapsforge_logo")));
-		//
-		// FX2_Logo = new Image(rec_FX2_Logo, "FX2_Logo");
-		// FX2_Logo.setDrawable(new SpriteDrawable(atlas.createSprite("FXzwei")));
-		//
 		Lasifant = new FrameAnimation(rec_LibGdx_Logo, "LibGdx_Logo");
 
 		Lasifant.addFrame(atlas.createSprite("logo-1"));
@@ -179,39 +170,6 @@ public class splash extends TabMainView
 
 		Lasifant.play(800);
 
-		// Lasifant.setDrawable(new SpriteDrawable(atlas.createSprite("logo-1")));
-		//
-		// Route_Logo = new Image(rec_OSM, "Route_Logo");
-		// Route_Logo.setDrawable(new SpriteDrawable(atlas.createSprite("openrouteservice_logo")));
-		//
-		// OSM_Logo = new Image(rec_Route, "OSM_Logo");
-		// OSM_Logo.setDrawable(new SpriteDrawable(atlas.createSprite("osm_logo")));
-
-		// float yPos = descTextView.getY() - GC_Logo.getHeight();
-		// float xPos = (this.width - (ref * 2) - GC_Logo.getWidth() - Mapsforge_Logo.getWidth() - FX2_Logo.getWidth()) / 2;
-		//
-		// GC_Logo.setPos(xPos, yPos);
-		// xPos += GC_Logo.getWidth() + ref;
-		//
-		// Mapsforge_Logo.setPos(xPos, yPos);
-		// xPos += Mapsforge_Logo.getWidth() + ref;
-		//
-		// FX2_Logo.setPos(xPos, yPos);
-		//
-		// yPos -= GC_Logo.getHeight();// + refHeight;
-		// LibGdx_Logo.setPos(this.halfWidth - LibGdx_Logo.getHalfWidth(), yPos);
-		//
-		// yPos -= GC_Logo.getHeight();//
-		// xPos = (this.width - (ref) - Route_Logo.getWidth() - OSM_Logo.getWidth()) / 2;
-		//
-		// Route_Logo.setPos(xPos, yPos);
-		//
-		// xPos += Route_Logo.getWidth() + ref;
-		// OSM_Logo.setPos(xPos, yPos);
-		//
-		// this.addChild(GC_Logo);
-		// this.addChild(Mapsforge_Logo);
-		// this.addChild(FX2_Logo);
 		this.addChild(Lasifant);
 		// this.addChild(Route_Logo);
 		// this.addChild(OSM_Logo);

@@ -1,13 +1,17 @@
 package de.CB_SkinMaker;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import com.badlogic.gdx.graphics.Color;
 
@@ -20,9 +24,49 @@ public class skinJson
 		colors = new ArrayList<colorEntry>();
 	}
 
-	public void Load(File f)
+	public skinJson Load(File f) throws IOException
 	{
+		// Read all Colors
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		StringBuilder sb = new StringBuilder();
+		try
+		{
 
+			String line = br.readLine();
+
+			while (line != null)
+			{
+				sb.append(line);
+				sb.append("\n");
+				line = br.readLine();
+			}
+		}
+		finally
+		{
+			br.close();
+		}
+		JSONTokener tokener = new JSONTokener(sb.toString());
+		try
+		{
+			JSONObject json = (JSONObject) tokener.nextValue();
+			JSONObject jCcolors = json.getJSONObject("com.badlogic.gdx.graphics.Color");
+
+			String names[] = JSONObject.getNames(jCcolors);
+
+			colors = new ArrayList<colorEntry>();
+
+			for (String name : names)
+			{
+				Color c = getColorFromJSONObject(jCcolors.getJSONObject(name));
+				colors.add(new colorEntry(name, c));
+			}
+
+		}
+		catch (Exception e)
+		{
+		}
+
+		return this;
 	}
 
 	public void Save(File f) throws JSONException, FileNotFoundException
@@ -59,6 +103,16 @@ public class skinJson
 		json.put("a", (double) c.a);
 
 		return json;
+	}
+
+	private Color getColorFromJSONObject(JSONObject jo) throws JSONException
+	{
+		float r = (float) jo.getDouble("r");
+		float g = (float) jo.getDouble("g");
+		float b = (float) jo.getDouble("b");
+		float a = (float) jo.getDouble("a");
+
+		return new Color(r, g, b, a);
 	}
 
 	public void addDefaultColorsDay()

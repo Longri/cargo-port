@@ -28,16 +28,10 @@ public class ColorDialog extends JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Container container = getContentPane();
-		// canvas1 = new LwjglAWTCanvas(new MusicTest(), false);
-		// LwjglAWTCanvas canvas2 = new LwjglAWTCanvas(new UITest(), false, canvas1);
 		LwjglAWTCanvas canvas3 = new LwjglAWTCanvas(new WindowCreator(), false, canvas1);
 
-		// canvas1.getCanvas().setSize(200, 480);
-		// canvas2.getCanvas().setSize(200, 480);
 		canvas3.getCanvas().setSize(200, 480);
 
-		// container.add(canvas1.getCanvas(), BorderLayout.LINE_START);
-		// container.add(canvas2.getCanvas(), BorderLayout.CENTER);
 		container.add(canvas3.getCanvas(), BorderLayout.LINE_END);
 
 		pack();

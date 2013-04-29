@@ -22,4 +22,17 @@ public class colorEntry
 	{
 		return mColor;
 	}
+
+	public java.awt.Color getAwtColor()
+	{
+		int r = (int) (mColor.r * 255);
+		int g = (int) (mColor.g * 255);
+		int b = (int) (mColor.b * 255);
+		int a = (int) (mColor.a * 255);
+
+		java.awt.Color c = new java.awt.Color(r, g, b, a);
+
+		return c;
+	}
+
 }
