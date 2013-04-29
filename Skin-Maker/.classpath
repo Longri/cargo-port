@@ -12,6 +12,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/gdx-natives.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/gdx.jar"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GDX-Frame"/>
-	<classpathentry kind="lib" path="/GDX-Frame/libs/gdx.jar" sourcepath="/GDX-Frame/libs/gdx-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="/GDX-Frame/libs/gdx.jar" sourcepath="/GDX-Frame/libs/gdx-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jmagick-6.4.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

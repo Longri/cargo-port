@@ -15,6 +15,7 @@ public class Settings
 	private String mWorkpath = null;
 	private String mDefaultSkin = null;
 	private int Test = 10;
+	private skinJson mSkinJsonDay, mSkinJsonNight;
 
 	public Settings()
 	{
@@ -47,5 +48,30 @@ public class Settings
 	public String getName()
 	{
 		return FileUtil.GetFileNameWithoutExtension(mWorkpath);
+	}
+
+	public String getWorkPath()
+	{
+		return mWorkpath;
+	}
+
+	public void setSkinJsonDay(skinJson sj)
+	{
+		mSkinJsonDay = sj;
+	}
+
+	public void setSkinJsonNight(skinJson sj)
+	{
+		mSkinJsonNight = sj;
+	}
+
+	public skinJson getSkinJsonDay()
+	{
+		return mSkinJsonDay;
+	}
+
+	public skinJson getSkinJsonNight()
+	{
+		return mSkinJsonNight;
 	}
 }

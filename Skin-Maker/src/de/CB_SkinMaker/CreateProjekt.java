@@ -66,6 +66,22 @@ public class CreateProjekt extends JFrame
 				set.setWorkspace(jTextFieldWorkspace.getText());
 				try
 				{
+					if (jRadioButton1.isSelected())
+					{
+						// Create new Skin
+						skinJson sj = new skinJson();
+						sj.addDefaultColorsDay();
+						set.setSkinJsonDay(sj);
+
+						skinJson sjn = new skinJson();
+						sjn.addDefaultColorsNight();
+						set.setSkinJsonNight(sjn);
+					}
+					else
+					{
+						// Load defaultSkin
+					}
+
 					set.save();
 					lunch.that.showWorkFrame(set);
 

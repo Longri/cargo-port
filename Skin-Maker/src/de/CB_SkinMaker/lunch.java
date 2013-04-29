@@ -12,6 +12,7 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,7 +62,6 @@ public class lunch extends JFrame
 	public static lunch that;
 
 	private JDesktopPane jDesktopPane1;
-	private WorkFrame jWorkFrame;
 	private JButton buttonLoad;
 	private JButton buttonNew;
 	private JLabel jLabel5;
@@ -127,14 +127,20 @@ public class lunch extends JFrame
 
 		// only first two letters
 		if (lang.length() > 2) lang = lang.substring(0, 1);
-
-		if (Gdx.files.internal("data/lang/" + lang + "/skinMakerStrings.ini").exists())
+		try
 		{
-			Translation.LoadTranslation("data/lang/" + lang + "/skinMakerStrings.ini");
+			if (Gdx.files.internal("data/lang/" + lang + "/skinMakerStrings.ini").exists())
+			{
+				Translation.LoadTranslation("data/lang/" + lang + "/skinMakerStrings.ini");
+			}
+			else
+			{
+				Translation.LoadTranslation("data/lang/en-GB/skinMakerStrings.ini");
+			}
 		}
-		else
+		catch (IOException e)
 		{
-			Translation.LoadTranslation("data/lang/en-GB/skinMakerStrings.ini");
+			e.printStackTrace();
 		}
 
 		{
@@ -345,7 +351,7 @@ public class lunch extends JFrame
 	public void showWorkFrame(Settings settings)
 	{
 
-		jWorkFrame = new WorkFrame(settings);
+		WorkFrame jWorkFrame = new WorkFrame(settings);
 		jDesktopPane1.add(jWorkFrame, BorderLayout.CENTER);
 
 		jWorkFrame.setVisible(true);
