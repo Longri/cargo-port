@@ -29,6 +29,8 @@ public class GameView extends CB_View_Base implements render3D
 	private final float SIZE_CONST = 5f;
 	private float size = 1f;
 
+	private float dpi = 1;
+
 	private Model model, field1, field2;
 	private ModelInstance instance;
 	private ModelInstance[][] GameField;
@@ -39,7 +41,8 @@ public class GameView extends CB_View_Base implements render3D
 	public GameView()
 	{
 		super(0, 0, MainView.Width(), MainView.Height(), "GameView");
-		size = UI_Size_Base.that.getScale() * SIZE_CONST;
+		dpi = UI_Size_Base.that.getScale();
+		size = dpi * SIZE_CONST;
 	}
 
 	@Override
@@ -77,19 +80,19 @@ public class GameView extends CB_View_Base implements render3D
 		if (font == null)
 		{
 			font = Fonts.getNormal();
-			font.setColor(Color.BLACK);
+			font.setColor(Color.GREEN);
 
 		}
 		String str = "fps: " + Gdx.graphics.getFramesPerSecond();
 		String str2 = "GameField:" + GameField.length + "*" + GameField[0].length;
 
-		font.setColor(Color.BLACK);
-		font.draw(batch, str, 20, 40);
-		font.draw(batch, str2, 20, 60);
-
-		font.setColor(Color.WHITE);
-		font.draw(batch, str, 100, 40);
-		font.draw(batch, str2, 100, 60);
+		// font.setColor(Color.GREEN);
+		font.draw(batch, str, 20 * dpi, 40 * dpi);
+		font.draw(batch, str2, 20 * dpi, 60 * dpi);
+		//
+		// font.setColor(Color.WHITE);
+		// font.draw(batch, str, 150 * dpi, 40 * dpi);
+		// font.draw(batch, str2, 150 * dpi, 60 * dpi);
 
 	}
 
