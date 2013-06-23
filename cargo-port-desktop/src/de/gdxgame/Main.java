@@ -40,8 +40,6 @@ public class Main
 		String workPath = "./cargo_port";
 		Config.Initialize(workPath, workPath + "/cachebox.config");
 
-		final GdxGame Game = new GdxGame(cfg.width, cfg.height);
-
 		devicesSizes ui = new devicesSizes();
 
 		ui.Window = new Size(cfg.width, cfg.height);
@@ -58,6 +56,14 @@ public class Main
 
 		new UiSizes();
 		UiSizes.that.initial(ui);
+
+		// create new splash
+		splash sp = new splash(0, 0, cfg.width, cfg.height, "Splash");
+
+		// create new mainView
+		MainView ma = new MainView(0, 0, cfg.width, cfg.height, "mainView");
+
+		final GdxGame Game = new GdxGame(cfg.width, cfg.height, sp, ma);
 
 		final LwjglApplication App = new LwjglApplication(Game, cfg);
 		App.getGraphics().setContinuousRendering(false);

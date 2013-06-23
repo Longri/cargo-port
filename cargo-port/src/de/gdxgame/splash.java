@@ -11,7 +11,6 @@ import CB_Core.GL_UI.Activitys.SelectDB;
 import CB_Core.GL_UI.Controls.Image;
 import CB_Core.GL_UI.Controls.Label;
 import CB_Core.GL_UI.Controls.ProgressBar;
-import CB_Core.GL_UI.Controls.Animation.FrameAnimation;
 import CB_Core.GL_UI.GL_Listener.GL;
 import CB_Core.GL_UI.Main.TabMainView;
 import CB_Core.Log.Logger;
@@ -37,14 +36,13 @@ public class splash extends TabMainView
 	public splash(float X, float Y, float Width, float Height, String Name)
 	{
 		super(X, Y, Width, Height, Name);
-		GL.that.addRenderView(this, GL.FRAME_RATE_FAST_ACTION);
-		splashEndTime = System.currentTimeMillis() + SPLASH_MIN_SHOW_TIME;
+
 	}
 
 	TextureAtlas atlas;
 	ProgressBar progress;
 	Image CB_Logo, OSM_Logo, Route_Logo, Mapsforge_Logo, FX2_Logo, GC_Logo;
-	FrameAnimation Lasifant;
+	LasifantAnimation Lasifant;
 
 	Label descTextView;
 	SelectDB selectDBDialog;
@@ -52,6 +50,13 @@ public class splash extends TabMainView
 	int step = 0;
 	boolean switcher = false;
 	boolean breakForWait = false;
+
+	@Override
+	public void onShow()
+	{
+		GL.that.addRenderView(this, GL.FRAME_RATE_FAST_ACTION);
+		splashEndTime = System.currentTimeMillis() + SPLASH_MIN_SHOW_TIME;
+	}
 
 	@Override
 	protected void Initial()
@@ -80,7 +85,7 @@ public class splash extends TabMainView
 				progress.setProgress(20, "Load Sprites");
 				break;
 			case 4:
-				// ini_Sprites();
+				ini_Sprites();
 				progress.setProgress(30, "check directoiries");
 				break;
 			case 5:
@@ -162,16 +167,7 @@ public class splash extends TabMainView
 
 		rec_FX2_Logo.setX(400);
 
-		// GC_Logo = new Image(rec_GC_Logo, "GC_Logo");
-		// GC_Logo.setDrawable(new SpriteDrawable(atlas.createSprite("gc_live")));
-		//
-		// Mapsforge_Logo = new Image(rec_Mapsforge_Logo, "Mapsforge_Logo");
-		// Mapsforge_Logo.setDrawable(new SpriteDrawable(atlas.createSprite("mapsforge_logo")));
-		//
-		// FX2_Logo = new Image(rec_FX2_Logo, "FX2_Logo");
-		// FX2_Logo.setDrawable(new SpriteDrawable(atlas.createSprite("FXzwei")));
-		//
-		Lasifant = new FrameAnimation(rec_LibGdx_Logo, "LibGdx_Logo");
+		Lasifant = new LasifantAnimation(rec_LibGdx_Logo, "LibGdx_Logo");
 
 		Lasifant.addFrame(atlas.createSprite("logo-1"));
 		Lasifant.addFrame(atlas.createSprite("logo-2"));
@@ -182,44 +178,9 @@ public class splash extends TabMainView
 		Lasifant.addFrame(atlas.createSprite("logo-7"));
 		Lasifant.addLastFrame(atlas.createSprite("logo-8"));
 
-		Lasifant.play(800);
+		Lasifant.play();
 
-		// Lasifant.setDrawable(new SpriteDrawable(atlas.createSprite("logo-1")));
-		//
-		// Route_Logo = new Image(rec_OSM, "Route_Logo");
-		// Route_Logo.setDrawable(new SpriteDrawable(atlas.createSprite("openrouteservice_logo")));
-		//
-		// OSM_Logo = new Image(rec_Route, "OSM_Logo");
-		// OSM_Logo.setDrawable(new SpriteDrawable(atlas.createSprite("osm_logo")));
-
-		// float yPos = descTextView.getY() - GC_Logo.getHeight();
-		// float xPos = (this.width - (ref * 2) - GC_Logo.getWidth() - Mapsforge_Logo.getWidth() - FX2_Logo.getWidth()) / 2;
-		//
-		// GC_Logo.setPos(xPos, yPos);
-		// xPos += GC_Logo.getWidth() + ref;
-		//
-		// Mapsforge_Logo.setPos(xPos, yPos);
-		// xPos += Mapsforge_Logo.getWidth() + ref;
-		//
-		// FX2_Logo.setPos(xPos, yPos);
-		//
-		// yPos -= GC_Logo.getHeight();// + refHeight;
-		// LibGdx_Logo.setPos(this.halfWidth - LibGdx_Logo.getHalfWidth(), yPos);
-		//
-		// yPos -= GC_Logo.getHeight();//
-		// xPos = (this.width - (ref) - Route_Logo.getWidth() - OSM_Logo.getWidth()) / 2;
-		//
-		// Route_Logo.setPos(xPos, yPos);
-		//
-		// xPos += Route_Logo.getWidth() + ref;
-		// OSM_Logo.setPos(xPos, yPos);
-		//
-		// this.addChild(GC_Logo);
-		// this.addChild(Mapsforge_Logo);
-		// this.addChild(FX2_Logo);
 		this.addChild(Lasifant);
-		// this.addChild(Route_Logo);
-		// this.addChild(OSM_Logo);
 
 	}
 
@@ -243,7 +204,15 @@ public class splash extends TabMainView
 	{
 		Logger.DEBUG("ini_Translations");
 		new Translation("data", true);
-		Translation.LoadTranslation("data/lang/en-GB/strings.ini");
+		try
+		{
+			Translation.LoadTranslation("data/lang/en-GB/strings.ini");
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -369,7 +338,7 @@ public class splash extends TabMainView
 
 		Logger.DEBUG("ini_TabMainView");
 		GL.that.removeRenderView(this);
-		((GdxGame) GL.that).switchToMainView(new MainView(0f, 0f, width, height, "MainView"));
+		((GdxGame) GL.that).switchToMainView();
 
 		GL.setIsInitial();
 	}

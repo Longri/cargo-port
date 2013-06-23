@@ -1,6 +1,9 @@
 package de.gdxgame;
 
 import CB_Core.Config;
+import CB_Core.GlobalCore;
+import CB_Core.Events.platformConector;
+import CB_Core.Events.platformConector.IQuit;
 import CB_Core.GL_UI.GL_Listener.GL;
 import CB_Core.Math.Size;
 import CB_Core.Math.UiSizes;
@@ -27,10 +30,6 @@ public class MainActivity extends AndroidApplication
 		AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
 		cfg.useGL20 = true;
 
-		// Initial Config
-		String workPath = "./cargo_port";
-		Config.Initialize(workPath, workPath + "/cachebox.config");
-
 		Resources res = this.getResources();
 		devicesSizes ui = new devicesSizes();
 
@@ -51,11 +50,33 @@ public class MainActivity extends AndroidApplication
 		ui.TB_IconSize = res.getDimensionPixelSize(R.dimen.TB_icon_Size);
 		ui.isLandscape = false;
 
-		final GdxGame Game = new GdxGame(ui.Window.width, ui.Window.height);
+		GlobalCore.displayDensity = ui.Density;
+
+		// Initial Config
+		String workPath = "./cargo_port";
+		Config.Initialize(workPath, workPath + "/cachebox.config");
 
 		new UiSizes();
 		UiSizes.that.initial(ui);
+
+		// create new splash
+		splash sp = new splash(0, 0, w, h, "Splash");
+
+		// create new mainView
+		MainView ma = new MainView(0, 0, w, h, "mainView");
+
+		final GdxGame Game = new GdxGame(ui.Window.width, ui.Window.height, sp, ma);
+
 		initialize(Game, cfg);
 		GL.that.onStart();
+
+		platformConector.setQuitListner(new IQuit()
+		{
+			@Override
+			public void Quit()
+			{
+				finish();
+			}
+		});
 	}
 }
