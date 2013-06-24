@@ -1,6 +1,8 @@
 package de.gdxgame.client;
 
 import de.gdxgame.GdxGame;
+import de.gdxgame.MainView;
+import de.gdxgame.splash;
 import CB_Core.Config;
 import CB_Core.Math.Size;
 import CB_Core.Math.UiSizes;
@@ -26,8 +28,7 @@ public class GwtLauncher extends GwtApplication {
 				String workPath = "./cargo_port";
 				Config.Initialize(workPath, workPath + "/cachebox.config");
 
-				final GdxGame Game = new GdxGame(cfg.width, cfg.height);
-
+			
 				devicesSizes ui = new devicesSizes();
 
 				ui.Window = new Size(cfg.width, cfg.height);
@@ -44,6 +45,14 @@ public class GwtLauncher extends GwtApplication {
 
 				new UiSizes();
 				UiSizes.that.initial(ui);
+
+				// create new splash
+				splash sp = new splash(0, 0, cfg.width, cfg.height, "Splash");
+
+				// create new mainView
+				MainView ma = new MainView(0, 0, cfg.width, cfg.height, "mainView");
+
+				final GdxGame Game = new GdxGame(cfg.width, cfg.height, sp, ma);
 		
 								
 		return Game;

@@ -68,7 +68,7 @@ public class splash extends TabMainView
 			switch (step)
 			{
 			case 0:
-				atlas = new TextureAtlas(Gdx.files.internal("data/skins/default/day/SplashPack.spp"));
+				atlas = new TextureAtlas(Gdx.files.internal("skins/default/day/SplashPack.spp"));
 				setBackground(new SpriteDrawable(atlas.createSprite("splash-back")));
 				break;
 			case 1:

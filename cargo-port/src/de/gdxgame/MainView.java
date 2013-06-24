@@ -4,9 +4,6 @@ import CB_Core.GL_UI.GL_View_Base;
 import CB_Core.GL_UI.Controls.Button;
 import CB_Core.GL_UI.GL_Listener.GL;
 import CB_Core.GL_UI.Main.TabMainView;
-import CB_Core.GL_UI.utils.ColorDrawable;
-
-import com.badlogic.gdx.graphics.Color;
 
 /**
  * @author Longri
@@ -45,10 +42,10 @@ public class MainView extends TabMainView
 		final Button test = new Button("Test");
 
 		test.setText("Test");
-		test.setPos(300, 500);
+		test.setPos(100, 100);
 
-		test.setninePatch(new ColorDrawable(Color.GREEN));
-		test.setninePatchPressed(new ColorDrawable(Color.RED));
+		// test.setninePatch(new ColorDrawable(Color.GREEN));
+		// test.setninePatchPressed(new ColorDrawable(Color.RED));
 
 		test.setOnClickListener(new OnClickListener()
 		{

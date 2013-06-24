@@ -7,5 +7,9 @@
 	<classpathentry exported="true" kind="lib" path="/cargo-port/libs/gdx.jar" sourcepath="/cargo-port/libs/gdx-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/gdx-backend-gwt.jar" sourcepath="war/WEB-INF/lib/gdx-backend-gwt-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="war/WEB-INF/lib/gdx-backend-gwt-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/CB_Core.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/CB_Locator.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/CB_Translation.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/CB_Utils.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
