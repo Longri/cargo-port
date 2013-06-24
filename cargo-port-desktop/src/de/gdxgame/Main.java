@@ -26,6 +26,9 @@ import CB_Core.Math.devicesSizes;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import de.gdxgame.Views.MainView;
+import de.gdxgame.Views.splash;
+
 public class Main
 {
 	public static void main(String[] args)
