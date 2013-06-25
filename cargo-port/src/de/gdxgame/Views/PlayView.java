@@ -1,13 +1,15 @@
 package de.gdxgame.Views;
 
 import CB_Core.GL_UI.CB_View_Base;
-import CB_Core.GL_UI.Fonts;
+import CB_Core.GL_UI.GL_View_Base;
 import CB_Core.GL_UI.SpriteCache;
 import CB_Core.GL_UI.Controls.Box;
-import CB_Core.GL_UI.Controls.Button;
 import CB_Core.GL_UI.Controls.ScrollBox;
 import CB_Core.Math.CB_RectF;
 import CB_Core.Math.UI_Size_Base;
+import controls.LevelButton;
+import de.gdxgame.Level;
+import de.gdxgame.Views.Actions.Action_Show_GameView;
 
 public class PlayView extends CB_View_Base
 {
@@ -40,25 +42,35 @@ public class PlayView extends CB_View_Base
 
 		float btnMargin = ((this.width - (ButtonRowCount * buttonRec.getWidth())) / (ButtonRowCount + 1));
 		content.setMargins(btnMargin, btnMargin);
-		int Count = 1;
+
 		for (int i = 0; i < ButtonLineCount; i++)
 		{
 
 			for (int j = 0; j < ButtonRowCount - 1; j++)
 			{
-				Button bt = new Button(buttonRec, "");
-				bt.setText(String.valueOf(Count), Fonts.getCompass(), Fonts.getFontColor());
-				bt.disable();
+				LevelButton bt = new LevelButton(buttonRec, Level.TestLevel);
+				bt.setOnClickListener(onClick);
 				content.addNext(bt, -1);
-				Count++;
 			}
-			Button bt = new Button(buttonRec, "");
-			bt.setText(String.valueOf(Count), Fonts.getCompass(), Fonts.getFontColor());
-			bt.disable();
+			LevelButton bt = new LevelButton(buttonRec, Level.TestLevel);
+			bt.setOnClickListener(onClick);
 			content.addLast(bt, -1);
-			Count++;
 		}
 	}
+
+	private OnClickListener onClick = new OnClickListener()
+	{
+
+		@Override
+		public boolean onClick(GL_View_Base arg0, int arg1, int arg2, int arg3, int arg4)
+		{
+			LevelButton bt = (LevelButton) arg0;
+			Action_Show_GameView action = new Action_Show_GameView(bt.getLevel());
+			action.setTab(MainView.that, MainView.TAB);
+			action.CallExecute();
+			return false;
+		}
+	};
 
 	@Override
 	protected void SkinIsChanged()

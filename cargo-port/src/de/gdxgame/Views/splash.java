@@ -6,7 +6,6 @@ import java.io.IOException;
 import CB_Core.Config;
 import CB_Core.DB.Database;
 import CB_Core.GL_UI.Fonts;
-import CB_Core.GL_UI.SpriteCache;
 import CB_Core.GL_UI.Activitys.SelectDB;
 import CB_Core.GL_UI.Controls.Image;
 import CB_Core.GL_UI.Controls.Label;
@@ -18,6 +17,7 @@ import CB_Core.Math.CB_RectF;
 import CB_Core.Math.UiSizes;
 import CB_Core.Settings.SettingString;
 import CB_Core.TranslationEngine.Translation;
+import Res.ResourceCache;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.HAlignment;
@@ -226,7 +226,7 @@ public class splash extends TabMainView
 	private void ini_Sprites()
 	{
 		Logger.DEBUG("ini_Sprites");
-		SpriteCache.LoadSprites(false);
+		ResourceCache.LoadSprites(false);
 	}
 
 	/**

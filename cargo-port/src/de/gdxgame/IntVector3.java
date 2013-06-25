@@ -7,22 +7,52 @@ package de.gdxgame;
  */
 public class IntVector3
 {
-	private int x = 0;
-	private int y = 0;
-	private int z = 0;
+	private int mX = 0;
+	private int mY = 0;
+	private int mZ = 0;
 
 	public IntVector3(int x, int y, int z)
 	{
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.mX = x;
+		this.mY = y;
+		this.mZ = z;
 	}
 
 	public IntVector3(IntVector3 vector)
 	{
-		this.x = vector.x;
-		this.y = vector.y;
-		this.z = vector.z;
+		this.mX = vector.mX;
+		this.mY = vector.mY;
+		this.mZ = vector.mZ;
+	}
+
+	public int getX()
+	{
+		return mX;
+	}
+
+	public void setX(int x)
+	{
+		this.mX = x;
+	}
+
+	public int getY()
+	{
+		return mY;
+	}
+
+	public void setY(int y)
+	{
+		this.mY = y;
+	}
+
+	public int getZ()
+	{
+		return mZ;
+	}
+
+	public void setZ(int z)
+	{
+		this.mZ = z;
 	}
 
 }

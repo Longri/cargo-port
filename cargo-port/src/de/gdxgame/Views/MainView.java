@@ -19,8 +19,9 @@ import de.gdxgame.Views.Actions.Action_Show_PlayView;
 public class MainView extends TabMainView
 {
 
-	private static MainView that;
-	private GameView gameView;
+	public static MainView that;
+	public static GameView gameView;
+	public static CB_TabView TAB;
 
 	// ######## Button Actions ###########
 	private Action_Show_PlayView actionShowPlayView = new Action_Show_PlayView();
@@ -45,8 +46,6 @@ public class MainView extends TabMainView
 	{
 		super(X, Y, Width, Height, Name);
 		that = this;
-		gameView = new GameView();
-
 	}
 
 	@Override
@@ -61,7 +60,7 @@ public class MainView extends TabMainView
 		rec.setHeight(this.height);
 		rec.setPos(0, 0);
 
-		LeftTab = new CB_TabView(rec, "Phone Tab");
+		TAB = new CB_TabView(rec, "Phone Tab");
 
 		CB_Button btn1 = new CB_Button(btnRec, "Button1", SpriteCache.CacheList);
 		CB_Button btn2 = new CB_Button(btnRec, "Button2", SpriteCache.Cache);
@@ -76,12 +75,12 @@ public class MainView extends TabMainView
 		btnList.addButton(btn4);
 		btnList.addButton(btn5);
 
-		LeftTab.addButtonList(btnList);
+		TAB.addButtonList(btnList);
 
-		this.addChild(LeftTab);
+		this.addChild(TAB);
 
 		// Tab den entsprechneden Actions zuweisen
-		actionShowPlayView.setTab(this, LeftTab);
+		actionShowPlayView.setTab(this, TAB);
 		// Actions den Buttons zuweisen
 
 		btn1.addAction(new CB_ActionButton(actionShowPlayView, true, GestureDirection.Up));

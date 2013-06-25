@@ -7,29 +7,28 @@ import java.util.Random;
 import CB_Core.GL_UI.CB_View_Base;
 import CB_Core.GL_UI.Fonts;
 import CB_Core.GL_UI.render3D;
+import CB_Core.GL_UI.runOnGL;
 import CB_Core.GL_UI.GL_Listener.GL;
 import CB_Core.Log.Logger;
 import CB_Core.Map.Point;
+import CB_Core.Math.CB_RectF;
 import CB_Core.Math.UI_Size_Base;
+import Res.ResourceCache;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.lights.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.lights.Lights;
-import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
-import com.badlogic.gdx.graphics.g3d.materials.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.materials.Material;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
+
+import de.gdxgame.Level;
 
 public class GameView extends CB_View_Base implements render3D
 {
@@ -38,10 +37,9 @@ public class GameView extends CB_View_Base implements render3D
 
 	private float dpi = 1;
 
-	private Model model, field1, field2;
 	private ModelInstance instance, instance2;
-	private ModelInstance[][] GameField;
-	private Vector3[][] GameFieldPositions;
+	private ModelInstance[][] GameField = new ModelInstance[1][1];
+	private Vector3[][] GameFieldPositions = new Vector3[1][1];
 	private Lights lights;
 
 	// InputProcessor
@@ -56,13 +54,13 @@ public class GameView extends CB_View_Base implements render3D
 	private KineticPan kineticPan = null;
 
 	float viewAngle = 0;
-	float zoom = 60;
+	float zoom = 20;
+	float lastZoom = 20;
 
-	public GameView()
+	public GameView(CB_RectF rec)
 	{
-		super(0, 0, MainView.Width(), MainView.Height(), "GameView");
+		super(rec, "GameView");
 		dpi = UI_Size_Base.that.getScale();
-		size = dpi * SIZE_CONST;
 	}
 
 	@Override
@@ -97,31 +95,29 @@ public class GameView extends CB_View_Base implements render3D
 	@Override
 	protected void render(SpriteBatch batch)
 	{
-		if (font == null)
+		synchronized (GameField)
 		{
-			font = Fonts.getNormal();
-			font.setColor(Color.GREEN);
+			if (font == null)
+			{
+				font = Fonts.getNormal();
+				font.setColor(Color.GREEN);
 
+			}
+			String str = "fps: " + Gdx.graphics.getFramesPerSecond();
+			String str2 = "GameField:" + GameField.length + "*" + GameField[0].length;
+
+			font.draw(batch, str, 20 * dpi, 40 * dpi);
+			font.draw(batch, str2, 20 * dpi, 60 * dpi);
 		}
-		String str = "fps: " + Gdx.graphics.getFramesPerSecond();
-		String str2 = "GameField:" + GameField.length + "*" + GameField[0].length;
 
-		font.draw(batch, str, 20 * dpi, 40 * dpi);
-		font.draw(batch, str2, 20 * dpi, 60 * dpi);
 	}
 
 	@Override
 	public void Initial3D()
 	{
-		ModelBuilder modelBuilder = new ModelBuilder();
-		// model = modelBuilder.createBox(size, size, size, new Material(ColorAttribute.createDiffuse(Color.GREEN)), Usage.Position
-		// | Usage.Normal | Usage.TextureCoordinates);
 
-		// model = new G3dModelLoader(new UBJsonReader()).loadModel(Gdx.files.internal("skins/default/day/cube.g3db"));
-
-		ObjLoader loader = new ObjLoader();
-		model = loader.loadModel(Gdx.files.internal("skins/default/day/ship.obj"));
-		instance = new ModelInstance(model);
+		instance = new ModelInstance(ResourceCache.getBoxModel());
+		instance2 = new ModelInstance(ResourceCache.getBox2Model());
 
 		BoundingBox box = new BoundingBox();
 		instance.calculateBoundingBox(box);
@@ -131,59 +127,58 @@ public class GameView extends CB_View_Base implements render3D
 		instance.transform.setToScaling(dpi, dpi, dpi);
 		instance.calculateTransforms();
 
-		instance.transform.setToTranslation(0, size / 2, 0);
-		instance.calculateTransforms();
-
-		model = modelBuilder.createBox(size, size, size, new Material(ColorAttribute.createDiffuse(Color.GREEN)), Usage.Position
-				| Usage.Normal);
-		instance2 = new ModelInstance(model);
-
-		field1 = modelBuilder.createBox(size, 0.1f, size, new Material(ColorAttribute.createDiffuse(Color.BLACK)), Usage.Position
-				| Usage.Normal | Usage.TextureCoordinates);
-
-		field2 = modelBuilder.createBox(size, 0.1f, size, new Material(ColorAttribute.createDiffuse(Color.GRAY)), Usage.Position
-				| Usage.Normal | Usage.TextureCoordinates);
-
 		lights = new Lights();
 		lights.ambientLight.set(0.4f, 0.4f, 0.4f, 1f);
 		lights.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
 
-		createGameField(5, 5);
-
 		is3DInitial = true;
 	}
 
-	private void createGameField(int countX, int countY)
+	private void createGameField(final int countX, final int countY)
 	{
-		boolean lineGray = true;
-		boolean rowGray = true;
-		GameField = new ModelInstance[countX][countY];
-		GameFieldPositions = new Vector3[countX][countY];
-		float x = 0;
-		float y = 0;
-		float z = 0;
-
-		for (int i = 0; i < countX; i++)
+		GL.that.RunOnGL(new runOnGL()
 		{
-			lineGray = rowGray = !lineGray;
-			for (int j = 0; j < countY; j++)
+
+			@Override
+			public void run()
 			{
-				ModelInstance inst = new ModelInstance(rowGray ? field1 : field2);
-				Vector3 vec = new Vector3(x, y, z);
-				inst.transform.setToTranslation(vec);
+				if (!is3DInitial) Initial3D();
+				synchronized (GameField)
+				{
+					boolean lineGray = true;
+					boolean rowGray = true;
+					GameField = new ModelInstance[countX][countY];
+					GameFieldPositions = new Vector3[countX][countY];
+					float x = 0;
+					float y = 0;
+					float z = 0;
 
-				vec = new Vector3(x, size / 2, z);
+					for (int i = 0; i < countX; i++)
+					{
+						lineGray = rowGray = !lineGray;
+						for (int j = 0; j < countY; j++)
+						{
+							ModelInstance inst = new ModelInstance(rowGray ? ResourceCache.getField1Model() : ResourceCache
+									.getField2Model());
+							Vector3 vec = new Vector3(x, y, z);
+							inst.transform.setToTranslation(vec);
 
-				GameField[i][j] = inst;
-				GameFieldPositions[i][j] = vec;
-				rowGray = !rowGray;
-				z += size;
+							vec = new Vector3(x, size / 2, z);
+
+							GameField[i][j] = inst;
+							GameFieldPositions[i][j] = vec;
+							rowGray = !rowGray;
+							z += size;
+						}
+						x += size;
+						z = 0;
+					}
+
+					instance2.transform.setToTranslation(GameFieldPositions[1][2]);
+					instance.transform.setToTranslation(GameFieldPositions[3][2]);
+				}
 			}
-			x += size;
-			z = 0;
-		}
-
-		instance2.transform.translate(GameFieldPositions[1][2]);
+		});
 	}
 
 	@Override
@@ -195,13 +190,15 @@ public class GameView extends CB_View_Base implements render3D
 	@Override
 	public void render3d(ModelBatch modelBatch)
 	{
-
-		// Render Game Field
-		for (int i = 0; i < GameField.length; i++)
+		synchronized (GameField)
 		{
-			for (int j = 0; j < GameField[i].length; j++)
+			// Render Game Field
+			for (int i = 0; i < GameField.length; i++)
 			{
-				modelBatch.render(GameField[i][j], lights);
+				for (int j = 0; j < GameField[i].length; j++)
+				{
+					modelBatch.render(GameField[i][j], lights);
+				}
 			}
 		}
 
@@ -246,7 +243,9 @@ public class GameView extends CB_View_Base implements render3D
 		}
 		if (cam3d != myCam) return myCam;
 
-		if (viewAngle == 0) return null;
+		if (viewAngle == 0 && lastZoom == zoom) return null;
+
+		lastZoom = zoom;
 
 		myCam.fieldOfView = zoom;
 		myCam.rotateAround(new Vector3(2.5f * size, 0, 2.5f * size), Vector3.Y, viewAngle);
@@ -292,7 +291,7 @@ public class GameView extends CB_View_Base implements render3D
 
 			float div = lastTouchPos.y - y;
 
-			zoom = div / 100f;
+			zoom += div / 100f;
 
 			return true;
 		}
@@ -337,10 +336,24 @@ public class GameView extends CB_View_Base implements render3D
 				float dy = (y - lastPoint.y);
 
 				// x Wert für Rotation
-				viewAngle = viewAngle + (dx / 10);
 
-				// y Wert für Zoom
-				zoom = zoom + (dy / 10);
+				if (y > this.halfHeight)
+				{
+					viewAngle += (dx / 10);
+				}
+				else
+				{
+					viewAngle -= (dx / 10);
+				}
+
+				if (x > this.halfWidth)
+				{
+					viewAngle += (dy / 10);
+				}
+				else
+				{
+					viewAngle -= (dy / 10);
+				}
 
 				lastPoint.x = x;
 				lastPoint.y = y;
@@ -360,7 +373,8 @@ public class GameView extends CB_View_Base implements render3D
 					p2 = (Point) fingerDown.values().toArray()[1];
 				}
 				float currentDistance = (float) Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
-				float ratio = originalDistance / currentDistance;
+
+				zoom += (originalDistance - currentDistance) / 20;
 
 				return true;
 			}
@@ -501,6 +515,13 @@ public class GameView extends CB_View_Base implements render3D
 			result.y = (int) (diffY / anzPoints * (1 - faktor));
 			return result;
 		}
+	}
+
+	public void setLevel(Level level)
+	{
+		// create game field
+		createGameField(level.getLeveDimensions().getX(), level.getLeveDimensions().getY());
+
 	}
 
 }
