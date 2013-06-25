@@ -47,4 +47,5 @@ public class Action_Show_GameView extends CB_Action_ShowView
 	{
 		return true;
 	}
+
 }

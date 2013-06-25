@@ -1,6 +1,7 @@
 package Res;
 
 import CB_Core.GL_UI.SpriteCache;
+import CB_Core.Math.UI_Size_Base;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -19,7 +20,7 @@ public class ResourceCache extends SpriteCache
 {
 
 	private static Model model_Box, model_Box2, model_field1, model_field2;
-	private static float size, halfsize;
+	private static float size, halfsize, dpi;
 
 	public static void LoadSprites(boolean reload)
 	{
@@ -49,7 +50,7 @@ public class ResourceCache extends SpriteCache
 
 			size = box.getDimensions().x;
 			halfsize = size / 2;
-
+			dpi = UI_Size_Base.that.getScale();
 			instance = null;
 
 		}
@@ -87,13 +88,19 @@ public class ResourceCache extends SpriteCache
 		return model_field2;
 	}
 
-	public static float getModelSize()
+	public static float getSize()
 	{
 		return size;
 	}
 
-	public static float getFieldHalfSize()
+	public static float getHalfSize()
 	{
 		return halfsize;
 	}
+
+	public static float getDpi()
+	{
+		return dpi;
+	}
+
 }

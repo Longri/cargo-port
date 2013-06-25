@@ -1,5 +1,6 @@
 package de.gdxgame.Views;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Random;
@@ -12,7 +13,6 @@ import CB_Core.GL_UI.GL_Listener.GL;
 import CB_Core.Log.Logger;
 import CB_Core.Map.Point;
 import CB_Core.Math.CB_RectF;
-import CB_Core.Math.UI_Size_Base;
 import Res.ResourceCache;
 
 import com.badlogic.gdx.Gdx;
@@ -26,21 +26,34 @@ import com.badlogic.gdx.graphics.g3d.lights.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.lights.Lights;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
 
+import de.gdxgame.IntVector3;
 import de.gdxgame.Level;
+import de.gdxgame.Views.Actions.Animation;
+import de.gdxgame.Views.Actions.AnimationList;
+import de.gdxgame.Views.Actions.AnimationVector3;
 
 public class GameView extends CB_View_Base implements render3D
 {
-	private final float SIZE_CONST = 5f;
-	private float size = 1f;
+	public static GameView that;
 
-	private float dpi = 1;
+	private interface readyHandler
+	{
+		void ready();
+	}
 
-	private ModelInstance instance, instance2;
+	/**
+	 * Zeit für eine Animation von einem Vector nächsten Vector
+	 */
+	private final int ANIMATION_TIME = 4000;
+
+	private ArrayList<ModelInstance> ModelList = new ArrayList<ModelInstance>();
+
 	private ModelInstance[][] GameField = new ModelInstance[1][1];
-	private Vector3[][] GameFieldPositions = new Vector3[1][1];
+	private Vector3[][][] GameFieldPositions = new Vector3[1][1][1];
+	private ModelInstance[][][] GameVectorModels = new ModelInstance[1][1][1];
 	private Lights lights;
+	private AnimationList mAnimationList = new AnimationList();
 
 	// InputProcessor
 	public enum InputState
@@ -60,7 +73,8 @@ public class GameView extends CB_View_Base implements render3D
 	public GameView(CB_RectF rec)
 	{
 		super(rec, "GameView");
-		dpi = UI_Size_Base.that.getScale();
+
+		that = this;
 	}
 
 	@Override
@@ -106,8 +120,8 @@ public class GameView extends CB_View_Base implements render3D
 			String str = "fps: " + Gdx.graphics.getFramesPerSecond();
 			String str2 = "GameField:" + GameField.length + "*" + GameField[0].length;
 
-			font.draw(batch, str, 20 * dpi, 40 * dpi);
-			font.draw(batch, str2, 20 * dpi, 60 * dpi);
+			font.draw(batch, str, 20 * ResourceCache.getDpi(), 40 * ResourceCache.getDpi());
+			font.draw(batch, str2, 20 * ResourceCache.getDpi(), 60 * ResourceCache.getDpi());
 		}
 
 	}
@@ -116,17 +130,6 @@ public class GameView extends CB_View_Base implements render3D
 	public void Initial3D()
 	{
 
-		instance = new ModelInstance(ResourceCache.getBoxModel());
-		instance2 = new ModelInstance(ResourceCache.getBox2Model());
-
-		BoundingBox box = new BoundingBox();
-		instance.calculateBoundingBox(box);
-
-		size = box.getDimensions().x;
-
-		instance.transform.setToScaling(dpi, dpi, dpi);
-		instance.calculateTransforms();
-
 		lights = new Lights();
 		lights.ambientLight.set(0.4f, 0.4f, 0.4f, 1f);
 		lights.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
@@ -134,7 +137,7 @@ public class GameView extends CB_View_Base implements render3D
 		is3DInitial = true;
 	}
 
-	private void createGameField(final int countX, final int countY)
+	private void createGameField(final int countX, final int countY, final int countZ, final readyHandler handler)
 	{
 		GL.that.RunOnGL(new runOnGL()
 		{
@@ -148,35 +151,45 @@ public class GameView extends CB_View_Base implements render3D
 					boolean lineGray = true;
 					boolean rowGray = true;
 					GameField = new ModelInstance[countX][countY];
-					GameFieldPositions = new Vector3[countX][countY];
+					GameFieldPositions = new Vector3[countX][countY][countZ];
+					GameVectorModels = new ModelInstance[countX][countY][countZ];
 					float x = 0;
 					float y = 0;
 					float z = 0;
 
-					for (int i = 0; i < countX; i++)
+					for (int h = 0; h < countZ; h++)
 					{
-						lineGray = rowGray = !lineGray;
-						for (int j = 0; j < countY; j++)
+
+						for (int i = 0; i < countX; i++)
 						{
-							ModelInstance inst = new ModelInstance(rowGray ? ResourceCache.getField1Model() : ResourceCache
-									.getField2Model());
-							Vector3 vec = new Vector3(x, y, z);
-							inst.transform.setToTranslation(vec);
+							lineGray = rowGray = !lineGray;
+							for (int j = 0; j < countY; j++)
+							{
+								Vector3 vec = new Vector3(x, y, z);
+								if (y == 0)
+								{
+									ModelInstance inst = new ModelInstance(rowGray ? ResourceCache.getField1Model() : ResourceCache
+											.getField2Model());
 
-							vec = new Vector3(x, size / 2, z);
+									inst.transform.setToTranslation(vec);
+									GameField[i][j] = inst;
+								}
+								vec = new Vector3(x, y + (ResourceCache.getHalfSize()), z);
 
-							GameField[i][j] = inst;
-							GameFieldPositions[i][j] = vec;
-							rowGray = !rowGray;
-							z += size;
+								GameFieldPositions[i][j][h] = vec;
+								rowGray = !rowGray;
+								z += ResourceCache.getSize();
+							}
+							x += ResourceCache.getSize();
+							z = 0;
 						}
-						x += size;
 						z = 0;
+						x = 0;
+						y += ResourceCache.getSize();
 					}
-
-					instance2.transform.setToTranslation(GameFieldPositions[1][2]);
-					instance.transform.setToTranslation(GameFieldPositions[3][2]);
 				}
+
+				handler.ready();
 			}
 		});
 	}
@@ -190,6 +203,17 @@ public class GameView extends CB_View_Base implements render3D
 	@Override
 	public void render3d(ModelBatch modelBatch)
 	{
+		synchronized (mAnimationList)
+		{
+			if (mAnimationList.size() > 0 && mAnimationList.isPlaying())
+			{
+				for (Animation ani : mAnimationList)
+				{
+					ani.render3d(modelBatch);
+				}
+			}
+		}
+
 		synchronized (GameField)
 		{
 			// Render Game Field
@@ -202,14 +226,15 @@ public class GameView extends CB_View_Base implements render3D
 			}
 		}
 
-		if (instance != null)
+		synchronized (ModelList)
 		{
-			modelBatch.render(instance, lights);
-		}
-
-		if (instance2 != null)
-		{
-			modelBatch.render(instance2, lights);
+			if (ModelList.size() > 0)
+			{
+				for (ModelInstance inst : ModelList)
+				{
+					modelBatch.render(inst, lights);
+				}
+			}
 		}
 
 		GL.that.renderOnce("Test");
@@ -235,7 +260,7 @@ public class GameView extends CB_View_Base implements render3D
 		{
 			myCam = new PerspectiveCamera(20, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			myCam.position.set(100f, 100f, 100f);
-			myCam.lookAt(2.5f * size, 0, 2.5f * size);
+			myCam.lookAt(2.5f * ResourceCache.getSize(), 0, 2.5f * ResourceCache.getSize());
 			myCam.near = 0.1f;
 			myCam.far = 300;
 			myCam.rotateAround(new Vector3(50f, 20f, 50f), Vector3.Y, viewAngle);
@@ -248,7 +273,7 @@ public class GameView extends CB_View_Base implements render3D
 		lastZoom = zoom;
 
 		myCam.fieldOfView = zoom;
-		myCam.rotateAround(new Vector3(2.5f * size, 0, 2.5f * size), Vector3.Y, viewAngle);
+		myCam.rotateAround(new Vector3(2.5f * ResourceCache.getSize(), 0, 2.5f * ResourceCache.getSize()), Vector3.Y, viewAngle);
 		myCam.update();
 		viewAngle = 0;
 		return myCam;
@@ -520,8 +545,61 @@ public class GameView extends CB_View_Base implements render3D
 	public void setLevel(Level level)
 	{
 		// create game field
-		createGameField(level.getLeveDimensions().getX(), level.getLeveDimensions().getY());
+		createGameField(level.getLeveDimensions().getX(), level.getLeveDimensions().getY(), level.getLeveDimensions().getZ(),
+				new readyHandler()
+				{
 
+					@Override
+					public void ready()
+					{
+						// fill Model List
+						{// for debug
+							ModelInstance inst = new ModelInstance(ResourceCache.getBox2Model());
+							inst.transform.setToTranslation(GameFieldPositions[0][0][0]);
+							GameVectorModels[0][0][0] = inst;
+							ModelList.add(inst);
+
+							ModelInstance inst2 = new ModelInstance(ResourceCache.getBox2Model());
+							inst2.transform.setToTranslation(GameFieldPositions[0][0][1]);
+							GameVectorModels[0][0][1] = inst2;
+							ModelList.add(inst2);
+						}
+					}
+				});
+
+		// clear Animations
+		synchronized (mAnimationList)
+		{
+			mAnimationList.clear();
+		}
+
+		// clear ModelList
+		synchronized (level)
+		{
+			ModelList.clear();
+		}
+
+	}
+
+	public void animateBox(IntVector3 start, IntVector3 end)
+	{
+		// get Box
+		ModelInstance box = GameVectorModels[start.getX()][start.getY()][start.getZ()];
+		if (box != null)
+		{
+			AnimationVector3 ani = new AnimationVector3(box, GameFieldPositions[start.getX()][start.getY()][start.getZ()],
+					GameFieldPositions[end.getX()][end.getY()][end.getZ()], ANIMATION_TIME);
+			synchronized (mAnimationList)
+			{
+				mAnimationList.add(ani);
+			}
+		}
+	}
+
+	public void beginnDebug()
+	{
+		animateBox(new IntVector3(0, 0, 0), new IntVector3(1, 0, 0));
+		mAnimationList.play();
 	}
 
 }
