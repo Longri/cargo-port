@@ -13,6 +13,7 @@ import CB_Core.GL_UI.GL_Listener.GL;
 import CB_Core.Log.Logger;
 import CB_Core.Map.Point;
 import CB_Core.Math.CB_RectF;
+import Res.PortalModel;
 import Res.ResourceCache;
 
 import com.badlogic.gdx.Gdx;
@@ -32,15 +33,17 @@ import de.gdxgame.Level;
 import de.gdxgame.Views.Actions.Animation;
 import de.gdxgame.Views.Actions.AnimationList;
 import de.gdxgame.Views.Actions.AnimationVector3;
+import de.gdxgame.Views.Actions.ReadyHandler;
 
+/**
+ * @author Longri
+ */
 public class GameView extends CB_View_Base implements render3D
 {
+	/**
+	 * Static zugriff auf die aktuelle Instance
+	 */
 	public static GameView that;
-
-	private interface readyHandler
-	{
-		void ready();
-	}
 
 	/**
 	 * Zeit für eine Animation von einem Vector nächsten Vector
@@ -49,14 +52,16 @@ public class GameView extends CB_View_Base implements render3D
 
 	private ArrayList<ModelInstance> ModelList = new ArrayList<ModelInstance>();
 
+	private PortalModel mPortalModel = new PortalModel();
 	private ModelInstance[][] GameField = new ModelInstance[1][1];
 	private Vector3[][][] GameFieldPositions = new Vector3[1][1][1];
 	private ModelInstance[][][] GameVectorModels = new ModelInstance[1][1][1];
 	private Lights lights;
 	private AnimationList mAnimationList = new AnimationList();
+	private IntVector3 mGameFieldDimensions;
 
 	// InputProcessor
-	public enum InputState
+	private enum InputState
 	{
 		Idle, IdleDown, Button, Pan, Zoom, PanAutomatic, ZoomAutomatic
 	}
@@ -70,10 +75,14 @@ public class GameView extends CB_View_Base implements render3D
 	float zoom = 20;
 	float lastZoom = 20;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param rec
+	 */
 	public GameView(CB_RectF rec)
 	{
 		super(rec, "GameView");
-
 		that = this;
 	}
 
@@ -137,8 +146,10 @@ public class GameView extends CB_View_Base implements render3D
 		is3DInitial = true;
 	}
 
-	private void createGameField(final int countX, final int countY, final int countZ, final readyHandler handler)
+	private void createGameField(final int countX, final int countY, final int countZ, final ReadyHandler handler)
 	{
+		mGameFieldDimensions = new IntVector3(countX - 1, countX - 1, countZ - 1);
+
 		GL.that.RunOnGL(new runOnGL()
 		{
 
@@ -189,6 +200,8 @@ public class GameView extends CB_View_Base implements render3D
 					}
 				}
 
+				mPortalModel.Initial3D();
+
 				handler.ready();
 			}
 		});
@@ -203,15 +216,22 @@ public class GameView extends CB_View_Base implements render3D
 	@Override
 	public void render3d(ModelBatch modelBatch)
 	{
-		synchronized (mAnimationList)
+		try
 		{
-			if (mAnimationList.size() > 0 && mAnimationList.isPlaying())
+			synchronized (mAnimationList)
 			{
-				for (Animation ani : mAnimationList)
+				if (mAnimationList.isPlaying() && mAnimationList.size() > 0)
 				{
-					ani.render3d(modelBatch);
+					for (Animation ani : mAnimationList)
+					{
+						ani.calcPositions();
+					}
 				}
 			}
+		}
+		catch (java.util.ConcurrentModificationException e)
+		{
+			Logger.Error("GameView", "ConcurrentModificationException=>mAnimationList", e);
 		}
 
 		synchronized (GameField)
@@ -236,6 +256,8 @@ public class GameView extends CB_View_Base implements render3D
 				}
 			}
 		}
+
+		if (mPortalModel != null) mPortalModel.render3d(modelBatch);
 
 		GL.that.renderOnce("Test");
 
@@ -546,7 +568,7 @@ public class GameView extends CB_View_Base implements render3D
 	{
 		// create game field
 		createGameField(level.getLeveDimensions().getX(), level.getLeveDimensions().getY(), level.getLeveDimensions().getZ(),
-				new readyHandler()
+				new ReadyHandler()
 				{
 
 					@Override
@@ -563,6 +585,8 @@ public class GameView extends CB_View_Base implements render3D
 							inst2.transform.setToTranslation(GameFieldPositions[0][0][1]);
 							GameVectorModels[0][0][1] = inst2;
 							ModelList.add(inst2);
+
+							mPortalModel.setRunway2Vector(new IntVector3(0, 0, 3));
 						}
 					}
 				});
@@ -581,25 +605,108 @@ public class GameView extends CB_View_Base implements render3D
 
 	}
 
-	public void animateBox(IntVector3 start, IntVector3 end)
+	public Animation animateBox(IntVector3 start, IntVector3 end)
 	{
-		// get Box
-		ModelInstance box = GameVectorModels[start.getX()][start.getY()][start.getZ()];
-		if (box != null)
+		try
 		{
-			AnimationVector3 ani = new AnimationVector3(box, GameFieldPositions[start.getX()][start.getY()][start.getZ()],
-					GameFieldPositions[end.getX()][end.getY()][end.getZ()], ANIMATION_TIME);
-			synchronized (mAnimationList)
+			// get Box
+			ModelInstance box = GameVectorModels[start.getX()][start.getY()][start.getZ()];
+			if (box != null)
 			{
-				mAnimationList.add(ani);
+				AnimationVector3 ani = new AnimationVector3(box, GameFieldPositions[start.getX()][start.getY()][start.getZ()],
+						GameFieldPositions[end.getX()][end.getY()][end.getZ()], ANIMATION_TIME);
+
+				// verschiebe GameVectorModel zur ZielPosition
+				GameVectorModels[end.getX()][end.getY()][end.getZ()] = box;
+				GameVectorModels[start.getX()][start.getY()][start.getZ()] = null;
+				return ani;
 			}
 		}
+		catch (java.lang.ArrayIndexOutOfBoundsException e)
+		{
+			Logger.Error("GameView", "ArrayIndexOutOfBoundsException", e);
+		}
+		return null;
 	}
 
 	public void beginnDebug()
 	{
-		animateBox(new IntVector3(0, 0, 0), new IntVector3(1, 0, 0));
-		mAnimationList.play();
+		Animation ani = animateBox(new IntVector3(0, 0, 0), new IntVector3(1, 0, 0));
+		synchronized (mAnimationList)
+		{
+			mAnimationList.add(ani);
+		}
+
+		mAnimationList.play(new ReadyHandler()
+		{
+			@Override
+			public void ready()
+			{
+				Animation ani = animateBox(new IntVector3(0, 0, 1), new IntVector3(0, 0, 0));
+				synchronized (mAnimationList)
+				{
+					mAnimationList.clear();
+					mAnimationList.add(ani);
+				}
+
+				mAnimationList.play(new ReadyHandler()
+				{
+
+					@Override
+					public void ready()
+					{
+						Animation ani = animateBox(new IntVector3(0, 0, 0), new IntVector3(0, 5, 0));
+						Animation ani2 = animateBox(new IntVector3(1, 0, 0), new IntVector3(5, 0, 0));
+
+						mAnimationList.clear();
+						mAnimationList.add(ani);
+						mAnimationList.add(ani2);
+
+						mAnimationList.play(new ReadyHandler()
+						{
+
+							@Override
+							public void ready()
+							{
+								Animation ani = animateBox(new IntVector3(0, 5, 0), new IntVector3(2, 3, 0));
+								Animation ani2 = animateBox(new IntVector3(5, 0, 0), new IntVector3(3, 2, 0));
+
+								mAnimationList.clear();
+								mAnimationList.add(ani);
+								mAnimationList.add(ani2);
+							}
+						});
+
+					}
+				});
+			}
+		});
 	}
 
+	public Vector3 getVectorPosition(IntVector3 vector)
+	{
+		try
+		{
+			return GameFieldPositions[vector.getX()][vector.getY()][vector.getZ()];
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
+	}
+
+	public int getMaxGameFieldX()
+	{
+		return GameFieldPositions.length;
+	}
+
+	public Lights getLights()
+	{
+		return lights;
+	}
+
+	public IntVector3 getGameFieldDimensions()
+	{
+		return mGameFieldDimensions;
+	}
 }

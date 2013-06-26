@@ -1,8 +1,15 @@
 package de.gdxgame.Views.Actions;
 
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
-
 public interface Animation
 {
-	public void render3d(ModelBatch modelBatch);
+	public void calcPositions();
+
+	public void play();
+
+	public void play(ReadyHandler handler);
+
+	public void stop();
+
+	public boolean isPlaying();
+
 }

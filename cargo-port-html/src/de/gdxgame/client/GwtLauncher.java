@@ -1,8 +1,8 @@
 package de.gdxgame.client;
 
 import de.gdxgame.GdxGame;
-import de.gdxgame.MainView;
-import de.gdxgame.splash;
+import de.gdxgame.Views.MainView;
+import de.gdxgame.Views.splash;
 import CB_Core.Config;
 import CB_Core.Math.Size;
 import CB_Core.Math.UiSizes;

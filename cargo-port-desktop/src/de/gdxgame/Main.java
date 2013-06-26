@@ -20,7 +20,6 @@ import CB_Core.Events.platformConector.IgetFolderReturnListner;
 import CB_Core.GL_UI.GL_Listener.GL;
 import CB_Core.GL_UI.GL_Listener.GL_Listener_Interface;
 import CB_Core.Math.Size;
-import CB_Core.Math.UiSizes;
 import CB_Core.Math.devicesSizes;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
@@ -42,6 +41,8 @@ public class Main
 		// Initial Config
 		String workPath = "./cargo_port";
 		Config.Initialize(workPath, workPath + "/cachebox.config");
+
+		Config.settings.SkinFolder.setValue("default");
 
 		devicesSizes ui = new devicesSizes();
 

@@ -19,7 +19,8 @@ import com.badlogic.gdx.utils.UBJsonReader;
 public class ResourceCache extends SpriteCache
 {
 
-	private static Model model_Box, model_Box2, model_field1, model_field2;
+	private static Model model_Box, model_Box2, model_field1, model_field2, model_PortalLegLeft, model_PortalLegRight, model_PortalJib,
+			model_PortalRunWay;
 	private static float size, halfsize, dpi;
 
 	public static void LoadSprites(boolean reload)
@@ -57,7 +58,9 @@ public class ResourceCache extends SpriteCache
 
 		ModelBuilder modelBuilder = new ModelBuilder();
 
-		model_Box2 = modelBuilder.createBox(size, size, size, new Material(ColorAttribute.createDiffuse(Color.GREEN)), Usage.Position
+		Color trans = new Color(0, 1, 0, 0.4f);
+
+		model_Box2 = modelBuilder.createBox(size, size, size, new Material(ColorAttribute.createDiffuse(trans)), Usage.Position
 				| Usage.Normal);
 
 		model_field1 = modelBuilder.createBox(size, 0.1f, size, new Material(ColorAttribute.createDiffuse(Color.BLACK)), Usage.Position
@@ -66,6 +69,23 @@ public class ResourceCache extends SpriteCache
 		model_field2 = modelBuilder.createBox(size, 0.1f, size, new Material(ColorAttribute.createDiffuse(Color.GRAY)), Usage.Position
 				| Usage.Normal | Usage.TextureCoordinates);
 
+		initialPortalModels();
+
+	}
+
+	private static void initialPortalModels()
+	{
+		ModelBuilder modelBuilder = new ModelBuilder();
+
+		float dimens = size / 4;
+		Material material = new Material(ColorAttribute.createDiffuse(Color.PINK));
+		long attributes = Usage.Position | Usage.Normal;
+
+		model_PortalLegLeft = modelBuilder.createCylinder(dimens, size, dimens, 16, material, attributes);
+		model_PortalLegRight = modelBuilder.createCylinder(dimens, size, dimens, 16, material, attributes);
+		model_PortalJib = modelBuilder.createCylinder(dimens, size, dimens, 16, material, attributes);
+		model_PortalRunWay = modelBuilder.createBox(dimens, dimens, dimens, new Material(ColorAttribute.createDiffuse(Color.RED)),
+				attributes);
 	}
 
 	public static Model getBoxModel()
@@ -86,6 +106,26 @@ public class ResourceCache extends SpriteCache
 	public static Model getField2Model()
 	{
 		return model_field2;
+	}
+
+	public static Model getPortalLegLeftModel()
+	{
+		return model_PortalLegLeft;
+	}
+
+	public static Model getPortalLegRightModel()
+	{
+		return model_PortalLegRight;
+	}
+
+	public static Model getPortalJibModel()
+	{
+		return model_PortalJib;
+	}
+
+	public static Model getPortalRunWay()
+	{
+		return model_PortalRunWay;
 	}
 
 	public static float getSize()
