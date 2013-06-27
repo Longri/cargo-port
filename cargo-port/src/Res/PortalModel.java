@@ -1,15 +1,21 @@
 package Res;
 
+import java.util.ArrayList;
+
 import CB_Core.GL_UI.render3D;
 
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.lights.Lights;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 
 import de.gdxgame.IntVector3;
 import de.gdxgame.Views.GameView;
+import de.gdxgame.Views.Actions.AnimationCallBack;
+import de.gdxgame.Views.Actions.AnimationList;
+import de.gdxgame.Views.Actions.AnimationVector3;
 
 /**
  * Enthällt die einzelnen Models des Portals<br>
@@ -22,17 +28,24 @@ import de.gdxgame.Views.GameView;
 public class PortalModel implements render3D
 {
 
-	private ModelInstance mLegLeft, mLegRight, mJib, mRunWay;
+	ArrayList<ModelInstance> mModelList, mLegCenterLeft, mLegCenterRight, mJibCenter;
+
+	private ModelInstance mLegBottomLeft, mLegTopLeft, mLegBottomRight, mLegTopRight, mJibLeft, mJibRight, mRunWay;
+
 	private boolean is3DInitial = false;
 	private IntVector3 actPos;
 	private float legOffset = 0;
+	private float legWidth = 0;
 
 	@Override
 	public void render3d(ModelBatch modelBatch)
 	{
-		modelBatch.render(mRunWay, GameView.that.getLights());
-		modelBatch.render(mLegLeft, GameView.that.getLights());
-		modelBatch.render(mLegRight, GameView.that.getLights());
+		Lights lights = GameView.that.getLights();
+
+		for (ModelInstance inst : mModelList)
+		{
+			modelBatch.render(inst, lights);
+		}
 	}
 
 	@Override
@@ -50,15 +63,65 @@ public class PortalModel implements render3D
 	@Override
 	public void Initial3D()
 	{
-		mLegLeft = new ModelInstance(ResourceCache.getPortalLegLeftModel());
-		mLegRight = new ModelInstance(ResourceCache.getPortalLegRightModel());
-		mJib = new ModelInstance(ResourceCache.getPortalJibModel());
+		mModelList = new ArrayList<ModelInstance>();
+
+		int maxField = GameView.that.getMaxGameFieldX();
+		int maxFieldHeight = GameView.that.getMaxGameFieldZ();
+
+		mLegBottomLeft = new ModelInstance(ResourceCache.getPortalLegBottomModel());
+
+		if (mLegCenterLeft == null) mLegCenterLeft = new ArrayList<ModelInstance>();
+		mLegCenterLeft.clear();
+		for (int i = 0; i < maxFieldHeight - 2; i++)
+		{
+			mLegCenterLeft.add(new ModelInstance(ResourceCache.getPortalLegCenterModel()));
+		}
+		mLegCenterLeft.trimToSize();
+		mLegTopLeft = new ModelInstance(ResourceCache.getPortalLegTopModel());
+
+		mLegBottomRight = new ModelInstance(ResourceCache.getPortalLegBottomModel());
+
+		if (mLegCenterRight == null) mLegCenterRight = new ArrayList<ModelInstance>();
+		mLegCenterRight.clear();
+		for (int i = 0; i < maxFieldHeight - 2; i++)
+		{
+			mLegCenterRight.add(new ModelInstance(ResourceCache.getPortalLegCenterModel()));
+		}
+		mLegCenterRight.trimToSize();
+		mLegTopRight = new ModelInstance(ResourceCache.getPortalLegTopModel());
+
+		mJibLeft = new ModelInstance(ResourceCache.getPortalJibLeftModel());
+		if (mJibCenter == null) mJibCenter = new ArrayList<ModelInstance>();
+		mJibCenter.clear();
+		for (int i = 0; i < maxField; i++)
+		{
+			mJibCenter.add(new ModelInstance(ResourceCache.getPortalJibCenterModel()));
+		}
+		mLegCenterRight.trimToSize();
+		mJibRight = new ModelInstance(ResourceCache.getPortalJibRightModel());
 		mRunWay = new ModelInstance(ResourceCache.getPortalRunWay());
+
+		mModelList.add(mLegBottomLeft);
+		mModelList.addAll(mLegCenterLeft);
+		mModelList.add(mLegTopLeft);
+
+		mModelList.add(mLegBottomRight);
+		mModelList.addAll(mLegCenterRight);
+		mModelList.add(mLegTopRight);
+
+		mModelList.add(mJibLeft);
+		mModelList.addAll(mJibCenter);
+		mModelList.add(mJibRight);
+
+		mModelList.add(mRunWay);
+
+		mModelList.trimToSize();
 
 		// Calculate LegOffset
 		BoundingBox bounds = new BoundingBox();
-		mLegLeft.calculateBoundingBox(bounds);
-		legOffset = bounds.getDimensions().x + (ResourceCache.getSize() / 2);
+		mLegBottomLeft.calculateBoundingBox(bounds);
+		legWidth = bounds.getDimensions().x;
+		legOffset = legWidth + (ResourceCache.getSize() / 2);
 
 		// Calculat and set Leg z-scale
 		Vector3 vec3 = GameView.that.getVectorPosition(GameView.that.getGameFieldDimensions());
@@ -71,41 +134,134 @@ public class PortalModel implements render3D
 
 	public void setRunway2Vector(IntVector3 vector)
 	{
+
 		// set Runway
 		{
 			Vector3 vec3 = GameView.that.getVectorPosition(vector);
 			if (vec3 != null) mRunWay.transform.setToTranslation(vec3);
 		}
 
-		// set legs
+		// set Positions from Left lower corner
 		{
-			// set left
-			{
-				vector.setZ(0);
-				vector.setX(0);
-				Vector3 vec3 = GameView.that.getVectorPosition(vector);
-				if (vec3 != null)
+			vector.setZ(0);
+			vector.setX(0);
+			Vector3 vec3 = GameView.that.getVectorPosition(vector);
+			setPositionDependencys(vec3);
+
+		}
+	}
+
+	/**
+	 * Setze alle Models in Abhängigkeit der unteren linken Ecke des Portals
+	 * 
+	 * @param vec
+	 */
+	private void setPositionDependencys(Vector3 vector)
+	{
+
+		Vector3 vec = vector.cpy();
+
+		float zeroPoint = vec.y;
+
+		if (vec != null)
+		{
+			{// Left Leg
+				vec.x -= legOffset;
+				mLegBottomLeft.transform.setToTranslation(vec);
+				for (ModelInstance ins : mLegCenterLeft)
 				{
-					vec3.x -= legOffset;
-					mLegLeft.transform.setToTranslation(vec3);
+					vec.y += ResourceCache.getSize();
+					ins.transform.setToTranslation(vec);
 				}
+
+				vec.y += ResourceCache.getSize();
+				mLegTopLeft.transform.setToTranslation(vec);
 			}
 
-			// set right
-			{
-				int maxField = GameView.that.getMaxGameFieldX();
+			{// Jib
+				mJibLeft.transform.setToTranslation(vec);
 
-				vector.setZ(0);
-				vector.setX(maxField - 1);
-				Vector3 vec3 = GameView.that.getVectorPosition(vector);
-				if (vec3 != null)
+				vec.x = 0 - ResourceCache.getSize();
+
+				for (ModelInstance ins : mJibCenter)
 				{
-					vec3.x += legOffset;
-					mLegRight.transform.setToTranslation(vec3);
+					vec.x += ResourceCache.getSize();
+					ins.transform.setToTranslation(vec);
 				}
+
+				vec.x += legWidth + (ResourceCache.getSize() / 2);
+				mJibRight.transform.setToTranslation(vec);
+			}
+
+			{// Right Leg
+				vec.y = zeroPoint;
+				mLegBottomRight.transform.setToTranslation(vec);
+
+				for (ModelInstance ins : mLegCenterRight)
+				{
+					vec.y += ResourceCache.getSize();
+					ins.transform.setToTranslation(vec);
+				}
+
+				vec.y += ResourceCache.getSize();
+				mLegTopRight.transform.setToTranslation(vec);
 			}
 
 		}
-
 	}
+
+	public AnimationList animatePortal(IntVector3 start, IntVector3 end)
+	{
+		if (start.getY() == end.getY()) return animateRunWay(start, end);
+		return animateY(start, end);
+	}
+
+	private AnimationList animateRunWay(IntVector3 start, IntVector3 end)
+	{
+		AnimationVector3 ani = new AnimationVector3(mRunWay, GameView.that.getVectorPosition(new IntVector3(start.getX(), start.getY(),
+				start.getZ())), GameView.that.getVectorPosition(new IntVector3(end.getX(), end.getY(), end.getZ())),
+				GameView.ANIMATION_TIME);
+
+		AnimationList list = new AnimationList();
+		list.add(ani);
+		list.trimToSize();
+		return list;
+	}
+
+	private AnimationList animateY(IntVector3 start, IntVector3 end)
+	{
+		AnimationList list = new AnimationList();
+
+		AnimationVector3 ani = new AnimationVector3(mRunWay, GameView.that.getVectorPosition(new IntVector3(start.getX(), start.getY(),
+				start.getZ())), GameView.that.getVectorPosition(new IntVector3(end.getX(), end.getY(), end.getZ())),
+				GameView.ANIMATION_TIME);
+		list.add(ani);
+
+		// Animate Left Lower corner and set Dependencys
+		start.setZ(0);
+		start.setX(0);
+		Vector3 vecStart = GameView.that.getVectorPosition(start);
+
+		end.setZ(0);
+		end.setX(0);
+		Vector3 vecEnd = GameView.that.getVectorPosition(end);
+
+		AnimationVector3 ani2 = new AnimationVector3(mLegBottomLeft, vecStart, vecEnd, GameView.ANIMATION_TIME);
+
+		ani2.setAnimationCallBack(new AnimationCallBack<Vector3>()
+		{
+
+			@Override
+			public void calculatedNewPos(Vector3 pos)
+			{
+				setPositionDependencys(pos);
+			}
+		});
+
+		list.add(ani2);
+
+		list.trimToSize();
+		return list;
+	}
+
 }

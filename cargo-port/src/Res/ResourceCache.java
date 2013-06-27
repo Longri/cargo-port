@@ -19,8 +19,8 @@ import com.badlogic.gdx.utils.UBJsonReader;
 public class ResourceCache extends SpriteCache
 {
 
-	private static Model model_Box, model_Box2, model_field1, model_field2, model_PortalLegLeft, model_PortalLegRight, model_PortalJib,
-			model_PortalRunWay;
+	private static Model model_Box, model_Box2, model_field1, model_field2, model_PortalLegBottom, model_PortalLegCenter,
+			model_PortalLegTop, model_PortalJibLeft, model_PortalJibCenter, model_PortalJibRight, model_PortalRunWay;
 	private static float size, halfsize, dpi;
 
 	public static void LoadSprites(boolean reload)
@@ -78,14 +78,19 @@ public class ResourceCache extends SpriteCache
 		ModelBuilder modelBuilder = new ModelBuilder();
 
 		float dimens = size / 4;
-		Material material = new Material(ColorAttribute.createDiffuse(Color.PINK));
+		Material matBlue = new Material(ColorAttribute.createDiffuse(Color.BLUE));
+		Material matGreen = new Material(ColorAttribute.createDiffuse(Color.GREEN));
+		Material matRed = new Material(ColorAttribute.createDiffuse(Color.RED));
 		long attributes = Usage.Position | Usage.Normal;
 
-		model_PortalLegLeft = modelBuilder.createCylinder(dimens, size, dimens, 16, material, attributes);
-		model_PortalLegRight = modelBuilder.createCylinder(dimens, size, dimens, 16, material, attributes);
-		model_PortalJib = modelBuilder.createCylinder(dimens, size, dimens, 16, material, attributes);
-		model_PortalRunWay = modelBuilder.createBox(dimens, dimens, dimens, new Material(ColorAttribute.createDiffuse(Color.RED)),
-				attributes);
+		model_PortalLegBottom = modelBuilder.createCylinder(dimens, size, dimens, 16, matBlue, attributes);
+		model_PortalLegCenter = modelBuilder.createCylinder(dimens, size, dimens, 16, matGreen, attributes);
+		model_PortalLegTop = modelBuilder.createCylinder(dimens, size, dimens, 16, matRed, attributes);
+		model_PortalJibLeft = modelBuilder.createBox(size / 2, dimens, dimens, matBlue, attributes);
+		model_PortalJibCenter = modelBuilder.createBox(size, dimens, dimens, matGreen, attributes);
+		model_PortalJibRight = modelBuilder.createBox(size / 2, dimens, dimens, matRed, attributes);
+		model_PortalRunWay = modelBuilder.createBox(dimens * 3, dimens * 2, dimens * 2,
+				new Material(ColorAttribute.createDiffuse(Color.RED)), attributes);
 	}
 
 	public static Model getBoxModel()
@@ -108,19 +113,34 @@ public class ResourceCache extends SpriteCache
 		return model_field2;
 	}
 
-	public static Model getPortalLegLeftModel()
+	public static Model getPortalLegBottomModel()
 	{
-		return model_PortalLegLeft;
+		return model_PortalLegBottom;
 	}
 
-	public static Model getPortalLegRightModel()
+	public static Model getPortalLegCenterModel()
 	{
-		return model_PortalLegRight;
+		return model_PortalLegCenter;
 	}
 
-	public static Model getPortalJibModel()
+	public static Model getPortalLegTopModel()
 	{
-		return model_PortalJib;
+		return model_PortalLegTop;
+	}
+
+	public static Model getPortalJibLeftModel()
+	{
+		return model_PortalJibLeft;
+	}
+
+	public static Model getPortalJibCenterModel()
+	{
+		return model_PortalJibCenter;
+	}
+
+	public static Model getPortalJibRightModel()
+	{
+		return model_PortalJibRight;
 	}
 
 	public static Model getPortalRunWay()

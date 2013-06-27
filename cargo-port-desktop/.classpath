@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="data"/>
 	<classpathentry kind="src" path="skins"/>
-	<classpathentry kind="src" path="assets"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/cargo-port"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdx-backend-lwjgl.jar" sourcepath="libs/gdx-backend-lwjgl-sources.jar"/>

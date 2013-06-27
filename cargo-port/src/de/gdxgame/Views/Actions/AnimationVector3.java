@@ -1,16 +1,18 @@
 package de.gdxgame.Views.Actions;
 
+import CB_Core.GL_UI.runOnGL;
 import CB_Core.GL_UI.GL_Listener.GL;
 
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
 
-public class AnimationVector3 implements Animation
+public class AnimationVector3 implements Animation<Vector3>
 {
 	private ModelInstance mModelInstance;
 	private Vector3 mStart, mEnd, mAct;
 	private int mDuration;
 	private ReadyHandler mReadyHandler;
+	private AnimationCallBack<Vector3> mAnimationCallBack;
 
 	private boolean mPlay = false;
 	private boolean mstop = false;
@@ -49,11 +51,34 @@ public class AnimationVector3 implements Animation
 			if (actTime + mStatrTime >= mTargetTime)
 			{
 				stop();
-				if (mReadyHandler != null) mReadyHandler.ready();
+				if (mReadyHandler != null)
+				{
+
+					Thread th = new Thread(new Runnable()
+					{
+
+						@Override
+						public void run()
+						{
+							GL.that.RunOnGL(new runOnGL()
+							{
+
+								@Override
+								public void run()
+								{
+									mReadyHandler.ready();
+								}
+							});
+						}
+					});
+					th.start();
+
+				}
 			}
 			else
 			{
 				mModelInstance.transform.setToTranslation(mAct);
+				if (mAnimationCallBack != null) mAnimationCallBack.calculatedNewPos(mAct);
 			}
 
 		}
@@ -86,6 +111,12 @@ public class AnimationVector3 implements Animation
 	public boolean isPlaying()
 	{
 		return mPlay;
+	}
+
+	@Override
+	public void setAnimationCallBack(AnimationCallBack<Vector3> callBack)
+	{
+		mAnimationCallBack = callBack;
 	}
 
 }

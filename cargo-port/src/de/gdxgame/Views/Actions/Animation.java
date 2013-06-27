@@ -1,6 +1,6 @@
 package de.gdxgame.Views.Actions;
 
-public interface Animation
+public interface Animation<t>
 {
 	public void calcPositions();
 
@@ -12,4 +12,5 @@ public interface Animation
 
 	public boolean isPlaying();
 
+	public void setAnimationCallBack(AnimationCallBack<t> callBack);
 }

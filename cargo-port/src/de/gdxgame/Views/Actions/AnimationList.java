@@ -2,7 +2,9 @@ package de.gdxgame.Views.Actions;
 
 import java.util.ArrayList;
 
-public class AnimationList extends ArrayList<Animation> implements Animation
+import com.badlogic.gdx.math.Vector3;
+
+public class AnimationList extends ArrayList<Animation<Vector3>> implements Animation<Vector3>
 {
 
 	/**
@@ -13,6 +15,7 @@ public class AnimationList extends ArrayList<Animation> implements Animation
 	private boolean mIsplay = false;
 	private ReadyHandler mReadyHandler;
 	private int mAnimationCount;
+	private AnimationCallBack<Vector3> mAnimationCallBack;
 
 	public void play()
 	{
@@ -26,7 +29,7 @@ public class AnimationList extends ArrayList<Animation> implements Animation
 		mReadyHandler = handler;
 		mIsplay = true;
 		// call play() on all Animations
-		for (Animation ani : this)
+		for (Animation<Vector3> ani : this)
 		{
 			if (ani != null)
 			{
@@ -63,7 +66,7 @@ public class AnimationList extends ArrayList<Animation> implements Animation
 	public void calcPositions()
 	{
 		// call calcPositions() on all Animations
-		for (Animation ani : this)
+		for (Animation<Vector3> ani : this)
 		{
 			if (ani != null) ani.calcPositions();
 		}
@@ -73,10 +76,16 @@ public class AnimationList extends ArrayList<Animation> implements Animation
 	public void stop()
 	{
 		// call stop() on all Animations
-		for (Animation ani : this)
+		for (Animation<Vector3> ani : this)
 		{
 			if (ani != null) ani.stop();
 		}
+	}
+
+	@Override
+	public void setAnimationCallBack(AnimationCallBack<Vector3> callBack)
+	{
+		mAnimationCallBack = callBack;
 	}
 
 }
