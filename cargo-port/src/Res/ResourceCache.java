@@ -1,11 +1,19 @@
 package Res;
 
+import java.util.ArrayList;
+
+import CB_Core.GL_UI.ButtonSprites;
 import CB_Core.GL_UI.SpriteCache;
+import CB_Core.GL_UI.Skin.CB_Skin;
+import CB_Core.GL_UI.Skin.SkinBase;
+import CB_Core.GL_UI.utils.ColorDrawable;
 import CB_Core.Math.UI_Size_Base;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
@@ -14,6 +22,8 @@ import com.badlogic.gdx.graphics.g3d.materials.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.materials.Material;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.UBJsonReader;
 
 public class ResourceCache extends SpriteCache
@@ -25,7 +35,9 @@ public class ResourceCache extends SpriteCache
 
 	public static void LoadSprites(boolean reload)
 	{
-		SpriteCache.LoadSprites(reload);
+		if (!reload) setPath(CB_Skin.INSTANCE);
+
+		loadDefaultUi();
 
 		// Load Box Model and read Boundingbox for Size initialisations
 		{
@@ -70,6 +82,120 @@ public class ResourceCache extends SpriteCache
 				| Usage.Normal | Usage.TextureCoordinates);
 
 		initialPortalModels();
+
+	}
+
+	private static void loadDefaultUi()
+	{
+		if (ChkIcons == null) ChkIcons = new ArrayList<Sprite>();
+		synchronized (ChkIcons)
+		{
+
+			ChkIcons.clear();
+			ChkIcons.add(getThemedSprite("check-off"));
+			ChkIcons.add(getThemedSprite("check-on"));
+
+		}
+
+		if (Dialog == null) Dialog = new ArrayList<Sprite>();
+		synchronized (Dialog)
+		{
+			Dialog.clear();
+			Dialog.add(getThemedSprite("dialog-header"));
+			Dialog.add(getThemedSprite("dialog-center"));
+			Dialog.add(getThemedSprite("dialog-footer"));
+			Dialog.add(getThemedSprite("dialog-title"));
+			Dialog.add(getThemedSprite("menu-divider"));
+
+		}
+
+		if (ToggleBtn == null) ToggleBtn = new ArrayList<Sprite>();
+		synchronized (ToggleBtn)
+		{
+			ToggleBtn.clear();
+			ToggleBtn.add(getThemedSprite("btn-normal"));
+			ToggleBtn.add(getThemedSprite("btn-pressed"));
+			ToggleBtn.add(getThemedSprite("toggle-led-gr"));
+
+		}
+
+		Progress = getThemedSprite("progress");
+
+		if (ZoomBtn == null) ZoomBtn = new ArrayList<Sprite>();
+		synchronized (ZoomBtn)
+		{
+			ZoomBtn.clear();
+			ZoomBtn.add(getThemedSprite("day-btn-zoom-down-normal"));
+			ZoomBtn.add(getThemedSprite("day-btn-zoom-down-pressed"));
+			ZoomBtn.add(getThemedSprite("day-btn-zoom-down-disabled"));
+			ZoomBtn.add(getThemedSprite("day-btn-zoom-up-normal"));
+			ZoomBtn.add(getThemedSprite("day-btn-zoom-up-pressed"));
+			ZoomBtn.add(getThemedSprite("day-btn-zoom-up-disabled"));
+
+		}
+
+		ZoomValueBack = getThemedSprite("zoom-back");
+
+		loadButtnSprites();
+
+		createDrawables();
+	}
+
+	protected static void loadButtnSprites()
+	{
+		CacheList = new ButtonSprites(getThemedSprite("db"), getThemedSprite("db-pressed"));
+
+		Cache = new ButtonSprites(getThemedSprite("cache"), getThemedSprite("cache-pressed"));
+		Nav = new ButtonSprites(getThemedSprite("Nav"), getThemedSprite("Nav-pressed"));
+		Tool = new ButtonSprites(getThemedSprite("tool"), getThemedSprite("tool-pressed"));
+		Misc = new ButtonSprites(getThemedSprite("misc"), getThemedSprite("misc-pressed"));
+		// QuickButton = new ButtonSprites(getThemedSprite("button"), getThemedSprite("btn-pressed"));
+
+	}
+
+	protected static void createDrawables()
+	{
+		patch = (SpriteCache.getThemedSprite("activity-back").getWidth() > 60) ? 16 : 8;
+
+		activityBackground = new NinePatchDrawable(new NinePatch(SpriteCache.getThemedSprite("activity-back"), patch, patch, patch, patch));
+		activityBorderMask = new NinePatchDrawable(
+				new NinePatch(SpriteCache.getThemedSprite("activity-border"), patch, patch, patch, patch));
+		ListBack = new ColorDrawable(SkinBase.getThemedColor("background"));
+		ButtonBack = new SpriteDrawable(getThemedSprite("button-list-back"));
+		// AboutBack = new SpriteDrawable(getThemedSprite("splash-back"));
+		// InfoBack = new NinePatchDrawable(new NinePatch(getThemedSprite("InfoPanelBack"), patch, patch, patch, patch));
+		ProgressBack = new NinePatchDrawable(new NinePatch(ToggleBtn.get(0), patch, patch, patch, patch));
+		ProgressFill = new NinePatchDrawable(new NinePatch(SpriteCache.Progress, patch - 1, patch - 1, patch - 1, patch - 1));
+		btn = new NinePatchDrawable(new NinePatch(SpriteCache.getThemedSprite("btn-normal"), patch, patch, patch, patch));
+		btnPressed = new NinePatchDrawable(new NinePatch(SpriteCache.getThemedSprite("btn-pressed"), patch, patch, patch, patch));
+		btnDisabled = new NinePatchDrawable(new NinePatch(SpriteCache.getThemedSprite("btn-disabled"), patch, patch, patch, patch));
+
+		chkOn = new SpriteDrawable(getThemedSprite("check-on"));
+		chkOff = new SpriteDrawable(getThemedSprite("check-off"));
+		chkOnDisabled = new SpriteDrawable(getThemedSprite("check-disable"));
+		chkOffDisabled = new SpriteDrawable(getThemedSprite("check-off"));
+
+		radioOn = new SpriteDrawable(getThemedSprite("RadioButtonSet"));
+		radioBack = new SpriteDrawable(getThemedSprite("RadioButtonBack"));
+
+		textFiledBackground = new NinePatchDrawable(new NinePatch(SpriteCache.getThemedSprite("text-field-back"), patch, patch, patch,
+				patch));
+		textFiledBackgroundFocus = new NinePatchDrawable(new NinePatch(SpriteCache.getThemedSprite("text-field-back-focus"), patch, patch,
+				patch, patch));
+
+		selection = new SpriteDrawable(getThemedSprite("Selection"));
+		selection_set = new SpriteDrawable(getThemedSprite("Selection-set"));
+		selection_left = new SpriteDrawable(getThemedSprite("Selection-Left"));
+		selection_right = new SpriteDrawable(getThemedSprite("Selection-Right"));
+
+		copy = new SpriteDrawable(getThemedSprite("tf-copy"));
+		paste = new SpriteDrawable(getThemedSprite("tf-paste"));
+		cut = new SpriteDrawable(getThemedSprite("tf-cut"));
+
+		textFieldCursor = new NinePatchDrawable(new NinePatch(SpriteCache.getThemedSprite("selection-input-icon"), 1, 1, 2, 2));
+
+		int hp = patch / 2;
+		// shaddowRec = new NinePatchDrawable(new NinePatch(SpriteCache.getThemedSprite("shaddowrect"), hp, hp, hp, hp));
 
 	}
 

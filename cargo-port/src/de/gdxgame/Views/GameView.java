@@ -28,6 +28,7 @@ import com.badlogic.gdx.graphics.g3d.lights.Lights;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import controls.InstractionView;
 import de.gdxgame.IntVector3;
 import de.gdxgame.Level;
 import de.gdxgame.Views.Actions.Animation;
@@ -79,6 +80,8 @@ public class GameView extends CB_View_Base implements render3D
 	float zoom = 20;
 	float lastZoom = 20;
 
+	private InstractionView mInstractionView;
+
 	/**
 	 * Constructor
 	 * 
@@ -88,6 +91,9 @@ public class GameView extends CB_View_Base implements render3D
 	{
 		super(rec, "GameView");
 		that = this;
+		mInstractionView = new InstractionView(rec);
+		mInstractionView.setHeight(this.height + mInstractionView.getTopHeight());
+		this.addChild(mInstractionView);
 	}
 
 	@Override
@@ -107,6 +113,7 @@ public class GameView extends CB_View_Base implements render3D
 	@Override
 	public void onShow()
 	{
+		super.onShow();
 		GL.that.register3D(this);
 		GL.that.addRenderView(this, GL.FRAME_RATE_FAST_ACTION);
 	}
@@ -287,10 +294,10 @@ public class GameView extends CB_View_Base implements render3D
 		{
 			myCam = new PerspectiveCamera(20, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			myCam.position.set(100f, 100f, 100f);
-			myCam.lookAt(GameFieldDepth / 2, GameFieldHight / 2, GameFieldWidth / 2);
+			myCam.lookAt(GameFieldWidth / 2, 0, GameFieldDepth / 2);
 			myCam.near = 0.1f;
 			myCam.far = 300;
-			myCam.rotateAround(new Vector3(50f, 20f, 50f), Vector3.Y, viewAngle);
+			myCam.rotateAround(new Vector3(GameFieldWidth / 2, 0, GameFieldDepth / 2), Vector3.Y, viewAngle);
 			myCam.update();
 		}
 		if (cam3d != myCam) return myCam;
@@ -300,7 +307,7 @@ public class GameView extends CB_View_Base implements render3D
 		lastZoom = zoom;
 
 		myCam.fieldOfView = zoom;
-		myCam.rotateAround(new Vector3(2.5f * ResourceCache.getSize(), 0, 2.5f * ResourceCache.getSize()), Vector3.Y, viewAngle);
+		myCam.rotateAround(new Vector3(GameFieldWidth / 2, 0, GameFieldDepth / 2), Vector3.Y, viewAngle);
 		myCam.update();
 		viewAngle = 0;
 		return myCam;

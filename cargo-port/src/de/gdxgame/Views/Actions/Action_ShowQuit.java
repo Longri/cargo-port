@@ -10,6 +10,8 @@ import CB_Core.GL_UI.Main.Actions.CB_Action_ShowQuit;
 import CB_Core.Log.Logger;
 import CB_Core.TranslationEngine.Translation;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 public class Action_ShowQuit extends CB_Action_ShowQuit
 {
 	static GL_MsgBox msg;
@@ -38,5 +40,11 @@ public class Action_ShowQuit extends CB_Action_ShowQuit
 				return true;
 			}
 		});
+	}
+
+	@Override
+	public Sprite getIcon()
+	{
+		return null;// SpriteCache.Icons.get(IconName.close_31.ordinal());
 	}
 }

@@ -3,8 +3,6 @@ package de.gdxgame.Views.Actions;
 import CB_Core.GL_UI.CB_View_Base;
 import CB_Core.GL_UI.GL_View_Base;
 import CB_Core.GL_UI.GL_View_Base.OnClickListener;
-import CB_Core.GL_UI.SpriteCache;
-import CB_Core.GL_UI.SpriteCache.IconName;
 import CB_Core.GL_UI.Main.Actions.CB_Action_ShowView;
 import CB_Core.GL_UI.Menu.Menu;
 import CB_Core.GL_UI.Menu.MenuID;
@@ -48,7 +46,7 @@ public class Action_Show_PlayView extends CB_Action_ShowView
 	@Override
 	public Sprite getIcon()
 	{
-		return SpriteCache.Icons.get(IconName.cacheList_7.ordinal());
+		return null;// SpriteCache.Icons.get(IconName.cacheList_7.ordinal());
 	}
 
 	@Override
