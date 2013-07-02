@@ -9,7 +9,7 @@ package de.gdxgame;
 public abstract class Level
 {
 
-	public final static Level TestLevel = new Level(6, 6, 4)
+	public final static Level TestLevel = new Level(3, 3, 4)
 	{
 
 		@Override

@@ -204,10 +204,10 @@ public class GameView extends CB_View_Base implements render3D
 								z += ResourceCache.getSize();
 							}
 							x += ResourceCache.getSize();
-							GameFieldDepth = Math.max(GameFieldDepth, z);
+							GameFieldDepth = Math.max(GameFieldDepth, z - ResourceCache.getSize());
 							z = 0;
 						}
-						GameFieldWidth = Math.max(GameFieldWidth, x);
+						GameFieldWidth = Math.max(GameFieldWidth, x - ResourceCache.getSize());
 
 						z = 0;
 						x = 0;
@@ -292,7 +292,7 @@ public class GameView extends CB_View_Base implements render3D
 	{
 		if (myCam == null)
 		{
-			myCam = new PerspectiveCamera(20, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			myCam = new PerspectiveCamera(zoom, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			myCam.position.set(100f, 100f, 100f);
 			myCam.lookAt(GameFieldWidth / 2, 0, GameFieldDepth / 2);
 			myCam.near = 0.1f;

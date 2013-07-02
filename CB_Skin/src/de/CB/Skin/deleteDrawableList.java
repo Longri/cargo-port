@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
  * 
  * @author Longri
  */
-public class löschenDrawableList
+public class deleteDrawableList
 {
 
 	private ArrayList<TextureAtlas> atlanten;
