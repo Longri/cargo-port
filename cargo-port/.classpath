@@ -4,8 +4,9 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdx.jar" sourcepath="libs/gdx-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/CB_Core.jar"/>
-	<classpathentry kind="lib" path="libs/CB_Locator.jar"/>
-	<classpathentry kind="lib" path="libs/CB_Translation.jar"/>
-	<classpathentry kind="lib" path="libs/CB_Utils.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/CB_Locator.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/CB_Translation.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/CB_Utils.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/CB_UI.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

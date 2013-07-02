@@ -145,7 +145,8 @@ public class splash extends TabMainView
 		TextBounds bounds = Fonts.getNormal().getMultiLineBounds(VersionString + Global.br + Global.br + Global.splashMsg);
 		descTextView = new Label(0, CB_LogoRec.getY() - ref - bounds.height, this.width, bounds.height + 10, "DescLabel");
 		// HAlignment.CENTER funktioniert (hier) (noch) nicht, es kommt rechtsbündig raus
-		descTextView.setWrappedText(VersionString + Global.br + Global.br + Global.splashMsg, HAlignment.CENTER);
+		descTextView.setWrappedText(VersionString + Global.br + Global.br + Global.splashMsg);
+		descTextView.setHAlignment(HAlignment.CENTER);
 		this.addChild(descTextView);
 
 		Drawable ProgressBack = new NinePatchDrawable(atlas.createPatch("btn-normal"));
