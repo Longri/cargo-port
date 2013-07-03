@@ -1,15 +1,15 @@
 package de.gdxgame;
 
 /**
- * Enthällt alle Infos eines Game Levels<br>
- * * getLeveDimensions() gibt die Abmessungen dieses Levels zurück <br>
+ * Enthï¿½llt alle Infos eines Game Levels<br>
+ * * getLeveDimensions() gibt die Abmessungen dieses Levels zurï¿½ck <br>
  * 
  * @author Longri
  */
 public abstract class Level
 {
 
-	public final static Level TestLevel = new Level(3, 3, 4)
+	public final static Level TestLevel = new Level(8, 8, 4)
 	{
 
 		@Override
@@ -31,12 +31,12 @@ public abstract class Level
 	public abstract void create();
 
 	/**
-	 * Enthält die drei Dimensionen des Spielfelds. <br>
+	 * Enthï¿½lt die drei Dimensionen des Spielfelds. <br>
 	 */
 	private IntVector3 mLevelDemensions;
 
 	/**
-	 * gibt die drei Dimensionen des Spielfelds zurück. <br>
+	 * gibt die drei Dimensionen des Spielfelds zurï¿½ck. <br>
 	 * 
 	 * @return IntVector3
 	 */
@@ -49,7 +49,7 @@ public abstract class Level
 	protected boolean mIsFreeToPlay = false;
 
 	/**
-	 * Gibt TRUE zurück, wenn das Level zum Spielen freigeschalten ist.
+	 * Gibt TRUE zurï¿½ck, wenn das Level zum Spielen freigeschalten ist.
 	 * 
 	 * @return boolean
 	 */
@@ -61,7 +61,7 @@ public abstract class Level
 	protected int mLevelNumber = -1;
 
 	/**
-	 * Gibt die Level Nummer zurück
+	 * Gibt die Level Nummer zurï¿½ck
 	 * 
 	 * @return int
 	 */

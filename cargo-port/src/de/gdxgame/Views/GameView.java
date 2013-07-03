@@ -47,7 +47,7 @@ public class GameView extends CB_View_Base implements render3D
 	public static GameView that;
 
 	/**
-	 * Zeit für eine Animation von einem Vector nächsten Vector
+	 * Zeit fï¿½r eine Animation von einem Vector nï¿½chsten Vector
 	 */
 	public static final int ANIMATION_TIME = 700;
 
@@ -72,13 +72,13 @@ public class GameView extends CB_View_Base implements render3D
 	}
 
 	private InputState inputState = InputState.Idle;
-	// speicher, welche Finger-Pointer aktuell gedrückt sind
+	// speicher, welche Finger-Pointer aktuell gedrï¿½ckt sind
 	private HashMap<Integer, Point> fingerDown = new LinkedHashMap<Integer, Point>();
 	private KineticPan kineticPan = null;
 
 	float viewAngle = 0;
-	float zoom = 20;
-	float lastZoom = 20;
+	float zoom = 80;
+	float lastZoom = 80;
 
 	private InstractionView mInstractionView;
 
@@ -278,9 +278,9 @@ public class GameView extends CB_View_Base implements render3D
 	private PerspectiveCamera myCam;
 	private boolean is3DInitial = false;
 
-	// Zufallszahl von "min"(einschließlich) bis "max"(einschließlich)
+	// Zufallszahl von "min"(einschlieï¿½lich) bis "max"(einschlieï¿½lich)
 	// Beispiel: zufallszahl(4,10);
-	// Mögliche Zufallszahlen 4,5,6,7,8,9,10
+	// Mï¿½gliche Zufallszahlen 4,5,6,7,8,9,10
 	public int zufallszahl(int min, int max)
 	{
 		Random random = new Random();
@@ -293,8 +293,8 @@ public class GameView extends CB_View_Base implements render3D
 		if (myCam == null)
 		{
 			myCam = new PerspectiveCamera(zoom, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-			myCam.position.set(100f, 100f, 100f);
-			myCam.lookAt(GameFieldWidth / 2, 0, GameFieldDepth / 2);
+			myCam.position.set(GameFieldWidth, GameFieldHight, GameFieldDepth);
+			myCam.lookAt(GameFieldWidth / 2, GameFieldHight * 0.33f, GameFieldDepth / 2);
 			myCam.near = 0.1f;
 			myCam.far = 300;
 			myCam.rotateAround(new Vector3(GameFieldWidth / 2, 0, GameFieldDepth / 2), Vector3.Y, viewAngle);
@@ -362,7 +362,7 @@ public class GameView extends CB_View_Base implements render3D
 			// debugString = "touchDragged " + inputState.toString();
 			if (inputState == InputState.IdleDown)
 			{
-				// es wurde 1x gedrückt -> testen, ob ein gewisser Minimum Bereich verschoben wurde
+				// es wurde 1x gedrï¿½ckt -> testen, ob ein gewisser Minimum Bereich verschoben wurde
 				Point p = fingerDown.get(pointer);
 				if (p != null)
 				{
@@ -380,7 +380,7 @@ public class GameView extends CB_View_Base implements render3D
 			}
 			if (inputState == InputState.Button)
 			{
-				// wenn ein Button gedrückt war -> beim Verschieben nichts machen!!!
+				// wenn ein Button gedrï¿½ckt war -> beim Verschieben nichts machen!!!
 				return false;
 			}
 
@@ -394,7 +394,7 @@ public class GameView extends CB_View_Base implements render3D
 				float dx = (lastPoint.x - x);
 				float dy = (y - lastPoint.y);
 
-				// x Wert für Rotation
+				// x Wert fï¿½r Rotation
 
 				if (y > this.halfHeight)
 				{
@@ -461,12 +461,12 @@ public class GameView extends CB_View_Base implements render3D
 
 		if (inputState == InputState.IdleDown)
 		{
-			// es wurde gedrückt, aber nich verschoben
+			// es wurde gedrï¿½ckt, aber nich verschoben
 			fingerDown.remove(pointer);
 			inputState = InputState.Idle;
 			// -> Buttons testen
 
-			// auf Button Clicks nur reagieren, wenn aktuell noch kein Finger gedrückt ist!!!
+			// auf Button Clicks nur reagieren, wenn aktuell noch kein Finger gedrï¿½ckt ist!!!
 			if (kineticPan != null)
 			// bei FingerKlick (wenn Idle) sofort das kinetische Scrollen stoppen
 			kineticPan = null;
@@ -495,7 +495,7 @@ public class GameView extends CB_View_Base implements render3D
 	{
 		private boolean started;
 		private boolean fertig;
-		// benutze den Abstand der letzten 5 Positionsänderungen
+		// benutze den Abstand der letzten 5 Positionsï¿½nderungen
 		final int anzPoints = 3;
 		private int[] x = new int[anzPoints];
 		private int[] y = new int[anzPoints];
@@ -593,7 +593,7 @@ public class GameView extends CB_View_Base implements render3D
 							GameVectorModels[1][1][0] = inst;
 							ModelList.add(inst);
 
-							mPortalModel.setRunway2Vector(new IntVector3(0, 0, 3));
+							mPortalModel.setRunway2Vector(new IntVector3(0, 0, mGameFieldDimensions.getZ()));
 						}
 					}
 				});
@@ -678,7 +678,8 @@ public class GameView extends CB_View_Base implements render3D
 
 	public void beginnDebug()
 	{
-		AnimationList ani = animatePortal(new IntVector3(0, 0, 3), new IntVector3(1, 0, 3));
+		AnimationList ani = animatePortal(new IntVector3(0, 0, mGameFieldDimensions.getZ()),
+				new IntVector3(1, 0, mGameFieldDimensions.getZ()));
 		synchronized (mAnimationList)
 		{
 			mAnimationList.add(ani);
@@ -689,7 +690,8 @@ public class GameView extends CB_View_Base implements render3D
 			@Override
 			public void ready()
 			{
-				Animation<Vector3> ani = animatePortal(new IntVector3(1, 0, 3), new IntVector3(1, 1, 3));
+				Animation<Vector3> ani = animatePortal(new IntVector3(1, 0, mGameFieldDimensions.getZ()), new IntVector3(1, 1,
+						mGameFieldDimensions.getZ()));
 				synchronized (mAnimationList)
 				{
 					mAnimationList.clear();
@@ -702,7 +704,7 @@ public class GameView extends CB_View_Base implements render3D
 					@Override
 					public void ready()
 					{
-						Animation<Vector3> ani = animateBox(new IntVector3(1, 1, 0), new IntVector3(1, 1, 2));
+						Animation<Vector3> ani = animateBox(new IntVector3(1, 1, 0), new IntVector3(1, 1, mGameFieldDimensions.getZ() - 1));
 						synchronized (mAnimationList)
 						{
 							mAnimationList.clear();
@@ -714,8 +716,10 @@ public class GameView extends CB_View_Base implements render3D
 							@Override
 							public void ready()
 							{
-								Animation<Vector3> ani = animatePortal(new IntVector3(1, 1, 3), new IntVector3(2, 1, 3));
-								Animation<Vector3> ani2 = animateBox(new IntVector3(1, 1, 2), new IntVector3(2, 1, 2));
+								Animation<Vector3> ani = animatePortal(new IntVector3(1, 1, mGameFieldDimensions.getZ()), new IntVector3(2,
+										1, mGameFieldDimensions.getZ()));
+								Animation<Vector3> ani2 = animateBox(new IntVector3(1, 1, mGameFieldDimensions.getZ() - 1), new IntVector3(
+										2, 1, mGameFieldDimensions.getZ() - 1));
 								synchronized (mAnimationList)
 								{
 									mAnimationList.clear();
@@ -728,7 +732,8 @@ public class GameView extends CB_View_Base implements render3D
 									@Override
 									public void ready()
 									{
-										Animation<Vector3> ani = animateBox(new IntVector3(2, 1, 2), new IntVector3(2, 1, 0));
+										Animation<Vector3> ani = animateBox(new IntVector3(2, 1, mGameFieldDimensions.getZ() - 1),
+												new IntVector3(2, 1, 0));
 										synchronized (mAnimationList)
 										{
 											mAnimationList.clear();
