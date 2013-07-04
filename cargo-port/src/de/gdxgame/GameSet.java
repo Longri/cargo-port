@@ -41,26 +41,26 @@ public class GameSet
 			this.startFloor.setFloor("00000;02000");
 			this.targetFloor.setFloor("00000;01000;00000;00010");
 			this.startCrane.setPosition(0, 0);
-			// this.mainInstructionPool.setInstruction(0, 5);
-			// this.mainInstructionPool.setInstruction(1, 2);
-			// this.mainInstructionPool.setInstruction(2, 4);
-			// this.mainInstructionPool.setInstruction(3, 1);
-			// this.mainInstructionPool.setInstruction(4, 3);
-			// this.mainInstructionPool.setInstruction(5, 5);
-			// this.mainInstructionPool.setInstruction(6, 3);
-			// this.mainInstructionPool.setInstruction(7, 3);
-			// this.mainInstructionPool.setInstruction(8, 6);
-			// this.mainInstructionPool.setInstruction(9, 1);
-			// this.mainInstructionPool.setInstruction(10, 1);
-			// this.mainInstructionPool.setInstruction(11, 5);
-			this.mainInstructionPool.setInstruction(0, 1);
-			this.mainInstructionPool.setInstruction(1, 1);
-			this.mainInstructionPool.setInstruction(2, 3);
-			this.mainInstructionPool.setInstruction(3, 3);
+			this.mainInstructionPool.setInstruction(0, 5);
+			this.mainInstructionPool.setInstruction(1, 2);
+			this.mainInstructionPool.setInstruction(2, 4);
+			this.mainInstructionPool.setInstruction(3, 1);
 			this.mainInstructionPool.setInstruction(4, 3);
-			this.mainInstructionPool.setInstruction(5, 3);
-			this.mainInstructionPool.setInstruction(6, 2);
-			this.mainInstructionPool.setInstruction(7, 4);
+			this.mainInstructionPool.setInstruction(5, 5);
+			this.mainInstructionPool.setInstruction(6, 3);
+			this.mainInstructionPool.setInstruction(7, 3);
+			this.mainInstructionPool.setInstruction(8, 6);
+			this.mainInstructionPool.setInstruction(9, 1);
+			this.mainInstructionPool.setInstruction(10, 1);
+			this.mainInstructionPool.setInstruction(11, 5);
+			// this.mainInstructionPool.setInstruction(0, 1);
+			// this.mainInstructionPool.setInstruction(1, 1);
+			// this.mainInstructionPool.setInstruction(2, 3);
+			// this.mainInstructionPool.setInstruction(3, 3);
+			// this.mainInstructionPool.setInstruction(4, 3);
+			// this.mainInstructionPool.setInstruction(5, 3);
+			// this.mainInstructionPool.setInstruction(6, 2);
+			// this.mainInstructionPool.setInstruction(7, 4);
 
 		}
 
@@ -164,8 +164,8 @@ public class GameSet
 	}
 
 	/**
-	 * Diese Methode f�hrt die n�chste Instruktion aus der Menge der Instruktionen aus. Sie aktualisiert die Objekte currentCrane (aktuelle
-	 * Portalkranposition) und currentFloor (aktueller Zustand der Lagerfl�che)
+	 * Diese Methode f�hrt die n�chste Instruktion aus der Menge der Instruktionen aus. Sie aktualisiert die Objekte currentCrane
+	 * (aktuelle Portalkranposition) und currentFloor (aktueller Zustand der Lagerfl�che)
 	 * 
 	 * @return 0 normaler Zug -1 Programmende erreicht (gameAccomplished true/false) -2 NOP-Code (runInstruction erneut aufrufen) -3 Randzug
 	 *         -4 Aufnahme/Ablegen -5 leere Aufnahme -6 Zug l�st Kollision aus
@@ -517,7 +517,7 @@ public class GameSet
 				returnCode = -3;
 			}
 			break;
-		case grib: // Portalkran aufnehmen/ablegen
+		case grab: // Portalkran aufnehmen/ablegen
 			if (currentCrane.isLoaded())
 			{
 				// ablegen

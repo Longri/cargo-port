@@ -53,6 +53,7 @@ public class GameView extends CB_View_Base implements render3D
 	 * Zeit f�r eine Animation von einem Vector n�chsten Vector
 	 */
 	public static final int ANIMATION_TIME = 700;
+	public static final int ANIMATION_WAIT_TIME = 300;
 
 	private ArrayList<ModelInstance> ModelList = new ArrayList<ModelInstance>();
 	private AtomicBoolean waitOfAnimationReady;
@@ -711,7 +712,7 @@ public class GameView extends CB_View_Base implements render3D
 					{
 						try
 						{
-							Thread.sleep(100);
+							Thread.sleep(ANIMATION_WAIT_TIME);
 							continue;
 						}
 						catch (InterruptedException e)
