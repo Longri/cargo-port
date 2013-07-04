@@ -67,7 +67,7 @@ public class Action_Show_PlayView extends CB_Action_ShowView
 				switch (((MenuItem) v).getMenuItemId())
 				{
 				case MenuID.MI_RESORT:
-					GameView.that.beginnDebug();
+					GameView.that.RunGameLoop();
 					return true;
 				}
 				return false;

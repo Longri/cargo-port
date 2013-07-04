@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import CB_Core.GL_UI.CB_View_Base;
 import CB_Core.GL_UI.Fonts;
@@ -53,7 +54,7 @@ public class GameView extends CB_View_Base implements render3D
 	public static final int ANIMATION_TIME = 700;
 
 	private ArrayList<ModelInstance> ModelList = new ArrayList<ModelInstance>();
-
+	private AtomicBoolean waitOfAnimationReady;
 	private GameSet myGameSet;
 
 	private PortalModel mPortalModel = new PortalModel();
@@ -592,15 +593,23 @@ public class GameView extends CB_View_Base implements render3D
 					@Override
 					public void ready()
 					{
-						// fill Model List
-						{// for debug
-							ModelInstance inst = new ModelInstance(ResourceCache.getBox2Model());
-							inst.transform.setToTranslation(GameFieldPositions[1][1][0]);
-							GameVectorModels[1][1][0] = inst;
-							ModelList.add(inst);
-
-							mPortalModel.setRunway2Vector(new GameCoord(0, 0, mGameFieldDimensions.getZ()));
+						for (int i = 0; i < myGameSet.startFloor.getWidth(); i++)
+						{
+							for (int j = 0; j < myGameSet.startFloor.getLength(); j++)
+							{
+								for (int k = 0; k < myGameSet.startFloor.floorBoxes[i][j]; k++)
+								{
+									ModelInstance inst = new ModelInstance(ResourceCache.getBox2Model());
+									inst.transform.setToTranslation(GameFieldPositions[i][j][k]);
+									GameVectorModels[i][j][k] = inst;
+									ModelList.add(inst);
+								}
+							}
 						}
+
+						mPortalModel.setRunway2Vector(new GameCoord(myGameSet.startCrane.getXPosition(), myGameSet.startCrane
+								.getYPosition(), mGameFieldDimensions.getZ()));
+
 					}
 				});
 
@@ -615,8 +624,6 @@ public class GameView extends CB_View_Base implements render3D
 		{
 			ModelList.clear();
 		}
-
-		// create BoxModels
 
 	}
 
@@ -684,20 +691,35 @@ public class GameView extends CB_View_Base implements render3D
 		return mPortalModel.animatePortal(start, end);
 	}
 
-	public void beginnDebug()
+	public void RunGameLoop()
 	{
 		myGameSet.startGame();
 		int returnCode = 0;
+		waitOfAnimationReady = new AtomicBoolean(false);
 		System.out.println("Ausgangslage:");
 		printGameSet();
 		while (returnCode != -1)
 		{
+			if (waitOfAnimationReady.get())
+			{
+				try
+				{
+					Thread.sleep(100);
+					continue;
+				}
+				catch (InterruptedException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			returnCode = myGameSet.runInstruction();
 			System.out.println("instructionCode: " + myGameSet.currentInstruction);
 			System.out.println("returnCode: " + returnCode);
 			switch (returnCode)
 			{
 			case 0: // normaler Zug
+				normalPull();
 				printGameSet();
 				break;
 			case -1: // Programmende erreicht
@@ -725,6 +747,40 @@ public class GameView extends CB_View_Base implements render3D
 				printGameSet();
 				break;
 			default:
+			}
+		}
+	}
+
+	private void normalPull()
+	{
+		synchronized (mAnimationList)
+		{
+			mAnimationList.clear();
+
+			if (!that.myGameSet.boxAnimationStartCoord.isNull() && !that.myGameSet.boxAnimationTargetCoord.isNull())
+			{
+				Animation<Vector3> ani = animateBox(that.myGameSet.boxAnimationStartCoord, that.myGameSet.boxAnimationTargetCoord);
+				mAnimationList.add(ani);
+			}
+
+			if (!that.myGameSet.craneAnimationStartCoord.isNull() && !that.myGameSet.craneAnimationTargetCoord.isNull())
+			{
+				Animation<Vector3> ani = animatePortal(that.myGameSet.craneAnimationStartCoord, that.myGameSet.craneAnimationTargetCoord);
+				mAnimationList.add(ani);
+			}
+
+			if (mAnimationList.size() > 0)
+			{
+				waitOfAnimationReady.set(true);
+				mAnimationList.play(new ReadyHandler()
+				{
+
+					@Override
+					public void ready()
+					{
+						waitOfAnimationReady.set(false);
+					}
+				});
 			}
 		}
 	}

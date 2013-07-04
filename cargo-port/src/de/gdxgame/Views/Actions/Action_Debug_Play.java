@@ -19,7 +19,7 @@ public class Action_Debug_Play extends CB_Action
 	@Override
 	public void Execute()
 	{
-		GameView.that.beginnDebug();
+		GameView.that.RunGameLoop();
 	}
 
 	@Override
