@@ -41,18 +41,26 @@ public class GameSet
 			this.startFloor.setFloor("00000;02000");
 			this.targetFloor.setFloor("00000;01000;00000;00010");
 			this.startCrane.setPosition(0, 0);
-			this.mainInstructionPool.setInstruction(0, 5);
-			this.mainInstructionPool.setInstruction(1, 2);
-			this.mainInstructionPool.setInstruction(2, 4);
-			this.mainInstructionPool.setInstruction(3, 1);
+			// this.mainInstructionPool.setInstruction(0, 5);
+			// this.mainInstructionPool.setInstruction(1, 2);
+			// this.mainInstructionPool.setInstruction(2, 4);
+			// this.mainInstructionPool.setInstruction(3, 1);
+			// this.mainInstructionPool.setInstruction(4, 3);
+			// this.mainInstructionPool.setInstruction(5, 5);
+			// this.mainInstructionPool.setInstruction(6, 3);
+			// this.mainInstructionPool.setInstruction(7, 3);
+			// this.mainInstructionPool.setInstruction(8, 6);
+			// this.mainInstructionPool.setInstruction(9, 1);
+			// this.mainInstructionPool.setInstruction(10, 1);
+			// this.mainInstructionPool.setInstruction(11, 5);
+			this.mainInstructionPool.setInstruction(0, 1);
+			this.mainInstructionPool.setInstruction(1, 1);
+			this.mainInstructionPool.setInstruction(2, 3);
+			this.mainInstructionPool.setInstruction(3, 3);
 			this.mainInstructionPool.setInstruction(4, 3);
-			this.mainInstructionPool.setInstruction(5, 5);
-			this.mainInstructionPool.setInstruction(6, 3);
-			this.mainInstructionPool.setInstruction(7, 3);
-			this.mainInstructionPool.setInstruction(8, 6);
-			this.mainInstructionPool.setInstruction(9, 1);
-			this.mainInstructionPool.setInstruction(10, 1);
-			this.mainInstructionPool.setInstruction(11, 5);
+			this.mainInstructionPool.setInstruction(5, 3);
+			this.mainInstructionPool.setInstruction(6, 2);
+			this.mainInstructionPool.setInstruction(7, 4);
 
 		}
 
@@ -156,11 +164,11 @@ public class GameSet
 	}
 
 	/**
-	 * Diese Methode führt die nächste Instruktion aus der Menge der Instruktionen aus. Sie aktualisiert die Objekte currentCrane (aktuelle
-	 * Portalkranposition) und currentFloor (aktueller Zustand der Lagerfläche)
+	 * Diese Methode fï¿½hrt die nï¿½chste Instruktion aus der Menge der Instruktionen aus. Sie aktualisiert die Objekte currentCrane (aktuelle
+	 * Portalkranposition) und currentFloor (aktueller Zustand der Lagerflï¿½che)
 	 * 
 	 * @return 0 normaler Zug -1 Programmende erreicht (gameAccomplished true/false) -2 NOP-Code (runInstruction erneut aufrufen) -3 Randzug
-	 *         -4 Aufnahme/Ablegen -5 leere Aufnahme -6 Zug löst Kollision aus
+	 *         -4 Aufnahme/Ablegen -5 leere Aufnahme -6 Zug lï¿½st Kollision aus
 	 */
 	public int runInstruction()
 	{
@@ -212,9 +220,6 @@ public class GameSet
 			returnCode = -2;
 			break;
 		case xForward: // x-Position vor
-			boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(), currentFloor.getHeight());
-			craneAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(), currentFloor.getHeight());
-			hookAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(), currentFloor.getHeight());
 			if (currentCrane.getXPosition() < currentFloor.getWidth() - 1)
 			{
 				if (currentCrane.isLoaded())
@@ -222,6 +227,18 @@ public class GameSet
 					if (currentFloor.getBoxes(currentCrane.getXPosition() + 1, currentCrane.getYPosition()) == currentFloor.getHeight() - 1)
 					{
 						// Kranposition auf Zielposition, Vernichtung der aufgenommenen Box, Vernichtung der obersten Box an Zielposition
+						boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						craneAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight());
+						hookAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						boxAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() + 1, currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						craneAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() + 1, currentCrane.getYPosition(),
+								currentFloor.getHeight());
+						hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() + 1, currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
 						currentCrane.setPosition(currentCrane.getXPosition() + 1, currentCrane.getYPosition());
 						currentFloor.setBoxes(currentCrane.getXPosition(), currentCrane.getYPosition(),
 								currentFloor.getBoxes(currentCrane.getXPosition(), currentCrane.getYPosition()) - 1);
@@ -230,20 +247,54 @@ public class GameSet
 					}
 					else
 					{
+						boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						craneAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight());
+						hookAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						boxAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() + 1, currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						craneAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() + 1, currentCrane.getYPosition(),
+								currentFloor.getHeight());
+						hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() + 1, currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
 						currentCrane.setPosition(currentCrane.getXPosition() + 1, currentCrane.getYPosition());
 					}
 				}
 				else
 				{
+					craneAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+							currentFloor.getHeight());
+					hookAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+							currentFloor.getHeight() - 1);
+					craneAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() + 1, currentCrane.getYPosition(),
+							currentFloor.getHeight());
+					hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() + 1, currentCrane.getYPosition(),
+							currentFloor.getHeight() - 1);
 					currentCrane.setPosition(currentCrane.getXPosition() + 1, currentCrane.getYPosition());
 				}
 			}
 			else
 			{
+				if (currentCrane.isLoaded())
+				{
+					boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+							currentFloor.getHeight() - 1);
+					boxAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() + 1, currentCrane.getYPosition(),
+							currentFloor.getHeight() - 1);
+				}
+				craneAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(), currentFloor.getHeight());
+				hookAnimationStartCoord
+						.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(), currentFloor.getHeight() - 1);
+				craneAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() + 1, currentCrane.getYPosition(),
+						currentFloor.getHeight());
+				hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() + 1, currentCrane.getYPosition(),
+						currentFloor.getHeight() - 1);
 				returnCode = -3;
 			}
 			break;
-		case xBack: // x-Position zurück
+		case xBack: // x-Position zurï¿½ck
 			if (currentCrane.getXPosition() > 0)
 			{
 				if (currentCrane.isLoaded())
@@ -251,6 +302,18 @@ public class GameSet
 					if (currentFloor.getBoxes(currentCrane.getXPosition() - 1, currentCrane.getYPosition()) == currentFloor.getHeight() - 1)
 					{
 						// Kranposition auf Zielposition, Vernichtung der aufgenommenen Box, Vernichtung der obersten Box an Zielposition
+						boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						craneAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight());
+						hookAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						boxAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() - 1, currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						craneAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() - 1, currentCrane.getYPosition(),
+								currentFloor.getHeight());
+						hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() - 1, currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
 						currentCrane.setPosition(currentCrane.getXPosition() - 1, currentCrane.getYPosition());
 						currentFloor.setBoxes(currentCrane.getXPosition(), currentCrane.getYPosition(),
 								currentFloor.getBoxes(currentCrane.getXPosition(), currentCrane.getYPosition()) - 1);
@@ -259,16 +322,50 @@ public class GameSet
 					}
 					else
 					{
+						boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						craneAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight());
+						hookAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						boxAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() - 1, currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						craneAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() - 1, currentCrane.getYPosition(),
+								currentFloor.getHeight());
+						hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() - 1, currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
 						currentCrane.setPosition(currentCrane.getXPosition() - 1, currentCrane.getYPosition());
 					}
 				}
 				else
 				{
+					craneAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+							currentFloor.getHeight());
+					hookAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+							currentFloor.getHeight() - 1);
+					craneAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() - 1, currentCrane.getYPosition(),
+							currentFloor.getHeight());
+					hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() - 1, currentCrane.getYPosition(),
+							currentFloor.getHeight() - 1);
 					currentCrane.setPosition(currentCrane.getXPosition() - 1, currentCrane.getYPosition());
 				}
 			}
 			else
 			{
+				if (currentCrane.isLoaded())
+				{
+					boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+							currentFloor.getHeight() - 1);
+					boxAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() - 1, currentCrane.getYPosition(),
+							currentFloor.getHeight() - 1);
+				}
+				craneAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(), currentFloor.getHeight());
+				hookAnimationStartCoord
+						.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(), currentFloor.getHeight() - 1);
+				craneAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() - 1, currentCrane.getYPosition(),
+						currentFloor.getHeight());
+				hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition() - 1, currentCrane.getYPosition(),
+						currentFloor.getHeight() - 1);
 				returnCode = -3;
 			}
 			break;
@@ -280,6 +377,18 @@ public class GameSet
 					if (currentFloor.getBoxes(currentCrane.getXPosition(), currentCrane.getYPosition() + 1) == currentFloor.getHeight() - 1)
 					{
 						// Kranposition auf Zielposition, Vernichtung der aufgenommenen Box, Vernichtung der obersten Box an Zielposition
+						boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						craneAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight());
+						hookAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						boxAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() + 1,
+								currentFloor.getHeight() - 1);
+						craneAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() + 1,
+								currentFloor.getHeight());
+						hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() + 1,
+								currentFloor.getHeight() - 1);
 						currentCrane.setPosition(currentCrane.getXPosition(), currentCrane.getYPosition() + 1);
 						currentFloor.setBoxes(currentCrane.getXPosition(), currentCrane.getYPosition(),
 								currentFloor.getBoxes(currentCrane.getXPosition(), currentCrane.getYPosition()) - 1);
@@ -288,20 +397,53 @@ public class GameSet
 					}
 					else
 					{
+						boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						craneAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight());
+						hookAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						boxAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() + 1,
+								currentFloor.getHeight() - 1);
+						craneAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() + 1,
+								currentFloor.getHeight());
+						hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() + 1,
+								currentFloor.getHeight() - 1);
 						currentCrane.setPosition(currentCrane.getXPosition(), currentCrane.getYPosition() + 1);
 					}
 				}
 				else
 				{
+					craneAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+							currentFloor.getHeight());
+					hookAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+							currentFloor.getHeight() - 1);
+					craneAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() + 1,
+							currentFloor.getHeight());
+					hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() + 1,
+							currentFloor.getHeight() - 1);
 					currentCrane.setPosition(currentCrane.getXPosition(), currentCrane.getYPosition() + 1);
 				}
 			}
 			else
 			{
+				if (currentCrane.isLoaded())
+				{
+					boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+							currentFloor.getHeight() - 1);
+					boxAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() + 1,
+							currentFloor.getHeight() - 1);
+				}
+				craneAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(), currentFloor.getHeight());
+				hookAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() + 1,
+						currentFloor.getHeight() - 1);
+				craneAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(), currentFloor.getHeight());
+				hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() + 1,
+						currentFloor.getHeight() - 1);
 				returnCode = -3;
 			}
 			break;
-		case yBack: // y-Position zurück
+		case yBack: // y-Position zurï¿½ck
 			if (currentCrane.getYPosition() > 0)
 			{
 				if (currentCrane.isLoaded())
@@ -309,6 +451,18 @@ public class GameSet
 					if (currentFloor.getBoxes(currentCrane.getXPosition(), currentCrane.getYPosition() - 1) == currentFloor.getHeight() - 1)
 					{
 						// Kranposition auf Zielposition, Vernichtung der aufgenommenen Box, Vernichtung der obersten Box an Zielposition
+						boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						craneAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight());
+						hookAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						boxAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() - 1,
+								currentFloor.getHeight() - 1);
+						craneAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() - 1,
+								currentFloor.getHeight());
+						hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() - 1,
+								currentFloor.getHeight() - 1);
 						currentCrane.setPosition(currentCrane.getXPosition(), currentCrane.getYPosition() - 1);
 						currentFloor.setBoxes(currentCrane.getXPosition(), currentCrane.getYPosition(),
 								currentFloor.getBoxes(currentCrane.getXPosition(), currentCrane.getYPosition()) - 1);
@@ -317,16 +471,49 @@ public class GameSet
 					}
 					else
 					{
+						boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						craneAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight());
+						hookAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+								currentFloor.getHeight() - 1);
+						boxAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() - 1,
+								currentFloor.getHeight() - 1);
+						craneAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() - 1,
+								currentFloor.getHeight());
+						hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() - 1,
+								currentFloor.getHeight() - 1);
 						currentCrane.setPosition(currentCrane.getXPosition(), currentCrane.getYPosition() - 1);
 					}
 				}
 				else
 				{
+					craneAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+							currentFloor.getHeight());
+					hookAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+							currentFloor.getHeight() - 1);
+					craneAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() - 1,
+							currentFloor.getHeight());
+					hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() - 1,
+							currentFloor.getHeight() - 1);
 					currentCrane.setPosition(currentCrane.getXPosition(), currentCrane.getYPosition() - 1);
 				}
 			}
 			else
 			{
+				if (currentCrane.isLoaded())
+				{
+					boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+							currentFloor.getHeight() - 1);
+					boxAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() - 1,
+							currentFloor.getHeight() - 1);
+				}
+				craneAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(), currentFloor.getHeight());
+				hookAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() - 1,
+						currentFloor.getHeight() - 1);
+				craneAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(), currentFloor.getHeight());
+				hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition() - 1,
+						currentFloor.getHeight() - 1);
 				returnCode = -3;
 			}
 			break;
