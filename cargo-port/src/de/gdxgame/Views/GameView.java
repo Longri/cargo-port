@@ -299,7 +299,7 @@ public class GameView extends CB_View_Base implements render3D
 		if (myCam == null)
 		{
 			myCam = new PerspectiveCamera(zoom, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-			myCam.position.set(GameFieldWidth, GameFieldHight, GameFieldDepth);
+			myCam.position.set(GameFieldWidth / 2, GameFieldHight, GameFieldDepth * 2);
 			myCam.lookAt(GameFieldWidth / 2, GameFieldHight * 0.33f, GameFieldDepth / 2);
 			myCam.near = 0.1f;
 			myCam.far = 300;
@@ -727,19 +727,19 @@ public class GameView extends CB_View_Base implements render3D
 					switch (returnCode)
 					{
 					case 0: // normaler Zug
-						normalPull();
+						normalMove();
 						printGameSet();
 						break;
 					case -1: // Programmende erreicht
 						if (myGameSet.gameAccomplished())
 						{
-							GL_MsgBox.Show("Level gelöst");
-							System.out.println("Level gelöst");
+							GL_MsgBox.Show("Level gelï¿½st");
+							System.out.println("Level gelï¿½st");
 						}
 						else
 						{
-							GL_MsgBox.Show("Level nicht gelöst");
-							System.out.println("Level nicht gelöst");
+							GL_MsgBox.Show("Level nicht gelï¿½st");
+							System.out.println("Level nicht gelï¿½st");
 						}
 
 						printGameSet();
@@ -747,10 +747,20 @@ public class GameView extends CB_View_Base implements render3D
 					case -2: // NOP-Code
 						break;
 					case -3: // Randzug
-						System.out.println("versuchte Spielfeldrandüberschreitung verhindert");
+						System.out.println("versuchte Spielfeldrandï¿½berschreitung verhindert");
 						printGameSet();
 						break;
 					case -4: // Aufnahme/Ablegen
+						if (myGameSet.currentCrane.isLoaded())
+						{ // es wurde gerade aufgenommen
+							// leere Hookanimation
+							grabMove();
+						}
+						else
+						{ // es wurde gerade abgelegt
+							grabMove();
+							// leere Hookanimation
+						}
 						System.out.println("Box aufgenommen/abgelegt");
 						printGameSet();
 						break;
@@ -758,8 +768,8 @@ public class GameView extends CB_View_Base implements render3D
 						System.out.println("Es gibt nichts aufzunehmen");
 						printGameSet();
 						break;
-					case -6: // Zug löst Kollision aus
-						System.out.println("Kollision ausgelöst");
+					case -6: // Zug lï¿½st Kollision aus
+						System.out.println("Kollision ausgelï¿½st");
 						printGameSet();
 						break;
 					default:
@@ -772,7 +782,7 @@ public class GameView extends CB_View_Base implements render3D
 
 	}
 
-	private void normalPull()
+	private void normalMove()
 	{
 		synchronized (mAnimationList)
 		{
@@ -787,6 +797,34 @@ public class GameView extends CB_View_Base implements render3D
 			if (!that.myGameSet.craneAnimationStartCoord.isNull() && !that.myGameSet.craneAnimationTargetCoord.isNull())
 			{
 				Animation<Vector3> ani = animatePortal(that.myGameSet.craneAnimationStartCoord, that.myGameSet.craneAnimationTargetCoord);
+				mAnimationList.add(ani);
+			}
+
+			if (mAnimationList.size() > 0)
+			{
+				waitOfAnimationReady.set(true);
+				mAnimationList.play(new ReadyHandler()
+				{
+
+					@Override
+					public void ready()
+					{
+						waitOfAnimationReady.set(false);
+					}
+				});
+			}
+		}
+	}
+
+	private void grabMove()
+	{
+		synchronized (mAnimationList)
+		{
+			mAnimationList.clear();
+
+			if (!that.myGameSet.boxAnimationStartCoord.isNull() && !that.myGameSet.boxAnimationTargetCoord.isNull())
+			{
+				Animation<Vector3> ani = animateBox(that.myGameSet.boxAnimationStartCoord, that.myGameSet.boxAnimationTargetCoord);
 				mAnimationList.add(ani);
 			}
 

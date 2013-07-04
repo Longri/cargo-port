@@ -32,7 +32,7 @@ public class GameSet
 	private int func2Stack;
 	private boolean gameAccomplished;
 
-	public final static GameSet TestLevel = new GameSet(5, 5, 3)
+	public final static GameSet TestLevel = new GameSet(8, 8, 4)
 	{
 		protected void create()
 		{
@@ -53,14 +53,6 @@ public class GameSet
 			this.mainInstructionPool.setInstruction(9, 1);
 			this.mainInstructionPool.setInstruction(10, 1);
 			this.mainInstructionPool.setInstruction(11, 5);
-			// this.mainInstructionPool.setInstruction(0, 1);
-			// this.mainInstructionPool.setInstruction(1, 1);
-			// this.mainInstructionPool.setInstruction(2, 3);
-			// this.mainInstructionPool.setInstruction(3, 3);
-			// this.mainInstructionPool.setInstruction(4, 3);
-			// this.mainInstructionPool.setInstruction(5, 3);
-			// this.mainInstructionPool.setInstruction(6, 2);
-			// this.mainInstructionPool.setInstruction(7, 4);
 
 		}
 
@@ -69,7 +61,7 @@ public class GameSet
 	public GameSet(int x, int y, int z)
 	{
 		super();
-		this.mLevelDemensions = new GameCoord(x, y, z);
+		this.mLevelDimensions = new GameCoord(x, y, z);
 		startFloor = new GameFloor(x, y, z);
 		targetFloor = new GameFloor(x, y, z);
 		create();
@@ -105,7 +97,7 @@ public class GameSet
 	/**
 	 * Enth?lt die drei Dimensionen des Spielfelds. <br>
 	 */
-	private GameCoord mLevelDemensions;
+	private GameCoord mLevelDimensions;
 
 	/**
 	 * gibt die drei Dimensionen des Spielfelds zur?ck. <br>
@@ -114,8 +106,8 @@ public class GameSet
 	 */
 	public GameCoord getLeveDimensions()
 	{
-		if (mLevelDemensions == null) mLevelDemensions = new GameCoord(0, 0, 0);
-		return mLevelDemensions;
+		if (mLevelDimensions == null) mLevelDimensions = new GameCoord(0, 0, 0);
+		return mLevelDimensions;
 	}
 
 	/**
@@ -164,8 +156,8 @@ public class GameSet
 	}
 
 	/**
-	 * Diese Methode f�hrt die n�chste Instruktion aus der Menge der Instruktionen aus. Sie aktualisiert die Objekte currentCrane
-	 * (aktuelle Portalkranposition) und currentFloor (aktueller Zustand der Lagerfl�che)
+	 * Diese Methode f�hrt die n�chste Instruktion aus der Menge der Instruktionen aus. Sie aktualisiert die Objekte currentCrane (aktuelle
+	 * Portalkranposition) und currentFloor (aktueller Zustand der Lagerfl�che)
 	 * 
 	 * @return 0 normaler Zug -1 Programmende erreicht (gameAccomplished true/false) -2 NOP-Code (runInstruction erneut aufrufen) -3 Randzug
 	 *         -4 Aufnahme/Ablegen -5 leere Aufnahme -6 Zug l�st Kollision aus
@@ -521,6 +513,13 @@ public class GameSet
 			if (currentCrane.isLoaded())
 			{
 				// ablegen
+				boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(), currentFloor.getHeight() - 1);
+				hookAnimationStartCoord
+						.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(), currentFloor.getHeight() - 1);
+				boxAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+						currentFloor.getBoxes(currentCrane.getXPosition(), currentCrane.getYPosition()));
+				hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+						currentFloor.getBoxes(currentCrane.getXPosition(), currentCrane.getYPosition()));
 				currentFloor.setBoxes(currentCrane.getXPosition(), currentCrane.getYPosition(),
 						currentFloor.getBoxes(currentCrane.getXPosition(), currentCrane.getYPosition()) + 1);
 				currentCrane.toggleLoadState();
@@ -531,6 +530,14 @@ public class GameSet
 				// aufnehmen
 				if (currentFloor.getBoxes(currentCrane.getXPosition(), currentCrane.getYPosition()) > 0)
 				{
+					boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+							currentFloor.getBoxes(currentCrane.getXPosition(), currentCrane.getYPosition()) - 1);
+					hookAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+							currentFloor.getHeight() - 1);
+					boxAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+							currentFloor.getHeight() - 1);
+					hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+							currentFloor.getBoxes(currentCrane.getXPosition(), currentCrane.getYPosition()) - 1);
 					currentFloor.setBoxes(currentCrane.getXPosition(), currentCrane.getYPosition(),
 							currentFloor.getBoxes(currentCrane.getXPosition(), currentCrane.getYPosition()) - 1);
 					currentCrane.toggleLoadState();
@@ -538,6 +545,9 @@ public class GameSet
 				}
 				else
 				{
+					hookAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
+							currentFloor.getHeight() - 1);
+					hookAnimationTargetCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(), 0);
 					returnCode = -5;
 				}
 			}
