@@ -55,10 +55,9 @@ public class InstractionView extends CB_View_Base
 		});
 		this.addChild(slideButton);
 
-		InstractionButton btn = new InstractionButton("1");
-
-		btn.setPos(200f, 200f);
-		this.addChild(btn);
+		InstractionSelect sel = new InstractionSelect(this, "select");
+		sel.setZeroPos();
+		this.addChild(sel);
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import CB_Core.GL_UI.CB_View_Base;
 import CB_Core.GL_UI.Fonts;
 import CB_Core.GL_UI.render3D;
 import CB_Core.GL_UI.runOnGL;
+import CB_Core.GL_UI.Controls.MessageBox.GL_MsgBox;
 import CB_Core.GL_UI.GL_Listener.GL;
 import CB_Core.Log.Logger;
 import CB_Core.Map.Point;
@@ -178,13 +179,13 @@ public class GameView extends CB_View_Base implements render3D
 					boolean lineGray = true;
 					boolean rowGray = true;
 					GameField = new ModelInstance[countX][countY];
-					GameFieldPositions = new Vector3[countX][countY][countZ];
-					GameVectorModels = new ModelInstance[countX][countY][countZ];
+					GameFieldPositions = new Vector3[countX][countY][countZ + 1];
+					GameVectorModels = new ModelInstance[countX][countY][countZ + 1];
 					float x = 0;
 					float y = 0;
 					float z = 0;
 
-					for (int h = 0; h < countZ; h++)
+					for (int h = 0; h < countZ + 1; h++)
 					{
 
 						for (int i = 0; i < countX; i++)
@@ -608,7 +609,7 @@ public class GameView extends CB_View_Base implements render3D
 						}
 
 						mPortalModel.setRunway2Vector(new GameCoord(myGameSet.startCrane.getXPosition(), myGameSet.startCrane
-								.getYPosition(), mGameFieldDimensions.getZ()));
+								.getYPosition(), mGameFieldDimensions.getZ() + 1));
 
 					}
 				});
@@ -693,62 +694,81 @@ public class GameView extends CB_View_Base implements render3D
 
 	public void RunGameLoop()
 	{
-		myGameSet.startGame();
-		int returnCode = 0;
-		waitOfAnimationReady = new AtomicBoolean(false);
-		System.out.println("Ausgangslage:");
-		printGameSet();
-		while (returnCode != -1)
+		Thread loop = new Thread(new Runnable()
 		{
-			if (waitOfAnimationReady.get())
+
+			@Override
+			public void run()
 			{
-				try
+				myGameSet.startGame();
+				int returnCode = 0;
+				waitOfAnimationReady = new AtomicBoolean(false);
+				System.out.println("Ausgangslage:");
+				printGameSet();
+				while (returnCode != -1)
 				{
-					Thread.sleep(100);
-					continue;
-				}
-				catch (InterruptedException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					if (waitOfAnimationReady.get())
+					{
+						try
+						{
+							Thread.sleep(100);
+							continue;
+						}
+						catch (InterruptedException e)
+						{
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					returnCode = myGameSet.runInstruction();
+					System.out.println("instructionCode: " + myGameSet.currentInstruction);
+					System.out.println("returnCode: " + returnCode);
+					switch (returnCode)
+					{
+					case 0: // normaler Zug
+						normalPull();
+						printGameSet();
+						break;
+					case -1: // Programmende erreicht
+						if (myGameSet.gameAccomplished())
+						{
+							GL_MsgBox.Show("Level gelöst");
+							System.out.println("Level gelöst");
+						}
+						else
+						{
+							GL_MsgBox.Show("Level nicht gelöst");
+							System.out.println("Level nicht gelöst");
+						}
+
+						printGameSet();
+						break;
+					case -2: // NOP-Code
+						break;
+					case -3: // Randzug
+						System.out.println("versuchte Spielfeldrandüberschreitung verhindert");
+						printGameSet();
+						break;
+					case -4: // Aufnahme/Ablegen
+						System.out.println("Box aufgenommen/abgelegt");
+						printGameSet();
+						break;
+					case -5: // leere Aufnahme
+						System.out.println("Es gibt nichts aufzunehmen");
+						printGameSet();
+						break;
+					case -6: // Zug löst Kollision aus
+						System.out.println("Kollision ausgelöst");
+						printGameSet();
+						break;
+					default:
+					}
 				}
 			}
-			returnCode = myGameSet.runInstruction();
-			System.out.println("instructionCode: " + myGameSet.currentInstruction);
-			System.out.println("returnCode: " + returnCode);
-			switch (returnCode)
-			{
-			case 0: // normaler Zug
-				normalPull();
-				printGameSet();
-				break;
-			case -1: // Programmende erreicht
-				if (myGameSet.gameAccomplished()) System.out.println("Level gelöst");
-				else
-					System.out.println("Level nicht gelöst");
-				printGameSet();
-				break;
-			case -2: // NOP-Code
-				break;
-			case -3: // Randzug
-				System.out.println("versuchte Spielfeldrandüberschreitung verhindert");
-				printGameSet();
-				break;
-			case -4: // Aufnahme/Ablegen
-				System.out.println("Box aufgenommen/abgelegt");
-				printGameSet();
-				break;
-			case -5: // leere Aufnahme
-				System.out.println("Es gibt nichts aufzunehmen");
-				printGameSet();
-				break;
-			case -6: // Zug löst Kollision aus
-				System.out.println("Kollision ausgelöst");
-				printGameSet();
-				break;
-			default:
-			}
-		}
+		});
+
+		loop.start();
+
 	}
 
 	private void normalPull()

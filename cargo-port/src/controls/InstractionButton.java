@@ -8,10 +8,11 @@ public class InstractionButton extends Button
 {
 	InstructionType type;
 
-	public InstractionButton(String text)
+	public InstractionButton(InstructionType instructionType)
 	{
 		super("");
 		setWidth(UI_Size_Base.that.getButtonHeight());
+		type = instructionType;
 	}
 
 }
