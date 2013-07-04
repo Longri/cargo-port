@@ -52,8 +52,8 @@ public class GameView extends CB_View_Base implements render3D
 	/**
 	 * Zeit f�r eine Animation von einem Vector n�chsten Vector
 	 */
-	public static final int ANIMATION_TIME = 700;
-	public static final int ANIMATION_WAIT_TIME = 300;
+	public static final int ANIMATION_TIME = 200;
+	public static final int ANIMATION_WAIT_TIME = 80;
 
 	private ArrayList<ModelInstance> ModelList = new ArrayList<ModelInstance>();
 	private AtomicBoolean waitOfAnimationReady;
