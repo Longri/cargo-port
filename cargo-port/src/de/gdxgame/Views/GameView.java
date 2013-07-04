@@ -29,14 +29,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import controls.InstractionView;
-import de.gdxgame.IntVector3;
-import de.gdxgame.Level;
+import de.gdxgame.GameCoord;
+import de.gdxgame.GameSet;
 import de.gdxgame.Views.Actions.Animation;
 import de.gdxgame.Views.Actions.AnimationList;
 import de.gdxgame.Views.Actions.AnimationVector3;
 import de.gdxgame.Views.Actions.ReadyHandler;
 
 /**
+ * @author Lars Streblow
  * @author Longri
  */
 public class GameView extends CB_View_Base implements render3D
@@ -53,13 +54,15 @@ public class GameView extends CB_View_Base implements render3D
 
 	private ArrayList<ModelInstance> ModelList = new ArrayList<ModelInstance>();
 
+	private GameSet myGameSet;
+
 	private PortalModel mPortalModel = new PortalModel();
 	private ModelInstance[][] GameField = new ModelInstance[1][1];
 	private Vector3[][][] GameFieldPositions = new Vector3[1][1][1];
 	private ModelInstance[][][] GameVectorModels = new ModelInstance[1][1][1];
 	private Lights lights;
 	private AnimationList mAnimationList = new AnimationList();
-	private IntVector3 mGameFieldDimensions;
+	private GameCoord mGameFieldDimensions;
 
 	private float GameFieldWidth = 0;
 	private float GameFieldHight = 0;
@@ -160,7 +163,7 @@ public class GameView extends CB_View_Base implements render3D
 
 	private void createGameField(final int countX, final int countY, final int countZ, final ReadyHandler handler)
 	{
-		mGameFieldDimensions = new IntVector3(countX - 1, countX - 1, countZ - 1);
+		mGameFieldDimensions = new GameCoord(countX - 1, countX - 1, countZ - 1);
 
 		GL.that.RunOnGL(new runOnGL()
 		{
@@ -576,8 +579,11 @@ public class GameView extends CB_View_Base implements render3D
 		}
 	}
 
-	public void setLevel(Level level)
+	public void setLevel(GameSet level)
 	{
+
+		myGameSet = level;
+
 		// create game field
 		createGameField(level.getLeveDimensions().getX(), level.getLeveDimensions().getY(), level.getLeveDimensions().getZ(),
 				new ReadyHandler()
@@ -593,7 +599,7 @@ public class GameView extends CB_View_Base implements render3D
 							GameVectorModels[1][1][0] = inst;
 							ModelList.add(inst);
 
-							mPortalModel.setRunway2Vector(new IntVector3(0, 0, mGameFieldDimensions.getZ()));
+							mPortalModel.setRunway2Vector(new GameCoord(0, 0, mGameFieldDimensions.getZ()));
 						}
 					}
 				});
@@ -610,9 +616,11 @@ public class GameView extends CB_View_Base implements render3D
 			ModelList.clear();
 		}
 
+		// create BoxModels
+
 	}
 
-	public Vector3 getVectorPosition(IntVector3 vector)
+	public Vector3 getVectorPosition(GameCoord vector)
 	{
 		try
 		{
@@ -639,12 +647,12 @@ public class GameView extends CB_View_Base implements render3D
 		return lights;
 	}
 
-	public IntVector3 getGameFieldDimensions()
+	public GameCoord getGameFieldDimensions()
 	{
 		return mGameFieldDimensions;
 	}
 
-	public AnimationList animateBox(IntVector3 start, IntVector3 end)
+	public AnimationList animateBox(GameCoord start, GameCoord end)
 	{
 		try
 		{
@@ -671,85 +679,76 @@ public class GameView extends CB_View_Base implements render3D
 		return null;
 	}
 
-	public AnimationList animatePortal(IntVector3 start, IntVector3 end)
+	public AnimationList animatePortal(GameCoord start, GameCoord end)
 	{
 		return mPortalModel.animatePortal(start, end);
 	}
 
 	public void beginnDebug()
 	{
-		AnimationList ani = animatePortal(new IntVector3(0, 0, mGameFieldDimensions.getZ()),
-				new IntVector3(1, 0, mGameFieldDimensions.getZ()));
-		synchronized (mAnimationList)
+		myGameSet.startGame();
+		int returnCode = 0;
+		System.out.println("Ausgangslage:");
+		printGameSet();
+		while (returnCode != -1)
 		{
-			mAnimationList.add(ani);
-		}
-
-		mAnimationList.play(new ReadyHandler()
-		{
-			@Override
-			public void ready()
+			returnCode = myGameSet.runInstruction();
+			System.out.println("instructionCode: " + myGameSet.currentInstruction);
+			System.out.println("returnCode: " + returnCode);
+			switch (returnCode)
 			{
-				Animation<Vector3> ani = animatePortal(new IntVector3(1, 0, mGameFieldDimensions.getZ()), new IntVector3(1, 1,
-						mGameFieldDimensions.getZ()));
-				synchronized (mAnimationList)
-				{
-					mAnimationList.clear();
-					mAnimationList.add(ani);
-				}
-
-				mAnimationList.play(new ReadyHandler()
-				{
-
-					@Override
-					public void ready()
-					{
-						Animation<Vector3> ani = animateBox(new IntVector3(1, 1, 0), new IntVector3(1, 1, mGameFieldDimensions.getZ() - 1));
-						synchronized (mAnimationList)
-						{
-							mAnimationList.clear();
-							mAnimationList.add(ani);
-						}
-						mAnimationList.play(new ReadyHandler()
-						{
-
-							@Override
-							public void ready()
-							{
-								Animation<Vector3> ani = animatePortal(new IntVector3(1, 1, mGameFieldDimensions.getZ()), new IntVector3(2,
-										1, mGameFieldDimensions.getZ()));
-								Animation<Vector3> ani2 = animateBox(new IntVector3(1, 1, mGameFieldDimensions.getZ() - 1), new IntVector3(
-										2, 1, mGameFieldDimensions.getZ() - 1));
-								synchronized (mAnimationList)
-								{
-									mAnimationList.clear();
-									mAnimationList.add(ani);
-									mAnimationList.add(ani2);
-								}
-								mAnimationList.play(new ReadyHandler()
-								{
-
-									@Override
-									public void ready()
-									{
-										Animation<Vector3> ani = animateBox(new IntVector3(2, 1, mGameFieldDimensions.getZ() - 1),
-												new IntVector3(2, 1, 0));
-										synchronized (mAnimationList)
-										{
-											mAnimationList.clear();
-											mAnimationList.add(ani);
-										}
-										mAnimationList.play();
-
-									}
-								});
-							}
-						});
-
-					}
-				});
+			case 0: // normaler Zug
+				printGameSet();
+				break;
+			case -1: // Programmende erreicht
+				if (myGameSet.gameAccomplished()) System.out.println("Level gelöst");
+				else
+					System.out.println("Level nicht gelöst");
+				printGameSet();
+				break;
+			case -2: // NOP-Code
+				break;
+			case -3: // Randzug
+				System.out.println("versuchte Spielfeldrandüberschreitung verhindert");
+				printGameSet();
+				break;
+			case -4: // Aufnahme/Ablegen
+				System.out.println("Box aufgenommen/abgelegt");
+				printGameSet();
+				break;
+			case -5: // leere Aufnahme
+				System.out.println("Es gibt nichts aufzunehmen");
+				printGameSet();
+				break;
+			case -6: // Zug löst Kollision aus
+				System.out.println("Kollision ausgelöst");
+				printGameSet();
+				break;
+			default:
 			}
-		});
+		}
+	}
+
+	public static void printGameSet()
+	{
+		int x = 0;
+		int y = 0;
+		for (y = 0; y < that.myGameSet.currentFloor.getLength(); y++)
+		{
+			for (x = 0; x < that.myGameSet.currentFloor.getWidth(); x++)
+			{
+				System.out.print(that.myGameSet.currentFloor.getBoxes(x, y));
+				if (that.myGameSet.currentCrane.getXPosition() == x && that.myGameSet.currentCrane.getYPosition() == y) if (that.myGameSet.currentCrane
+						.isLoaded()) System.out.print("1");
+				else
+					System.out.print("0");
+				else
+					System.out.print(" ");
+				if (x < that.myGameSet.currentFloor.getLength() - 1) System.out.print(" ");
+			}
+			System.out.println();
+		}
+		System.out.println();
 	}
 
 }

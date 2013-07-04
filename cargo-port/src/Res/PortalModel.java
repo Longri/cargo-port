@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g3d.lights.Lights;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 
-import de.gdxgame.IntVector3;
+import de.gdxgame.GameCoord;
 import de.gdxgame.Views.GameView;
 import de.gdxgame.Views.Actions.AnimationCallBack;
 import de.gdxgame.Views.Actions.AnimationList;
@@ -33,7 +33,7 @@ public class PortalModel implements render3D
 	private ModelInstance mLegBottomLeft, mLegTopLeft, mLegBottomRight, mLegTopRight, mJibLeft, mJibRight, mRunWay;
 
 	private boolean is3DInitial = false;
-	private IntVector3 actPos;
+	private GameCoord actPos;
 	private float legOffset = 0;
 	private float legWidth = 0;
 
@@ -132,7 +132,7 @@ public class PortalModel implements render3D
 		is3DInitial = true;
 	}
 
-	public void setRunway2Vector(IntVector3 vector)
+	public void setRunway2Vector(GameCoord vector)
 	{
 
 		// set Runway
@@ -210,16 +210,16 @@ public class PortalModel implements render3D
 		}
 	}
 
-	public AnimationList animatePortal(IntVector3 start, IntVector3 end)
+	public AnimationList animatePortal(GameCoord start, GameCoord end)
 	{
 		if (start.getY() == end.getY()) return animateRunWay(start, end);
 		return animateY(start, end);
 	}
 
-	private AnimationList animateRunWay(IntVector3 start, IntVector3 end)
+	private AnimationList animateRunWay(GameCoord start, GameCoord end)
 	{
-		AnimationVector3 ani = new AnimationVector3(mRunWay, GameView.that.getVectorPosition(new IntVector3(start.getX(), start.getY(),
-				start.getZ())), GameView.that.getVectorPosition(new IntVector3(end.getX(), end.getY(), end.getZ())),
+		AnimationVector3 ani = new AnimationVector3(mRunWay, GameView.that.getVectorPosition(new GameCoord(start.getX(), start.getY(),
+				start.getZ())), GameView.that.getVectorPosition(new GameCoord(end.getX(), end.getY(), end.getZ())),
 				GameView.ANIMATION_TIME);
 
 		AnimationList list = new AnimationList();
@@ -228,12 +228,12 @@ public class PortalModel implements render3D
 		return list;
 	}
 
-	private AnimationList animateY(IntVector3 start, IntVector3 end)
+	private AnimationList animateY(GameCoord start, GameCoord end)
 	{
 		AnimationList list = new AnimationList();
 
-		AnimationVector3 ani = new AnimationVector3(mRunWay, GameView.that.getVectorPosition(new IntVector3(start.getX(), start.getY(),
-				start.getZ())), GameView.that.getVectorPosition(new IntVector3(end.getX(), end.getY(), end.getZ())),
+		AnimationVector3 ani = new AnimationVector3(mRunWay, GameView.that.getVectorPosition(new GameCoord(start.getX(), start.getY(),
+				start.getZ())), GameView.that.getVectorPosition(new GameCoord(end.getX(), end.getY(), end.getZ())),
 				GameView.ANIMATION_TIME);
 		list.add(ani);
 

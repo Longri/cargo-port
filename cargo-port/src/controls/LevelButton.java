@@ -3,13 +3,13 @@ package controls;
 import CB_Core.GL_UI.Fonts;
 import CB_Core.GL_UI.Controls.Button;
 import CB_Core.Math.CB_RectF;
-import de.gdxgame.Level;
+import de.gdxgame.GameSet;
 
 public class LevelButton extends Button
 {
-	private Level mLevel;
+	private GameSet mLevel;
 
-	public LevelButton(CB_RectF rec, Level level)
+	public LevelButton(CB_RectF rec, GameSet level)
 	{
 		super(rec, "LevelButton:" + level.getLevelNumber());
 		mLevel = level;
@@ -19,7 +19,7 @@ public class LevelButton extends Button
 			this.disable();
 	}
 
-	public Level getLevel()
+	public GameSet getLevel()
 	{
 		return mLevel;
 	}

@@ -8,7 +8,7 @@ import CB_Core.GL_UI.Controls.ScrollBox;
 import CB_Core.Math.CB_RectF;
 import CB_Core.Math.UI_Size_Base;
 import controls.LevelButton;
-import de.gdxgame.Level;
+import de.gdxgame.GameSet;
 import de.gdxgame.Views.Actions.Action_Show_GameView;
 
 public class PlayView extends CB_View_Base
@@ -48,11 +48,11 @@ public class PlayView extends CB_View_Base
 
 			for (int j = 0; j < ButtonRowCount - 1; j++)
 			{
-				LevelButton bt = new LevelButton(buttonRec, Level.TestLevel);
+				LevelButton bt = new LevelButton(buttonRec, GameSet.TestLevel);
 				bt.setOnClickListener(onClick);
 				content.addNext(bt, -1);
 			}
-			LevelButton bt = new LevelButton(buttonRec, Level.TestLevel);
+			LevelButton bt = new LevelButton(buttonRec, GameSet.TestLevel);
 			bt.setOnClickListener(onClick);
 			content.addLast(bt, -1);
 		}

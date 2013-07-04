@@ -2,7 +2,7 @@ package de.gdxgame.Views.Actions;
 
 import CB_Core.GL_UI.CB_View_Base;
 import CB_Core.GL_UI.Main.Actions.CB_Action_ShowView;
-import de.gdxgame.Level;
+import de.gdxgame.GameSet;
 import de.gdxgame.Views.GameView;
 import de.gdxgame.Views.MainView;
 import de.gdxgame.Views.ViewIDs;
@@ -10,9 +10,9 @@ import de.gdxgame.Views.ViewIDs;
 public class Action_Show_GameView extends CB_Action_ShowView
 {
 
-	private Level mLevel;
+	private GameSet mLevel;
 
-	public Action_Show_GameView(Level level)
+	public Action_Show_GameView(GameSet level)
 	{
 		super("showGameView", ViewIDs.PLAY_VIEW);
 		this.mLevel = level;
