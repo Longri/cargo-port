@@ -32,28 +32,55 @@ public class GameSet
 	private int func2Stack;
 	private boolean gameAccomplished;
 
-	public final static GameSet TestLevel = new GameSet(8, 8, 4)
+	public final static GameSet TestLevel = new GameSet(8, 8, 2)
 	{
 		protected void create()
 		{
 			super.create();
 			this.mIsFreeToPlay = true;
-			this.startFloor.setFloor("00000;02000");
-			this.targetFloor.setFloor("00000;01000;00000;00010");
-			this.startCrane.setPosition(0, 0);
-			this.mainInstructionPool.setInstruction(0, 5);
-			this.mainInstructionPool.setInstruction(1, 2);
-			this.mainInstructionPool.setInstruction(2, 4);
-			this.mainInstructionPool.setInstruction(3, 1);
-			this.mainInstructionPool.setInstruction(4, 3);
-			this.mainInstructionPool.setInstruction(5, 5);
-			this.mainInstructionPool.setInstruction(6, 3);
-			this.mainInstructionPool.setInstruction(7, 3);
-			this.mainInstructionPool.setInstruction(8, 6);
-			this.mainInstructionPool.setInstruction(9, 1);
-			this.mainInstructionPool.setInstruction(10, 1);
-			this.mainInstructionPool.setInstruction(11, 5);
-
+			this.startFloor.setFloor(";;;02020202;20202020");
+			this.targetFloor.setFloor(";11111111;;;;;11111111");
+			this.startCrane.setPosition(0, 1);
+			this.mainInstructionPool.setInstruction(0, 6);
+			this.mainInstructionPool.setInstruction(1, 6);
+			this.mainInstructionPool.setInstruction(2, 6);
+			this.mainInstructionPool.setInstruction(3, 6);
+			this.mainInstructionPool.setInstruction(4, 7);
+			this.mainInstructionPool.setInstruction(5, 7);
+			this.mainInstructionPool.setInstruction(6, 7);
+			this.mainInstructionPool.setInstruction(7, 7);
+			this.func1InstructionPool.setInstruction(0, 3);
+			this.func1InstructionPool.setInstruction(1, 3);
+			this.func1InstructionPool.setInstruction(2, 3);
+			this.func1InstructionPool.setInstruction(3, 5);
+			this.func1InstructionPool.setInstruction(4, 3);
+			this.func1InstructionPool.setInstruction(5, 3);
+			this.func1InstructionPool.setInstruction(6, 5);
+			this.func1InstructionPool.setInstruction(7, 1);
+			this.func1InstructionPool.setInstruction(8, 4);
+			this.func1InstructionPool.setInstruction(9, 4);
+			this.func1InstructionPool.setInstruction(10, 4);
+			this.func1InstructionPool.setInstruction(11, 5);
+			this.func1InstructionPool.setInstruction(12, 4);
+			this.func1InstructionPool.setInstruction(13, 4);
+			this.func1InstructionPool.setInstruction(14, 5);
+			this.func1InstructionPool.setInstruction(15, 1);
+			this.func2InstructionPool.setInstruction(0, 3);
+			this.func2InstructionPool.setInstruction(1, 3);
+			this.func2InstructionPool.setInstruction(2, 5);
+			this.func2InstructionPool.setInstruction(3, 3);
+			this.func2InstructionPool.setInstruction(4, 3);
+			this.func2InstructionPool.setInstruction(5, 3);
+			this.func2InstructionPool.setInstruction(6, 5);
+			this.func2InstructionPool.setInstruction(7, 2);
+			this.func2InstructionPool.setInstruction(8, 4);
+			this.func2InstructionPool.setInstruction(9, 4);
+			this.func2InstructionPool.setInstruction(10, 5);
+			this.func2InstructionPool.setInstruction(11, 4);
+			this.func2InstructionPool.setInstruction(12, 4);
+			this.func2InstructionPool.setInstruction(13, 4);
+			this.func2InstructionPool.setInstruction(14, 5);
+			this.func2InstructionPool.setInstruction(15, 2);
 		}
 
 	};
@@ -554,11 +581,14 @@ public class GameSet
 			break;
 		case Func1: // Funktion 1 aufrufen
 			func1Stack = currentInstructionPool;
+			func1InstructionPool.resetInstructionPointer();
 			currentInstructionPool = 1;
+			func1InstructionPool.resetInstructionPointer();
 			returnCode = -2;
 			break;
 		case Func2: // Funktion 2 aufrufen
 			func2Stack = currentInstructionPool;
+			func2InstructionPool.resetInstructionPointer();
 			currentInstructionPool = 2;
 			returnCode = -2;
 			break;

@@ -672,9 +672,12 @@ public class GameView extends CB_View_Base implements render3D
 				AnimationVector3 ani = new AnimationVector3(box, GameFieldPositions[start.getX()][start.getY()][start.getZ()],
 						GameFieldPositions[end.getX()][end.getY()][end.getZ()], ANIMATION_TIME);
 
-				// verschiebe GameVectorModel zur ZielPosition
-				GameVectorModels[end.getX()][end.getY()][end.getZ()] = box;
-				GameVectorModels[start.getX()][start.getY()][start.getZ()] = null;
+				// verschiebe GameVectorModel zur ZielPosition, wenn es etwas zu verschieben gibt
+				if (end.getX() != start.getX() || end.getY() != start.getY() || end.getZ() != start.getZ())
+				{
+					GameVectorModels[end.getX()][end.getY()][end.getZ()] = box;
+					GameVectorModels[start.getX()][start.getY()][start.getZ()] = null;
+				}
 				AnimationList list = new AnimationList();
 				list.add(ani);
 				list.trimToSize();

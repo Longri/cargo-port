@@ -1,7 +1,7 @@
 package de.gdxgame;
 
 /**
- * Die Klasse GameFloor beschreibt den Zustand der Lagerfläche.
+ * Die Klasse GameFloor beschreibt den Zustand der Lagerflï¿½che.
  * 
  * @author Lars Streblow
  */
@@ -111,33 +111,33 @@ public class GameFloor
 
 	public void setFloor(String values)
 	{
-		int i = 0;
-		int j = 0;
+		int x = 0;
+		int y = 0;
 		int k = 0;
-		for (i = 0; i < gameWidth; i++)
+		for (x = 0; x < gameWidth; x++)
 		{
-			for (j = 0; j < gameLength; j++)
+			for (y = 0; y < gameLength; y++)
 			{
-				floorBoxes[i][j] = 0;
+				floorBoxes[x][y] = 0;
 			}
 		}
-		i = 0;
-		j = 0;
+		x = 0;
+		y = 0;
 		while (k < values.length())
 		{
 			if (values.charAt(k) == ';')
 			{
-				i++;
-				if (i >= gameWidth) return;
-				j = 0;
+				y++;
+				if (y >= gameLength) return;
+				x = 0;
 			}
 			else if ('0' <= values.charAt(k) && values.charAt(k) <= '9')
 			{
-				if (j < gameLength)
+				if (x < gameWidth)
 				{
-					floorBoxes[i][j] = Character.getNumericValue(values.charAt(k));
-					if (floorBoxes[i][j] > gameHeight) gameHeight = floorBoxes[i][j];
-					j++;
+					floorBoxes[x][y] = Character.getNumericValue(values.charAt(k));
+					if (floorBoxes[x][y] > gameHeight) gameHeight = floorBoxes[x][y];
+					x++;
 				}
 			}
 			k++;
