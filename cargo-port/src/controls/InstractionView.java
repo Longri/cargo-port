@@ -55,8 +55,11 @@ public class InstractionView extends CB_View_Base
 		});
 		this.addChild(slideButton);
 
+		CB_RectF rec = this.copy();
+		rec.setHeight(this.height - slideButton.getHeight());
 		InstractionSelect sel = new InstractionSelect(this, "select");
 		sel.setZeroPos();
+		sel.setY(slideButton.getMaxY());
 		this.addChild(sel);
 	}
 

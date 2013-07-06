@@ -1,5 +1,6 @@
 package de.gdxgame;
 
+import CB_Core.Util.MoveableList;
 import Enums.InstructionType;
 
 /**
@@ -9,19 +10,20 @@ import Enums.InstructionType;
  * 
  * @author Lars Streblow
  */
-public class GameInstructionPool
+public class GameInstructionPool extends MoveableList<InstructionType>
 {
-	private InstructionType[] gameInstructions;
+
+	private static final long serialVersionUID = -2685722265871835712L;
 	private int instructionPointer;
 
 	public GameInstructionPool()
 	{
-		gameInstructions = new InstructionType[16];
-		for (int i = 0; i < gameInstructions.length; i++)
+		for (int i = 0; i < 16; i++)
 		{
-			gameInstructions[i] = InstructionType.Nop;
+			this.add(InstructionType.Nop);
 		}
 		instructionPointer = 0;
+		this.trimToSize();
 	}
 
 	public void setInstruction(int position, int instruction)
@@ -31,17 +33,15 @@ public class GameInstructionPool
 
 	public void setInstruction(int position, InstructionType instruction)
 	{
-		if (0 <= position && position < gameInstructions.length && 0 <= instruction.ordinal() && instruction.ordinal() <= 7)
+		if (0 <= position && position < this.size() && 0 <= instruction.ordinal() && instruction.ordinal() <= 7)
 		{
-			gameInstructions[position] = instruction;
+			this.set(position, instruction);
 		}
 	}
 
 	public InstructionType getInstruction(int position)
 	{
-		if (0 <= position && position < gameInstructions.length) return gameInstructions[position];
-		else
-			return InstructionType.Nop;
+		return this.get(position);
 	}
 
 	public void resetInstructionPointer()
@@ -51,7 +51,7 @@ public class GameInstructionPool
 
 	public InstructionType getNextInstruction()
 	{
-		if (instructionPointer < gameInstructions.length) return getInstruction(instructionPointer++);
+		if (instructionPointer < this.size()) return getInstruction(instructionPointer++);
 		else
 			return InstructionType.nothing;
 	}
