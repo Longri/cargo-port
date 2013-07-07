@@ -52,8 +52,8 @@ public class GameView extends CB_View_Base implements render3D
 	/**
 	 * Zeit f�r eine Animation von einem Vector n�chsten Vector
 	 */
-	public static final int ANIMATION_TIME = 200;
-	public static final int ANIMATION_WAIT_TIME = 80;
+	public static final int ANIMATION_TIME = 600;
+	public static final int ANIMATION_WAIT_TIME = 200;
 
 	private ArrayList<ModelInstance> ModelList = new ArrayList<ModelInstance>();
 	private AtomicBoolean waitOfAnimationReady;
@@ -299,8 +299,8 @@ public class GameView extends CB_View_Base implements render3D
 		if (myCam == null)
 		{
 			myCam = new PerspectiveCamera(zoom, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-			myCam.position.set(GameFieldWidth / 2, GameFieldHight, GameFieldDepth * 2);
-			myCam.lookAt(GameFieldWidth / 2, GameFieldHight * 0.33f, GameFieldDepth / 2);
+			myCam.position.set(GameFieldWidth / 2, GameFieldHight * 1.75f, GameFieldDepth * 2);
+			myCam.lookAt(GameFieldWidth / 2, GameFieldHight * 0.25f, GameFieldDepth / 2);
 			myCam.near = 0.1f;
 			myCam.far = 300;
 			myCam.rotateAround(new Vector3(GameFieldWidth / 2, 0, GameFieldDepth / 2), Vector3.Y, viewAngle);

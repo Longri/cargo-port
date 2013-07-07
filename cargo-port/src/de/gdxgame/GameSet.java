@@ -32,15 +32,15 @@ public class GameSet
 	private int func2Stack;
 	private boolean gameAccomplished;
 
-	public final static GameSet TestLevel = new GameSet(8, 8, 2)
+	public final static GameSet TestLevel = new GameSet(8, 6, 2)
 	{
 		protected void create()
 		{
 			super.create();
 			this.mIsFreeToPlay = true;
-			this.startFloor.setFloor(";;;02020202;20202020");
-			this.targetFloor.setFloor(";11111111;;;;;11111111");
-			this.startCrane.setPosition(0, 1);
+			this.startFloor.setFloor(";;02020202;20202020");
+			this.targetFloor.setFloor("11111111;;;;;11111111");
+			this.startCrane.setPosition(0, 0);
 			this.mainInstructionPool.setInstruction(0, 6);
 			this.mainInstructionPool.setInstruction(1, 6);
 			this.mainInstructionPool.setInstruction(2, 6);

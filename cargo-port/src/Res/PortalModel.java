@@ -18,8 +18,8 @@ import de.gdxgame.Views.Actions.AnimationList;
 import de.gdxgame.Views.Actions.AnimationVector3;
 
 /**
- * Enthällt die einzelnen Models des Portals<br>
- * * linker/rechter Fuß<br>
+ * Enthï¿½llt die einzelnen Models des Portals<br>
+ * * linker/rechter Fuï¿½<br>
  * * Arn<br>
  * * Katze<br>
  * 
@@ -126,8 +126,12 @@ public class PortalModel implements render3D
 		// Calculat and set Leg z-scale
 		Vector3 vec3 = GameView.that.getVectorPosition(GameView.that.getGameFieldDimensions());
 
-		float zScale = vec3.z / bounds.getDimensions().y;
-		mRunWay.transform.setToScaling(new Vector3(2, zScale, 3));
+		// SL:hier geht was schief fÃ¼r y < x
+		// float zScale = vec3.z / bounds.getDimensions().y;
+		// mRunWay.transform.setToScaling(new Vector3(2, zScale, 3));
+		// SL:ersatzweise begin
+		mRunWay.transform.setToScaling(new Vector3(1, 1, 1));
+		// SL:ersatzweise end
 		mRunWay.calculateTransforms();
 		is3DInitial = true;
 	}
@@ -152,7 +156,7 @@ public class PortalModel implements render3D
 	}
 
 	/**
-	 * Setze alle Models in Abhängigkeit der unteren linken Ecke des Portals
+	 * Setze alle Models in Abhï¿½ngigkeit der unteren linken Ecke des Portals
 	 * 
 	 * @param vec
 	 */
@@ -219,8 +223,7 @@ public class PortalModel implements render3D
 	private AnimationList animateRunWay(GameCoord start, GameCoord end)
 	{
 		AnimationVector3 ani = new AnimationVector3(mRunWay, GameView.that.getVectorPosition(new GameCoord(start.getX(), start.getY(),
-				start.getZ())), GameView.that.getVectorPosition(new GameCoord(end.getX(), end.getY(), end.getZ())),
-				GameView.ANIMATION_TIME);
+				start.getZ())), GameView.that.getVectorPosition(new GameCoord(end.getX(), end.getY(), end.getZ())), GameView.ANIMATION_TIME);
 
 		AnimationList list = new AnimationList();
 		list.add(ani);
@@ -233,8 +236,7 @@ public class PortalModel implements render3D
 		AnimationList list = new AnimationList();
 
 		AnimationVector3 ani = new AnimationVector3(mRunWay, GameView.that.getVectorPosition(new GameCoord(start.getX(), start.getY(),
-				start.getZ())), GameView.that.getVectorPosition(new GameCoord(end.getX(), end.getY(), end.getZ())),
-				GameView.ANIMATION_TIME);
+				start.getZ())), GameView.that.getVectorPosition(new GameCoord(end.getX(), end.getY(), end.getZ())), GameView.ANIMATION_TIME);
 		list.add(ani);
 
 		// Animate Left Lower corner and set Dependencys
