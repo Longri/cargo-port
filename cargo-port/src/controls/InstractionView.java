@@ -8,9 +8,12 @@ import CB_Core.GL_UI.runOnGL;
 import CB_Core.GL_UI.Controls.Button;
 import CB_Core.GL_UI.GL_Listener.GL;
 import CB_Core.Math.CB_RectF;
+import CB_Core.Math.UI_Size_Base;
 import CB_Core.Math.UiSizes;
 
 import com.badlogic.gdx.graphics.Color;
+
+import de.gdxgame.GameSet;
 
 public class InstractionView extends CB_View_Base
 {
@@ -29,17 +32,18 @@ public class InstractionView extends CB_View_Base
 	private float touchYoffset = 0;
 	private float yPos = 0;
 	private boolean isShowing = false;
+	private GameSet myGameSet;
+	private InstractionSelect sel;
 
-	public InstractionView(CB_RectF rec)
+	private InstructionPoolView main, func1, func2;
+
+	public InstractionView(CB_RectF rec, GameSet level)
 	{
 		super(rec, "InstractionView");
 		this.setBackground(SpriteCache.activityBackground);
-		this.setColorFilter(new Color(1f, 1f, 1f, 0.9f));
-	}
+		this.setColorFilter(new Color(1f, 1f, 1f, 0.6f));
+		this.myGameSet = level;
 
-	@Override
-	protected void Initial()
-	{
 		slideButton = new Button("");
 		slideButton.setWidth(this.width);
 		slideButton.setHeight(UiSizes.that.getButtonHeight() / 2);
@@ -55,12 +59,47 @@ public class InstractionView extends CB_View_Base
 		});
 		this.addChild(slideButton);
 
-		CB_RectF rec = this.copy();
 		rec.setHeight(this.height - slideButton.getHeight());
-		InstractionSelect sel = new InstractionSelect(this, "select");
+		sel = new InstractionSelect(this, "select");
 		sel.setZeroPos();
 		sel.setY(slideButton.getMaxY());
 		this.addChild(sel);
+		setGameSet(myGameSet);
+	}
+
+	@Override
+	protected void Initial()
+	{
+
+	}
+
+	public void setGameSet(GameSet gameSet)
+	{
+		myGameSet = gameSet;
+		float margin = UI_Size_Base.that.getMargin();
+
+		this.removeChild(main);
+		this.removeChild(func1);
+		this.removeChild(func2);
+
+		if (myGameSet != null)
+		{
+			float instractionPoolHeight = (this.height - slideButton.getMaxY()) / 3 - (margin * 4);
+			float instructionPoolWidth = this.width - sel.getMaxX() - (margin * 4);
+
+			CB_RectF instructionPoolRec = new CB_RectF(0, 0, instructionPoolWidth, instractionPoolHeight);
+			main = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.mainInstructionPool);
+			func1 = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.func1InstructionPool);
+			func2 = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.func2InstructionPool);
+
+			this.addChild(main);
+			this.addChild(func1);
+			this.addChild(func2);
+
+			func2.setPos(sel.getMaxX() + margin, slideButton.getMaxY() + margin);
+			func1.setPos(sel.getMaxX() + margin, func2.getMaxY() + margin);
+			main.setPos(sel.getMaxX() + margin, func1.getMaxY() + margin);
+		}
 	}
 
 	@Override

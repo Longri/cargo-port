@@ -97,7 +97,7 @@ public class GameView extends CB_View_Base implements render3D
 	{
 		super(rec, "GameView");
 		that = this;
-		mInstractionView = new InstractionView(rec);
+		mInstractionView = new InstractionView(rec, myGameSet);
 		mInstractionView.setHeight(this.height + mInstractionView.getTopHeight());
 		this.addChild(mInstractionView);
 	}
@@ -626,7 +626,7 @@ public class GameView extends CB_View_Base implements render3D
 		{
 			ModelList.clear();
 		}
-
+		mInstractionView.setGameSet(myGameSet);
 	}
 
 	public Vector3 getVectorPosition(GameCoord vector)

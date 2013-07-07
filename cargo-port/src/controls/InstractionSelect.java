@@ -27,6 +27,7 @@ public class InstractionSelect extends CB_View_Base
 			this.addChild(instBtnArray[i]);
 		}
 		instBtnArray[0].performClick();
+		this.setWidth(instBtnArray[0].getWidth());
 	}
 
 	private OnClickListener click = new OnClickListener()
