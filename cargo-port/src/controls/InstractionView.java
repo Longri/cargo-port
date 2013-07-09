@@ -13,6 +13,7 @@ import CB_Core.Math.UiSizes;
 
 import com.badlogic.gdx.graphics.Color;
 
+import controls.InstructionBox.ISelected;
 import de.gdxgame.GameSet;
 
 public class InstractionView extends CB_View_Base
@@ -34,6 +35,7 @@ public class InstractionView extends CB_View_Base
 	private boolean isShowing = false;
 	private GameSet myGameSet;
 	private InstractionSelect sel;
+	private int mSelectedPool = -1;
 
 	private InstructionPoolView main, func1, func2;
 
@@ -88,9 +90,9 @@ public class InstractionView extends CB_View_Base
 			float instructionPoolWidth = this.width - sel.getMaxX() - (margin * 4);
 
 			CB_RectF instructionPoolRec = new CB_RectF(0, 0, instructionPoolWidth, instractionPoolHeight);
-			main = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.mainInstructionPool);
-			func1 = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.func1InstructionPool);
-			func2 = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.func2InstructionPool);
+			main = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.mainInstructionPool, selectHandler, 0);
+			func1 = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.func1InstructionPool, selectHandler, 1);
+			func2 = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.func2InstructionPool, selectHandler, 2);
 
 			this.addChild(main);
 			this.addChild(func1);
@@ -101,6 +103,34 @@ public class InstractionView extends CB_View_Base
 			main.setPos(sel.getMaxX() + margin, func1.getMaxY() + margin);
 		}
 	}
+
+	ISelected selectHandler = new ISelected()
+	{
+
+		@Override
+		public void selected(int PoolIndex)
+		{
+			mSelectedPool = PoolIndex;
+
+			// deselect other
+			switch (PoolIndex)
+			{
+			case 0:
+				func1.deselect();
+				func2.deselect();
+				break;
+			case 1:
+				main.deselect();
+				func2.deselect();
+				break;
+			case 2:
+				main.deselect();
+				func1.deselect();
+				break;
+			}
+
+		}
+	};
 
 	@Override
 	public void onShow()

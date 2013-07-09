@@ -16,10 +16,20 @@ public class InstractionButton extends ImageButton
 	InstructionType type;
 	boolean markToDelete;
 	Image deleteImage;
+	private IDelClicked mHandler;
+	private int mPoolIndex;
+	private boolean mDeleteDisabled = false;
 
-	public InstractionButton(InstructionType instructionType)
+	public interface IDelClicked
+	{
+		public void delClickeded(int poolIndex);
+	}
+
+	public InstractionButton(InstructionType instructionType, IDelClicked handler, int PoolIndex)
 	{
 		super("");
+		mHandler = handler;
+		mPoolIndex = PoolIndex;
 		setWidth(UI_Size_Base.that.getButtonHeight());
 		type = instructionType;
 
@@ -77,7 +87,7 @@ public class InstractionButton extends ImageButton
 		@Override
 		public boolean onClick(GL_View_Base v, int x, int y, int pointer, int button)
 		{
-
+			if (mHandler != null) mHandler.delClickeded(mPoolIndex);
 			return true;
 		}
 	};
@@ -88,6 +98,7 @@ public class InstractionButton extends ImageButton
 		@Override
 		public boolean onClick(GL_View_Base v, int x, int y, int pointer, int button)
 		{
+			if (mDeleteDisabled) return true;
 			markToDelete = true;
 			InstractionButton.this.deleteImage.setVisible();
 			return true;
@@ -98,5 +109,10 @@ public class InstractionButton extends ImageButton
 	{
 		if (type == InstructionType.Nop || type == InstructionType.nothing) return;
 		super.render(batch);
+	}
+
+	public void disableDelete()
+	{
+		mDeleteDisabled = true;
 	}
 }

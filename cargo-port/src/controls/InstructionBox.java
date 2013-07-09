@@ -1,6 +1,7 @@
 package controls;
 
 import CB_Core.GL_UI.CB_View_Base;
+import CB_Core.GL_UI.GL_View_Base;
 import CB_Core.Math.CB_RectF;
 import CB_Core.Math.UI_Size_Base;
 import Enums.InstructionType;
@@ -8,6 +9,8 @@ import Res.ResourceCache;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+
+import controls.InstractionButton.IDelClicked;
 
 public class InstructionBox extends CB_View_Base
 {
@@ -17,11 +20,41 @@ public class InstructionBox extends CB_View_Base
 
 	private boolean isSelected = false;
 	private InstructionType type;
+	private IDelClicked mHandler;
+	int mPoolIndex;
+	private ISelected mSelectedHandler;
 
-	public InstructionBox(CB_RectF rec, InstructionType type)
+	public interface ISelected
+	{
+		public void selected(int PoolIndex);
+	}
+
+	public InstructionBox(CB_RectF rec, InstructionType type, IDelClicked handler, int PoolIndex, ISelected selectedHandler)
 	{
 		super(rec, "");
+		mHandler = handler;
+		mPoolIndex = PoolIndex;
+		mSelectedHandler = selectedHandler;
 		this.type = type;
+		this.setOnClickListener(clickListner);
+		this.setClickable(true);
+	}
+
+	OnClickListener clickListner = new OnClickListener()
+	{
+
+		@Override
+		public boolean onClick(GL_View_Base v, int x, int y, int pointer, int button)
+		{
+			if (mSelectedHandler != null) mSelectedHandler.selected(mPoolIndex);
+			isSelected = true;
+			return true;
+		}
+	};
+
+	public void setSelection(boolean value)
+	{
+		isSelected = value;
 	}
 
 	@Override
@@ -32,8 +65,21 @@ public class InstructionBox extends CB_View_Base
 
 		float btH = UI_Size_Base.that.getButtonHeight() / 2;
 
-		this.addChild(new InstractionButton(type)).setPos(this.halfWidth - btH, this.halfHeight - btH);
+		InstractionButton btn = new InstractionButton(type, delClicked, mPoolIndex);
+		btn.setPos(this.halfWidth - btH, this.halfHeight - btH);
+		btn.setOnClickListener(clickListner);
+		this.addChild(btn);
 	}
+
+	private IDelClicked delClicked = new IDelClicked()
+	{
+
+		@Override
+		public void delClickeded(int PoolIndex)
+		{
+			if (mHandler != null) mHandler.delClickeded(PoolIndex);
+		}
+	};
 
 	@Override
 	protected void SkinIsChanged()

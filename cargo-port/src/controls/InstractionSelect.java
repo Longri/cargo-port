@@ -22,8 +22,9 @@ public class InstractionSelect extends CB_View_Base
 		super(rec, Name);
 		for (int i = 0; i < instBtnArray.length; i++)
 		{
-			instBtnArray[i] = new InstractionButton(InstructionType.values()[i + 1]);
+			instBtnArray[i] = new InstractionButton(InstructionType.values()[i + 1], null, -1);
 			instBtnArray[i].setOnClickListener(click);
+			instBtnArray[i].disableDelete();
 			this.addChild(instBtnArray[i]);
 		}
 		instBtnArray[0].performClick();
