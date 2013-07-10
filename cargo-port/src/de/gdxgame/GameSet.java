@@ -32,29 +32,6 @@ public class GameSet
 	private int func2Stack;
 	private boolean gameAccomplished;
 
-	public final static GameSet TestLevel = new GameSet(8, 6, 2)
-	{
-		protected void create()
-		{
-			super.create();
-			this.mIsFreeToPlay = true;
-			// level 11
-			this.startFloor.setFloor(";;02020202;20202020");
-			this.targetFloor.setFloor(";;01010101;10101010");
-			this.startCrane.setPosition(0, 0);
-			this.mainInstructionPool.setInstructionPool("6666");
-			this.func1InstructionPool.setInstructionPool("3335331444441");
-			// level 10
-			// this.startFloor.setFloor(";;02020202;20202020");
-			// this.targetFloor.setFloor("11111111;;;;;11111111");
-			// this.startCrane.setPosition(0, 0);
-			// this.mainInstructionPool.setInstructionPool("66667777");
-			// this.func1InstructionPool.setInstructionPool("3335335144454451");
-			// this.func2InstructionPool.setInstructionPool("3353335244544452");
-		}
-
-	};
-
 	public GameSet(int x, int y, int z)
 	{
 		super();
@@ -153,8 +130,8 @@ public class GameSet
 	}
 
 	/**
-	 * Diese Methode f�hrt die n�chste Instruktion aus der Menge der Instruktionen aus. Sie aktualisiert die Objekte currentCrane (aktuelle
-	 * Portalkranposition) und currentFloor (aktueller Zustand der Lagerfl�che)
+	 * Diese Methode f�hrt die n�chste Instruktion aus der Menge der Instruktionen aus. Sie aktualisiert die Objekte currentCrane
+	 * (aktuelle Portalkranposition) und currentFloor (aktueller Zustand der Lagerfl�che)
 	 * 
 	 * @return 0 normaler Zug -1 Programmende erreicht (gameAccomplished true/false) -2 NOP-Code (runInstruction erneut aufrufen) -3 Randzug
 	 *         -4 Aufnahme/Ablegen -5 leere Aufnahme -6 Zug l�st Kollision aus

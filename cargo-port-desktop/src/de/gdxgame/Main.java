@@ -79,21 +79,18 @@ public class Main
 			public void RequestRender(String requestName)
 			{
 				App.getGraphics().requestRendering();
-
 			}
 
 			@Override
 			public void RenderDirty()
 			{
 				App.getGraphics().setContinuousRendering(false);
-
 			}
 
 			@Override
 			public void RenderContinous()
 			{
 				App.getGraphics().setContinuousRendering(true);
-
 			}
 		};
 
@@ -115,14 +112,12 @@ public class Main
 			@Override
 			public boolean isOnline()
 			{
-
 				return true;
 			}
 
 			@Override
 			public boolean isGPSon()
 			{
-
 				return true;
 			}
 
@@ -154,7 +149,6 @@ public class Main
 					@Override
 					public String getDescription()
 					{
-
 						return extension;
 					}
 

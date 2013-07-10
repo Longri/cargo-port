@@ -14,9 +14,10 @@ import CB_Core.Math.UiSizes;
 import com.badlogic.gdx.graphics.Color;
 
 import controls.InstructionBox.ISelected;
+import controls.InstructionBox.IinstructionChanged;
 import de.gdxgame.GameSet;
 
-public class InstractionView extends CB_View_Base
+public class InstructionView extends CB_View_Base
 {
 	private final int ANIMATION_TIME = 50;// 50;
 
@@ -34,12 +35,12 @@ public class InstractionView extends CB_View_Base
 	private float yPos = 0;
 	private boolean isShowing = false;
 	private GameSet myGameSet;
-	private InstractionSelect sel;
+	private InstructionSelect sel;
 	private int mSelectedPool = -1;
 
 	private InstructionPoolView main, func1, func2;
 
-	public InstractionView(CB_RectF rec, GameSet level)
+	public InstructionView(CB_RectF rec, GameSet level)
 	{
 		super(rec, "InstractionView");
 		this.setBackground(SpriteCache.activityBackground);
@@ -62,7 +63,7 @@ public class InstractionView extends CB_View_Base
 		this.addChild(slideButton);
 
 		rec.setHeight(this.height - slideButton.getHeight());
-		sel = new InstractionSelect(this, "select");
+		sel = new InstructionSelect(this, "select");
 		sel.setZeroPos();
 		sel.setY(slideButton.getMaxY());
 		this.addChild(sel);
@@ -90,9 +91,11 @@ public class InstractionView extends CB_View_Base
 			float instructionPoolWidth = this.width - sel.getMaxX() - (margin * 4);
 
 			CB_RectF instructionPoolRec = new CB_RectF(0, 0, instructionPoolWidth, instractionPoolHeight);
-			main = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.mainInstructionPool, selectHandler, 0);
-			func1 = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.func1InstructionPool, selectHandler, 1);
-			func2 = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.func2InstructionPool, selectHandler, 2);
+			main = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.mainInstructionPool, selectHandler, 0, changedHandler);
+			func1 = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.func1InstructionPool, selectHandler, 1,
+					changedHandler);
+			func2 = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.func2InstructionPool, selectHandler, 2,
+					changedHandler);
 
 			this.addChild(main);
 			this.addChild(func1);
@@ -103,6 +106,18 @@ public class InstractionView extends CB_View_Base
 			main.setPos(sel.getMaxX() + margin, func1.getMaxY() + margin);
 		}
 	}
+
+	IinstructionChanged changedHandler = new IinstructionChanged()
+	{
+
+		@Override
+		public void changed()
+		{
+			myGameSet.mainInstructionPool = main.pool;
+			myGameSet.func1InstructionPool = func1.pool;
+			myGameSet.func2InstructionPool = func2.pool;
+		}
+	};
 
 	ISelected selectHandler = new ISelected()
 	{
@@ -334,6 +349,11 @@ public class InstractionView extends CB_View_Base
 
 		GL.that.renderOnce(this.name);
 
+	}
+
+	public GameSet getGameSet()
+	{
+		return myGameSet;
 	}
 
 }

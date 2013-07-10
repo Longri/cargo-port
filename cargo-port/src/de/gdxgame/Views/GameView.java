@@ -30,7 +30,7 @@ import com.badlogic.gdx.graphics.g3d.lights.Lights;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-import controls.InstractionView;
+import controls.InstructionView;
 import de.gdxgame.GameCoord;
 import de.gdxgame.GameSet;
 import de.gdxgame.Views.Actions.Animation;
@@ -52,8 +52,12 @@ public class GameView extends CB_View_Base implements render3D
 	/**
 	 * Zeit f�r eine Animation von einem Vector n�chsten Vector
 	 */
-	public static final int ANIMATION_TIME = 600;
-	public static final int ANIMATION_WAIT_TIME = 200;
+	public static final int ANIMATION_TIME = 400;
+	public static final int ANIMATION_WAIT_TIME = 100;
+	public static final int FAST_ANIMATION_TIME = 100;
+	public static final int FAST_ANIMATION_WAIT_TIME = 25;
+
+	public static boolean fastAnimation = false;
 
 	private ArrayList<ModelInstance> ModelList = new ArrayList<ModelInstance>();
 	private AtomicBoolean waitOfAnimationReady;
@@ -86,7 +90,7 @@ public class GameView extends CB_View_Base implements render3D
 	float zoom = 80;
 	float lastZoom = 80;
 
-	private InstractionView mInstractionView;
+	private InstructionView mInstractionView;
 
 	/**
 	 * Constructor
@@ -97,7 +101,7 @@ public class GameView extends CB_View_Base implements render3D
 	{
 		super(rec, "GameView");
 		that = this;
-		mInstractionView = new InstractionView(rec, myGameSet);
+		mInstractionView = new InstructionView(rec, myGameSet);
 		mInstractionView.setHeight(this.height + mInstractionView.getTopHeight());
 		this.addChild(mInstractionView);
 	}
@@ -670,7 +674,7 @@ public class GameView extends CB_View_Base implements render3D
 			if (box != null)
 			{
 				AnimationVector3 ani = new AnimationVector3(box, GameFieldPositions[start.getX()][start.getY()][start.getZ()],
-						GameFieldPositions[end.getX()][end.getY()][end.getZ()], ANIMATION_TIME);
+						GameFieldPositions[end.getX()][end.getY()][end.getZ()], fastAnimation ? FAST_ANIMATION_TIME : ANIMATION_TIME);
 
 				// verschiebe GameVectorModel zur ZielPosition, wenn es etwas zu verschieben gibt
 				if (end.getX() != start.getX() || end.getY() != start.getY() || end.getZ() != start.getZ())
@@ -706,7 +710,7 @@ public class GameView extends CB_View_Base implements render3D
 			{
 				// verschiebe Box von Start auf Ziel und lasse beide verschwinden
 				AnimationVector3 ani = new AnimationVector3(box, GameFieldPositions[start.getX()][start.getY()][start.getZ()],
-						GameFieldPositions[end.getX()][end.getY()][end.getZ()], ANIMATION_TIME);
+						GameFieldPositions[end.getX()][end.getY()][end.getZ()], fastAnimation ? FAST_ANIMATION_TIME : ANIMATION_TIME);
 				ModelList.remove(GameVectorModels[start.getX()][start.getY()][start.getZ()]);
 				GameVectorModels[start.getX()][start.getY()][start.getZ()] = null;
 				ModelList.remove(GameVectorModels[end.getX()][end.getY()][end.getZ()]);
@@ -724,14 +728,19 @@ public class GameView extends CB_View_Base implements render3D
 		return null;
 	}
 
-	public void RunGameLoop()
+	public void RunGameLoop(boolean FastAnimation)
 	{
+		fastAnimation = FastAnimation;
 		Thread loop = new Thread(new Runnable()
 		{
 
 			@Override
 			public void run()
 			{
+				// get gameSet from InstructionView
+				myGameSet = mInstractionView.getGameSet();
+				setLevel(myGameSet);
+
 				myGameSet.startGame();
 				int returnCode = 0;
 				waitOfAnimationReady = new AtomicBoolean(false);
@@ -743,7 +752,7 @@ public class GameView extends CB_View_Base implements render3D
 					{
 						try
 						{
-							Thread.sleep(ANIMATION_WAIT_TIME);
+							Thread.sleep(fastAnimation ? FAST_ANIMATION_WAIT_TIME : ANIMATION_WAIT_TIME);
 							continue;
 						}
 						catch (InterruptedException e)

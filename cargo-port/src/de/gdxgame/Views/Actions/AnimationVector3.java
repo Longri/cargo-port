@@ -27,9 +27,9 @@ public class AnimationVector3 implements Animation<Vector3>
 	public AnimationVector3(ModelInstance model, Vector3 start, Vector3 end, int duration)
 	{
 		mModelInstance = model;
-		mStart = new Vector3(start);
-		mEnd = new Vector3(end);
-		mAct = new Vector3(start);
+		mStart = new Vector3(start.cpy());
+		mEnd = new Vector3(end.cpy());
+		mAct = new Vector3(start.cpy());
 		mDuration = duration;
 		xDiv = mEnd.x - mStart.x;
 		yDiv = mEnd.y - mStart.y;
@@ -51,6 +51,7 @@ public class AnimationVector3 implements Animation<Vector3>
 			if (actTime + mStatrTime >= mTargetTime)
 			{
 				stop();
+
 				if (mReadyHandler != null)
 				{
 
@@ -66,6 +67,7 @@ public class AnimationVector3 implements Animation<Vector3>
 								@Override
 								public void run()
 								{
+									if (yDiv != 0) mModelInstance.transform.setToTranslation(mEnd);
 									mReadyHandler.ready();
 								}
 							});
@@ -78,7 +80,7 @@ public class AnimationVector3 implements Animation<Vector3>
 			else
 			{
 				mModelInstance.transform.setToTranslation(mAct);
-				if (mAnimationCallBack != null) mAnimationCallBack.calculatedNewPos(mAct);
+				if (mAnimationCallBack != null) mAnimationCallBack.calculatedNewPos(mAct.cpy());
 			}
 
 		}

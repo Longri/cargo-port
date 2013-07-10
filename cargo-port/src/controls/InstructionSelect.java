@@ -11,18 +11,22 @@ import Enums.InstructionType;
  * 
  * @author Longri
  */
-public class InstractionSelect extends CB_View_Base
+public class InstructionSelect extends CB_View_Base
 {
-	InstractionButton instBtnArray[] = new InstractionButton[7];
+	public static InstructionSelect that;
+
+	InstructionButton instBtnArray[] = new InstructionButton[7];
 
 	InstructionType selectedType;
 
-	public InstractionSelect(CB_RectF rec, String Name)
+	public InstructionSelect(CB_RectF rec, String Name)
 	{
+
 		super(rec, Name);
+		that = this;
 		for (int i = 0; i < instBtnArray.length; i++)
 		{
-			instBtnArray[i] = new InstractionButton(InstructionType.values()[i + 1], null, -1);
+			instBtnArray[i] = new InstructionButton(InstructionType.values()[i + 1], null, -1);
 			instBtnArray[i].setOnClickListener(click);
 			instBtnArray[i].disableDelete();
 			this.addChild(instBtnArray[i]);
@@ -31,13 +35,18 @@ public class InstractionSelect extends CB_View_Base
 		this.setWidth(instBtnArray[0].getWidth());
 	}
 
+	public InstructionType getSelectedInstructionType()
+	{
+		return selectedType;
+	}
+
 	private OnClickListener click = new OnClickListener()
 	{
 
 		@Override
 		public boolean onClick(GL_View_Base v, int x, int y, int pointer, int button)
 		{
-			selectedType = ((InstractionButton) v).type;
+			selectedType = ((InstructionButton) v).type;
 			for (int i = 0; i < instBtnArray.length; i++)
 			{
 				if (instBtnArray[i].type == selectedType) instBtnArray[i].setFocus(true);

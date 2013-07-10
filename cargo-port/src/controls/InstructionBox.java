@@ -10,7 +10,7 @@ import Res.ResourceCache;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
-import controls.InstractionButton.IDelClicked;
+import controls.InstructionButton.IDelClicked;
 
 public class InstructionBox extends CB_View_Base
 {
@@ -23,18 +23,26 @@ public class InstructionBox extends CB_View_Base
 	private IDelClicked mHandler;
 	int mPoolIndex;
 	private ISelected mSelectedHandler;
+	private IinstructionChanged mChangedHandler;
 
 	public interface ISelected
 	{
 		public void selected(int PoolIndex);
 	}
 
-	public InstructionBox(CB_RectF rec, InstructionType type, IDelClicked handler, int PoolIndex, ISelected selectedHandler)
+	public interface IinstructionChanged
+	{
+		public void changed();
+	}
+
+	public InstructionBox(CB_RectF rec, InstructionType type, IDelClicked handler, int PoolIndex, ISelected selectedHandler,
+			IinstructionChanged changedHandler)
 	{
 		super(rec, "");
 		mHandler = handler;
 		mPoolIndex = PoolIndex;
 		mSelectedHandler = selectedHandler;
+		mChangedHandler = changedHandler;
 		this.type = type;
 		this.setOnClickListener(clickListner);
 		this.setClickable(true);
@@ -48,6 +56,9 @@ public class InstructionBox extends CB_View_Base
 		{
 			if (mSelectedHandler != null) mSelectedHandler.selected(mPoolIndex);
 			isSelected = true;
+			type = InstructionSelect.that.getSelectedInstructionType();
+			addInstructionButton();
+			if (mChangedHandler != null) mChangedHandler.changed();
 			return true;
 		}
 	};
@@ -62,10 +73,15 @@ public class InstructionBox extends CB_View_Base
 	{
 		boxDrawable = ResourceCache.textFiledBackground;
 		boxDrawableSelected = ResourceCache.textFiledBackgroundFocus;
+		addInstructionButton();
+	}
 
+	private void addInstructionButton()
+	{
+		this.removeChilds();
 		float btH = UI_Size_Base.that.getButtonHeight() / 2;
 
-		InstractionButton btn = new InstractionButton(type, delClicked, mPoolIndex);
+		InstructionButton btn = new InstructionButton(type, delClicked, mPoolIndex);
 		btn.setPos(this.halfWidth - btH, this.halfHeight - btH);
 		btn.setOnClickListener(clickListner);
 		this.addChild(btn);
@@ -101,5 +117,10 @@ public class InstructionBox extends CB_View_Base
 		{
 			boxDrawable.draw(batch, 0, 0, width, height);
 		}
+	}
+
+	public InstructionType getType()
+	{
+		return type;
 	}
 }

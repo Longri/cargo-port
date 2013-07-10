@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
-public class InstractionButton extends ImageButton
+public class InstructionButton extends ImageButton
 {
 	InstructionType type;
 	boolean markToDelete;
@@ -25,7 +25,7 @@ public class InstractionButton extends ImageButton
 		public void delClickeded(int poolIndex);
 	}
 
-	public InstractionButton(InstructionType instructionType, IDelClicked handler, int PoolIndex)
+	public InstructionButton(InstructionType instructionType, IDelClicked handler, int PoolIndex)
 	{
 		super("");
 		mHandler = handler;
@@ -99,8 +99,16 @@ public class InstractionButton extends ImageButton
 		public boolean onClick(GL_View_Base v, int x, int y, int pointer, int button)
 		{
 			if (mDeleteDisabled) return true;
-			markToDelete = true;
-			InstractionButton.this.deleteImage.setVisible();
+			markToDelete = !markToDelete;
+			if (markToDelete)
+			{
+				InstructionButton.this.deleteImage.setVisible();
+			}
+			else
+			{
+				InstructionButton.this.deleteImage.setVisible(false);
+			}
+
 			return true;
 		}
 	};

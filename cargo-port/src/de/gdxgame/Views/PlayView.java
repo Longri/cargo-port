@@ -8,12 +8,11 @@ import CB_Core.GL_UI.Controls.ScrollBox;
 import CB_Core.Math.CB_RectF;
 import CB_Core.Math.UI_Size_Base;
 import controls.LevelButton;
-import de.gdxgame.GameSet;
+import de.gdxgame.TestLevels;
 import de.gdxgame.Views.Actions.Action_Show_GameView;
 
 public class PlayView extends CB_View_Base
 {
-	public static final int MAX_LEVEL_COUNT = 20;
 
 	ScrollBox scrollBox;
 	Box content;
@@ -30,7 +29,12 @@ public class PlayView extends CB_View_Base
 		CB_RectF buttonRec = new CB_RectF(0, 0, UI_Size_Base.that.getButtonWidthWide(), UI_Size_Base.that.getButtonWidthWide());
 
 		int ButtonRowCount = (int) (this.getWidth() / (buttonRec.getWidth() + UI_Size_Base.that.getMargin()));
-		int ButtonLineCount = MAX_LEVEL_COUNT / ButtonRowCount;
+		int ButtonLineCount = (TestLevels.Levels.size() - 1) / ButtonRowCount;
+		if (ButtonLineCount == 0)
+		{
+			ButtonLineCount = 1;
+			ButtonRowCount = TestLevels.Levels.size() - 1;
+		}
 
 		scrollBox = new ScrollBox(this);
 		content = new Box(this, "");
@@ -43,16 +47,17 @@ public class PlayView extends CB_View_Base
 		float btnMargin = ((this.width - (ButtonRowCount * buttonRec.getWidth())) / (ButtonRowCount + 1));
 		content.setMargins(btnMargin, btnMargin);
 
+		int Index = 0;
 		for (int i = 0; i < ButtonLineCount; i++)
 		{
 
-			for (int j = 0; j < ButtonRowCount - 1; j++)
+			for (int j = 0; j < ButtonRowCount; j++)
 			{
-				LevelButton bt = new LevelButton(buttonRec, GameSet.TestLevel);
+				LevelButton bt = new LevelButton(buttonRec, TestLevels.Levels.get(Index++));
 				bt.setOnClickListener(onClick);
 				content.addNext(bt, -1);
 			}
-			LevelButton bt = new LevelButton(buttonRec, GameSet.TestLevel);
+			LevelButton bt = new LevelButton(buttonRec, TestLevels.Levels.get(Index++));
 			bt.setOnClickListener(onClick);
 			content.addLast(bt, -1);
 		}

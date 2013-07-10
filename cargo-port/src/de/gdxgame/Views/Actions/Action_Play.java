@@ -9,9 +9,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import de.gdxgame.Views.GameView;
 import de.gdxgame.Views.ViewIDs;
 
-public class Action_Debug_Play extends CB_Action
+public class Action_Play extends CB_Action
 {
-	public Action_Debug_Play()
+	public Action_Play()
 	{
 		super("PlayView", "", ViewIDs.PLAY_VIEW);
 	}
@@ -19,7 +19,7 @@ public class Action_Debug_Play extends CB_Action
 	@Override
 	public void Execute()
 	{
-		GameView.that.RunGameLoop();
+		GameView.that.RunGameLoop(false);
 	}
 
 	@Override
