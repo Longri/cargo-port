@@ -36,7 +36,6 @@ public class InstructionView extends CB_View_Base
 	private boolean isShowing = false;
 	private GameSet myGameSet;
 	private InstructionSelect sel;
-	private int mSelectedPool = -1;
 
 	private InstructionPoolView main, func1, func2;
 
@@ -125,8 +124,6 @@ public class InstructionView extends CB_View_Base
 		@Override
 		public void selected(int PoolIndex)
 		{
-			mSelectedPool = PoolIndex;
-
 			// deselect other
 			switch (PoolIndex)
 			{

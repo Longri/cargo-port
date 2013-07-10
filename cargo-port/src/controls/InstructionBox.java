@@ -100,8 +100,6 @@ public class InstructionBox extends CB_View_Base
 	@Override
 	protected void SkinIsChanged()
 	{
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

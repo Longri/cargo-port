@@ -10,7 +10,6 @@ public class LasifantAnimation extends FrameAnimation
 	public LasifantAnimation(CB_RectF rec, String Name)
 	{
 		super(rec, Name);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -22,14 +21,12 @@ public class LasifantAnimation extends FrameAnimation
 	@Override
 	public AnimationBase INSTANCE()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public AnimationBase INSTANCE(CB_RectF rec)
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 

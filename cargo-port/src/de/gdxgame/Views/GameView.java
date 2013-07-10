@@ -109,15 +109,11 @@ public class GameView extends CB_View_Base implements render3D
 	@Override
 	protected void Initial()
 	{
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	protected void SkinIsChanged()
 	{
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -757,7 +753,6 @@ public class GameView extends CB_View_Base implements render3D
 						}
 						catch (InterruptedException e)
 						{
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}

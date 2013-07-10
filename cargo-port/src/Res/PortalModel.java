@@ -33,7 +33,6 @@ public class PortalModel implements render3D
 	private ModelInstance mLegBottomLeft, mLegTopLeft, mLegBottomRight, mLegTopRight, mJibLeft, mJibRight, mRunWay;
 
 	private boolean is3DInitial = false;
-	private GameCoord actPos;
 	private float legOffset = 0;
 	private float legWidth = 0;
 

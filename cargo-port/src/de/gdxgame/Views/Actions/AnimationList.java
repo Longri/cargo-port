@@ -15,7 +15,7 @@ public class AnimationList extends ArrayList<Animation<Vector3>> implements Anim
 	private boolean mIsplay = false;
 	private ReadyHandler mReadyHandler;
 	private int mAnimationCount;
-	private AnimationCallBack<Vector3> mAnimationCallBack;
+	protected AnimationCallBack<Vector3> mAnimationCallBack;
 
 	public void play()
 	{

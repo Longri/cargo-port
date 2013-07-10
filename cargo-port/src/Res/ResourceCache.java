@@ -194,9 +194,6 @@ public class ResourceCache extends SpriteCache
 
 		textFieldCursor = new NinePatchDrawable(new NinePatch(SpriteCache.getThemedSprite("selection-input-icon"), 1, 1, 2, 2));
 
-		int hp = patch / 2;
-		// shaddowRec = new NinePatchDrawable(new NinePatch(SpriteCache.getThemedSprite("shaddowrect"), hp, hp, hp, hp));
-
 	}
 
 	private static void initialPortalModels()
