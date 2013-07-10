@@ -41,46 +41,53 @@ public class GameSet
 			this.startFloor.setFloor(";;02020202;20202020");
 			this.targetFloor.setFloor("11111111;;;;;11111111");
 			this.startCrane.setPosition(0, 0);
-			this.mainInstructionPool.setInstruction(0, 6);
-			this.mainInstructionPool.setInstruction(1, 6);
-			this.mainInstructionPool.setInstruction(2, 6);
-			this.mainInstructionPool.setInstruction(3, 6);
-			this.mainInstructionPool.setInstruction(4, 7);
-			this.mainInstructionPool.setInstruction(5, 7);
-			this.mainInstructionPool.setInstruction(6, 7);
-			this.mainInstructionPool.setInstruction(7, 7);
-			this.func1InstructionPool.setInstruction(0, 3);
-			this.func1InstructionPool.setInstruction(1, 3);
-			this.func1InstructionPool.setInstruction(2, 3);
-			this.func1InstructionPool.setInstruction(3, 5);
-			this.func1InstructionPool.setInstruction(4, 3);
-			this.func1InstructionPool.setInstruction(5, 3);
-			this.func1InstructionPool.setInstruction(6, 5);
-			this.func1InstructionPool.setInstruction(7, 1);
-			this.func1InstructionPool.setInstruction(8, 4);
-			this.func1InstructionPool.setInstruction(9, 4);
-			this.func1InstructionPool.setInstruction(10, 4);
-			this.func1InstructionPool.setInstruction(11, 5);
-			this.func1InstructionPool.setInstruction(12, 4);
-			this.func1InstructionPool.setInstruction(13, 4);
-			this.func1InstructionPool.setInstruction(14, 5);
-			this.func1InstructionPool.setInstruction(15, 1);
-			this.func2InstructionPool.setInstruction(0, 3);
-			this.func2InstructionPool.setInstruction(1, 3);
-			this.func2InstructionPool.setInstruction(2, 5);
-			this.func2InstructionPool.setInstruction(3, 3);
-			this.func2InstructionPool.setInstruction(4, 3);
-			this.func2InstructionPool.setInstruction(5, 3);
-			this.func2InstructionPool.setInstruction(6, 5);
-			this.func2InstructionPool.setInstruction(7, 2);
-			this.func2InstructionPool.setInstruction(8, 4);
-			this.func2InstructionPool.setInstruction(9, 4);
-			this.func2InstructionPool.setInstruction(10, 5);
-			this.func2InstructionPool.setInstruction(11, 4);
-			this.func2InstructionPool.setInstruction(12, 4);
-			this.func2InstructionPool.setInstruction(13, 4);
-			this.func2InstructionPool.setInstruction(14, 5);
-			this.func2InstructionPool.setInstruction(15, 2);
+			this.mainInstructionPool.setInstruction(0, 3);
+			this.mainInstructionPool.setInstruction(1, 3);
+			this.mainInstructionPool.setInstruction(2, 3);
+			this.mainInstructionPool.setInstruction(3, 5);
+			this.mainInstructionPool.setInstruction(4, 1);
+			this.mainInstructionPool.setInstruction(5, 4); // booom!
+			this.mainInstructionPool.setInstruction(6, 4);
+			// this.mainInstructionPool.setInstruction(0, 6);
+			// this.mainInstructionPool.setInstruction(1, 6);
+			// this.mainInstructionPool.setInstruction(2, 6);
+			// this.mainInstructionPool.setInstruction(3, 6);
+			// this.mainInstructionPool.setInstruction(4, 7);
+			// this.mainInstructionPool.setInstruction(5, 7);
+			// this.mainInstructionPool.setInstruction(6, 7);
+			// this.mainInstructionPool.setInstruction(7, 7);
+			// this.func1InstructionPool.setInstruction(0, 3);
+			// this.func1InstructionPool.setInstruction(1, 3);
+			// this.func1InstructionPool.setInstruction(2, 3);
+			// this.func1InstructionPool.setInstruction(3, 5);
+			// this.func1InstructionPool.setInstruction(4, 3);
+			// this.func1InstructionPool.setInstruction(5, 3);
+			// this.func1InstructionPool.setInstruction(6, 5);
+			// this.func1InstructionPool.setInstruction(7, 1);
+			// this.func1InstructionPool.setInstruction(8, 4);
+			// this.func1InstructionPool.setInstruction(9, 4);
+			// this.func1InstructionPool.setInstruction(10, 4);
+			// this.func1InstructionPool.setInstruction(11, 5);
+			// this.func1InstructionPool.setInstruction(12, 4);
+			// this.func1InstructionPool.setInstruction(13, 4);
+			// this.func1InstructionPool.setInstruction(14, 5);
+			// this.func1InstructionPool.setInstruction(15, 1);
+			// this.func2InstructionPool.setInstruction(0, 3);
+			// this.func2InstructionPool.setInstruction(1, 3);
+			// this.func2InstructionPool.setInstruction(2, 5);
+			// this.func2InstructionPool.setInstruction(3, 3);
+			// this.func2InstructionPool.setInstruction(4, 3);
+			// this.func2InstructionPool.setInstruction(5, 3);
+			// this.func2InstructionPool.setInstruction(6, 5);
+			// this.func2InstructionPool.setInstruction(7, 2);
+			// this.func2InstructionPool.setInstruction(8, 4);
+			// this.func2InstructionPool.setInstruction(9, 4);
+			// this.func2InstructionPool.setInstruction(10, 5);
+			// this.func2InstructionPool.setInstruction(11, 4);
+			// this.func2InstructionPool.setInstruction(12, 4);
+			// this.func2InstructionPool.setInstruction(13, 4);
+			// this.func2InstructionPool.setInstruction(14, 5);
+			// this.func2InstructionPool.setInstruction(15, 2);
 		}
 
 	};
@@ -243,7 +250,7 @@ public class GameSet
 			{
 				if (currentCrane.isLoaded())
 				{
-					if (currentFloor.getBoxes(currentCrane.getXPosition() + 1, currentCrane.getYPosition()) == currentFloor.getHeight() - 1)
+					if (currentFloor.getBoxes(currentCrane.getXPosition() + 1, currentCrane.getYPosition()) == currentFloor.getHeight())
 					{
 						// Kranposition auf Zielposition, Vernichtung der aufgenommenen Box, Vernichtung der obersten Box an Zielposition
 						boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
@@ -318,7 +325,7 @@ public class GameSet
 			{
 				if (currentCrane.isLoaded())
 				{
-					if (currentFloor.getBoxes(currentCrane.getXPosition() - 1, currentCrane.getYPosition()) == currentFloor.getHeight() - 1)
+					if (currentFloor.getBoxes(currentCrane.getXPosition() - 1, currentCrane.getYPosition()) == currentFloor.getHeight())
 					{
 						// Kranposition auf Zielposition, Vernichtung der aufgenommenen Box, Vernichtung der obersten Box an Zielposition
 						boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
@@ -393,7 +400,7 @@ public class GameSet
 			{
 				if (currentCrane.isLoaded())
 				{
-					if (currentFloor.getBoxes(currentCrane.getXPosition(), currentCrane.getYPosition() + 1) == currentFloor.getHeight() - 1)
+					if (currentFloor.getBoxes(currentCrane.getXPosition(), currentCrane.getYPosition() + 1) == currentFloor.getHeight())
 					{
 						// Kranposition auf Zielposition, Vernichtung der aufgenommenen Box, Vernichtung der obersten Box an Zielposition
 						boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),
@@ -467,7 +474,7 @@ public class GameSet
 			{
 				if (currentCrane.isLoaded())
 				{
-					if (currentFloor.getBoxes(currentCrane.getXPosition(), currentCrane.getYPosition() - 1) == currentFloor.getHeight() - 1)
+					if (currentFloor.getBoxes(currentCrane.getXPosition(), currentCrane.getYPosition() - 1) == currentFloor.getHeight())
 					{
 						// Kranposition auf Zielposition, Vernichtung der aufgenommenen Box, Vernichtung der obersten Box an Zielposition
 						boxAnimationStartCoord.setGameCoord(currentCrane.getXPosition(), currentCrane.getYPosition(),

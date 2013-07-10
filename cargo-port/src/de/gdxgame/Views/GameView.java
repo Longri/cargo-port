@@ -696,6 +696,32 @@ public class GameView extends CB_View_Base implements render3D
 		return mPortalModel.animatePortal(start, end);
 	}
 
+	public AnimationList animateClashBox(GameCoord start, GameCoord end)
+	{
+		try
+		{
+			// get Box
+			ModelInstance box = GameVectorModels[start.getX()][start.getY()][start.getZ()];
+			if (box != null)
+			{
+				// verschiebe Box von Start auf Ziel und lasse beide verschwinden
+				AnimationVector3 ani = new AnimationVector3(box, GameFieldPositions[start.getX()][start.getY()][start.getZ()],
+						GameFieldPositions[end.getX()][end.getY()][end.getZ()], ANIMATION_TIME);
+				GameVectorModels[end.getX()][end.getY()][end.getZ()] = null;
+				GameVectorModels[start.getX()][start.getY()][start.getZ()] = null;
+				AnimationList list = new AnimationList();
+				list.add(ani);
+				list.trimToSize();
+				return list;
+			}
+		}
+		catch (java.lang.ArrayIndexOutOfBoundsException e)
+		{
+			Logger.Error("GameView", "ArrayIndexOutOfBoundsException", e);
+		}
+		return null;
+	}
+
 	public void RunGameLoop()
 	{
 		Thread loop = new Thread(new Runnable()
@@ -772,6 +798,7 @@ public class GameView extends CB_View_Base implements render3D
 						printGameSet();
 						break;
 					case -6: // Zug l�st Kollision aus
+						clashMove();
 						System.out.println("Kollision ausgel�st");
 						printGameSet();
 						break;
@@ -828,6 +855,40 @@ public class GameView extends CB_View_Base implements render3D
 			if (!that.myGameSet.boxAnimationStartCoord.isNull() && !that.myGameSet.boxAnimationTargetCoord.isNull())
 			{
 				Animation<Vector3> ani = animateBox(that.myGameSet.boxAnimationStartCoord, that.myGameSet.boxAnimationTargetCoord);
+				mAnimationList.add(ani);
+			}
+
+			if (mAnimationList.size() > 0)
+			{
+				waitOfAnimationReady.set(true);
+				mAnimationList.play(new ReadyHandler()
+				{
+
+					@Override
+					public void ready()
+					{
+						waitOfAnimationReady.set(false);
+					}
+				});
+			}
+		}
+	}
+
+	private void clashMove()
+	{
+		synchronized (mAnimationList)
+		{
+			mAnimationList.clear();
+
+			if (!that.myGameSet.boxAnimationStartCoord.isNull() && !that.myGameSet.boxAnimationTargetCoord.isNull())
+			{
+				Animation<Vector3> ani = animateClashBox(that.myGameSet.boxAnimationStartCoord, that.myGameSet.boxAnimationTargetCoord);
+				mAnimationList.add(ani);
+			}
+
+			if (!that.myGameSet.craneAnimationStartCoord.isNull() && !that.myGameSet.craneAnimationTargetCoord.isNull())
+			{
+				Animation<Vector3> ani = animatePortal(that.myGameSet.craneAnimationStartCoord, that.myGameSet.craneAnimationTargetCoord);
 				mAnimationList.add(ani);
 			}
 
