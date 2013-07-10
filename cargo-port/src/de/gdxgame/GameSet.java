@@ -45,9 +45,15 @@ public class GameSet
 			this.mainInstructionPool.setInstruction(1, 3);
 			this.mainInstructionPool.setInstruction(2, 3);
 			this.mainInstructionPool.setInstruction(3, 5);
-			this.mainInstructionPool.setInstruction(4, 1);
-			this.mainInstructionPool.setInstruction(5, 4); // booom!
-			this.mainInstructionPool.setInstruction(6, 4);
+			this.mainInstructionPool.setInstruction(4, 3);
+			this.mainInstructionPool.setInstruction(5, 3);
+			this.mainInstructionPool.setInstruction(6, 1);
+			this.mainInstructionPool.setInstruction(7, 4);
+			this.mainInstructionPool.setInstruction(8, 4);
+			this.mainInstructionPool.setInstruction(9, 4); // booom!
+			this.mainInstructionPool.setInstruction(10, 4);
+			this.mainInstructionPool.setInstruction(11, 4);
+			this.mainInstructionPool.setInstruction(12, 2);
 			// this.mainInstructionPool.setInstruction(0, 6);
 			// this.mainInstructionPool.setInstruction(1, 6);
 			// this.mainInstructionPool.setInstruction(2, 6);

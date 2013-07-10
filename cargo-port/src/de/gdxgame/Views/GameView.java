@@ -707,8 +707,10 @@ public class GameView extends CB_View_Base implements render3D
 				// verschiebe Box von Start auf Ziel und lasse beide verschwinden
 				AnimationVector3 ani = new AnimationVector3(box, GameFieldPositions[start.getX()][start.getY()][start.getZ()],
 						GameFieldPositions[end.getX()][end.getY()][end.getZ()], ANIMATION_TIME);
-				GameVectorModels[end.getX()][end.getY()][end.getZ()] = null;
+				ModelList.remove(GameVectorModels[start.getX()][start.getY()][start.getZ()]);
 				GameVectorModels[start.getX()][start.getY()][start.getZ()] = null;
+				ModelList.remove(GameVectorModels[end.getX()][end.getY()][end.getZ()]);
+				GameVectorModels[end.getX()][end.getY()][end.getZ()] = null;
 				AnimationList list = new AnimationList();
 				list.add(ani);
 				list.trimToSize();
