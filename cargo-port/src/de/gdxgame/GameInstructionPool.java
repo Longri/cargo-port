@@ -4,8 +4,8 @@ import CB_Core.Util.MoveableList;
 import Enums.InstructionType;
 
 /**
- * Die Klasse GameInstructionPool beschreibt eine Menge von Instruktionen. Es sind maximal 16 Instruktionen möglich. Die Instruktionen
- * können sein: 0 NOP 1 in X-Richtung vor 2 in X-Richtung zurück 3 in Y-Richtung vor 4 in Y-Richtung zurück 5 Aufnehmen/Ablegen Portalkran 6
+ * Die Klasse GameInstructionPool beschreibt eine Menge von Instruktionen. Es sind maximal 16 Instruktionen mï¿½glich. Die Instruktionen
+ * kï¿½nnen sein: 0 NOP 1 in X-Richtung vor 2 in X-Richtung zurï¿½ck 3 in Y-Richtung vor 4 in Y-Richtung zurï¿½ck 5 Aufnehmen/Ablegen Portalkran 6
  * Aufruf Funktion 1 7 Aufruf Funktion 2
  * 
  * @author Lars Streblow
@@ -54,5 +54,27 @@ public class GameInstructionPool extends MoveableList<InstructionType>
 		if (instructionPointer < this.size()) return getInstruction(instructionPointer++);
 		else
 			return InstructionType.nothing;
+	}
+
+	public void setInstructionPool(String values)
+	{
+		int k = 0;
+		int i = 0;
+		for (i = 0; i < 16; i++)
+		{
+			this.setInstruction(i, InstructionType.Nop);
+		}
+		i = 0;
+		while (k < values.length())
+		{
+			if ('0' <= values.charAt(k) && values.charAt(k) <= '7')
+			{
+				setInstruction(i, Character.getNumericValue(values.charAt(k)));
+				i++;
+				if (i >= 16) return;
+			}
+			k++;
+		}
+
 	}
 }
