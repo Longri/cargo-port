@@ -11,6 +11,7 @@ import CB_Core.GL_UI.Main.Actions.CB_Action_ShowQuit;
 import CB_Core.Math.CB_RectF;
 import CB_Core.Math.GL_UISizes;
 import de.gdxgame.Views.Actions.Action_Fast_Play;
+import de.gdxgame.Views.Actions.Action_Load_Model;
 import de.gdxgame.Views.Actions.Action_Play;
 import de.gdxgame.Views.Actions.Action_ShowQuit;
 import de.gdxgame.Views.Actions.Action_Show_PlayView;
@@ -30,6 +31,7 @@ public class MainView extends TabMainView
 	public static CB_Action_ShowQuit actionClose = new Action_ShowQuit();
 	private Action_Play actionPlay = new Action_Play();
 	private Action_Fast_Play actionFastPlay = new Action_Fast_Play();
+	private Action_Load_Model actionLoadModel = new Action_Load_Model();
 
 	// ######## Views ###########
 	public static PlayView mPlayView;
@@ -91,6 +93,8 @@ public class MainView extends TabMainView
 
 		btn2.addAction(new CB_ActionButton(actionPlay, true));
 		btn3.addAction(new CB_ActionButton(actionFastPlay, true));
+
+		btn4.addAction(new CB_ActionButton(actionLoadModel, true));
 		// btn5.addAction(new CB_ActionButton(actionShowSettings, false, GestureDirection.Left));
 		// btn5.addAction(new CB_ActionButton(actionDayNight, false));
 		// btn5.addAction(new CB_ActionButton(actionScreenLock, false));

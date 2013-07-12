@@ -17,6 +17,7 @@ import CB_Core.Map.Point;
 import CB_Core.Math.CB_RectF;
 import Res.PortalModel;
 import Res.ResourceCache;
+import Res.ResourceCache.IResourceChanged;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -42,7 +43,7 @@ import de.gdxgame.Views.Actions.ReadyHandler;
  * @author Lars Streblow
  * @author Longri
  */
-public class GameView extends CB_View_Base implements render3D
+public class GameView extends CB_View_Base implements render3D, IResourceChanged
 {
 	/**
 	 * Static zugriff auf die aktuelle Instance
@@ -100,6 +101,7 @@ public class GameView extends CB_View_Base implements render3D
 	public GameView(CB_RectF rec)
 	{
 		super(rec, "GameView");
+		ResourceCache.Add(this);
 		that = this;
 		mInstractionView = new InstructionView(rec, myGameSet);
 		mInstractionView.setHeight(this.height + mInstractionView.getTopHeight());
@@ -601,7 +603,7 @@ public class GameView extends CB_View_Base implements render3D
 							{
 								for (int k = 0; k < myGameSet.startFloor.floorBoxes[i][j]; k++)
 								{
-									ModelInstance inst = new ModelInstance(ResourceCache.getBox2Model());
+									ModelInstance inst = new ModelInstance(ResourceCache.getBoxModel());
 									inst.transform.setToTranslation(GameFieldPositions[i][j][k]);
 									GameVectorModels[i][j][k] = inst;
 									ModelList.add(inst);
@@ -934,6 +936,12 @@ public class GameView extends CB_View_Base implements render3D
 			System.out.println();
 		}
 		System.out.println();
+	}
+
+	@Override
+	public void resourceChanged()
+	{
+		setLevel(myGameSet);
 	}
 
 }

@@ -3,6 +3,7 @@ package Res;
 import java.util.ArrayList;
 
 import CB_Core.GL_UI.render3D;
+import Res.ResourceCache.IResourceChanged;
 
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
@@ -25,8 +26,13 @@ import de.gdxgame.Views.Actions.AnimationVector3;
  * 
  * @author Longri
  */
-public class PortalModel implements render3D
+public class PortalModel implements render3D, IResourceChanged
 {
+
+	public PortalModel()
+	{
+		ResourceCache.Add(this);
+	}
 
 	ArrayList<ModelInstance> mModelList, mLegCenterLeft, mLegCenterRight, mJibCenter;
 
@@ -122,16 +128,6 @@ public class PortalModel implements render3D
 		legWidth = bounds.getDimensions().x;
 		legOffset = legWidth + (ResourceCache.getSize() / 2);
 
-		// // Calculat and set Leg z-scale
-		// Vector3 vec3 = GameView.that.getVectorPosition(GameView.that.getGameFieldDimensions());
-		//
-		// // SL:hier geht was schief für y < x
-		// // float zScale = vec3.z / bounds.getDimensions().y;
-		// // mRunWay.transform.setToScaling(new Vector3(2, zScale, 3));
-		// // SL:ersatzweise begin
-		// mRunWay.transform.setToScaling(new Vector3(1, 1, 1));
-		// // SL:ersatzweise end
-		// mRunWay.calculateTransforms();
 		is3DInitial = true;
 	}
 
@@ -266,6 +262,12 @@ public class PortalModel implements render3D
 
 		list.trimToSize();
 		return list;
+	}
+
+	@Override
+	public void resourceChanged()
+	{
+		Initial3D();
 	}
 
 }

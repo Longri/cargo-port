@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import CB_Core.GL_UI.ButtonSprites;
 import CB_Core.GL_UI.SpriteCache;
+import CB_Core.GL_UI.Controls.MessageBox.GL_MsgBox;
+import CB_Core.GL_UI.Controls.MessageBox.MessageBoxIcon;
 import CB_Core.GL_UI.Skin.CB_Skin;
 import CB_Core.GL_UI.Skin.SkinBase;
 import CB_Core.GL_UI.utils.ColorDrawable;
@@ -32,12 +34,56 @@ public class ResourceCache extends SpriteCache
 	private static Model model_Box, model_Box2, model_field1, model_field2, model_PortalLegBottom, model_PortalLegCenter,
 			model_PortalLegTop, model_PortalJibLeft, model_PortalJibCenter, model_PortalJibRight, model_PortalRunWay;
 	private static float size, halfsize, dpi;
+	private static ModelBuilder modelBuilder;
+	private static Color trans;
+	private static float dimens;
+	private static Material matBlue;
+	private static Material matGreen;
+	private static Material matRed;
+	private static long attributes;
+
+	public interface IResourceChanged
+	{
+		public void resourceChanged();
+	}
+
+	public static ArrayList<IResourceChanged> list = new ArrayList<IResourceChanged>();
+
+	public static void Add(IResourceChanged event)
+	{
+		synchronized (list)
+		{
+			if (!list.contains(event)) list.add(event);
+		}
+	}
+
+	public static void Remove(IResourceChanged event)
+	{
+		synchronized (list)
+		{
+			list.remove(event);
+		}
+	}
+
+	public static void CallResourceChanged()
+	{
+		for (IResourceChanged event : list)
+		{
+			if (event == null) continue;
+			event.resourceChanged();
+		}
+	}
 
 	public static void LoadSprites(boolean reload)
 	{
 		if (!reload) setPath(CB_Skin.INSTANCE);
 
 		loadDefaultUi();
+
+		modelBuilder = new ModelBuilder();
+		trans = new Color(0, 1, 0, 0.4f);
+
+		size = 6;
 
 		// Load Box Model and read Boundingbox for Size initialisations
 		{
@@ -54,7 +100,9 @@ public class ResourceCache extends SpriteCache
 			}
 			else
 			{
-				model_Box = new G3dModelLoader(new UBJsonReader()).loadModel(Gdx.files.internal("skins/default/day/cube.g3db"));
+				// model_Box = new G3dModelLoader(new UBJsonReader()).loadModel(Gdx.files.internal("skins/default/day/cube.g3db"));
+				model_Box = modelBuilder.createBox(size, size, size, new Material(ColorAttribute.createDiffuse(trans)), Usage.Position
+						| Usage.Normal);
 			}
 
 			ModelInstance instance = new ModelInstance(model_Box);
@@ -67,10 +115,6 @@ public class ResourceCache extends SpriteCache
 			instance = null;
 
 		}
-
-		ModelBuilder modelBuilder = new ModelBuilder();
-
-		Color trans = new Color(0, 1, 0, 0.4f);
 
 		model_Box2 = modelBuilder.createBox(size, size, size, new Material(ColorAttribute.createDiffuse(trans)), Usage.Position
 				| Usage.Normal);
@@ -200,11 +244,11 @@ public class ResourceCache extends SpriteCache
 	{
 		ModelBuilder modelBuilder = new ModelBuilder();
 
-		float dimens = size / 4;
-		Material matBlue = new Material(ColorAttribute.createDiffuse(Color.BLUE));
-		Material matGreen = new Material(ColorAttribute.createDiffuse(Color.GREEN));
-		Material matRed = new Material(ColorAttribute.createDiffuse(Color.RED));
-		long attributes = Usage.Position | Usage.Normal;
+		dimens = size / 4;
+		matBlue = new Material(ColorAttribute.createDiffuse(Color.BLUE));
+		matGreen = new Material(ColorAttribute.createDiffuse(Color.GREEN));
+		matRed = new Material(ColorAttribute.createDiffuse(Color.RED));
+		attributes = Usage.Position | Usage.Normal;
 
 		model_PortalLegBottom = modelBuilder.createCylinder(dimens, size, dimens, 16, matBlue, attributes);
 		model_PortalLegCenter = modelBuilder.createCylinder(dimens, size, dimens, 16, matGreen, attributes);
@@ -284,6 +328,216 @@ public class ResourceCache extends SpriteCache
 	public static float getDpi()
 	{
 		return dpi;
+	}
+
+	public static void loadBoxModel(final String Path)
+	{
+		Model dispose = model_Box;
+		ObjLoader loader = new ObjLoader();
+		try
+		{
+			model_Box = loader.loadModel(Gdx.files.absolute(Path));
+		}
+		catch (Exception e)
+		{
+			GL_MsgBox.Show(e.toString(), "Fehler", MessageBoxIcon.Error);
+		}
+		CallResourceChanged();
+		if (dispose != null) dispose.dispose();
+		dispose = null;
+	}
+
+	public static void resetBoxModel()
+	{
+		Model dispose = model_Box;
+		model_Box = modelBuilder.createBox(size, size, size, new Material(ColorAttribute.createDiffuse(trans)), Usage.Position
+				| Usage.Normal);
+		CallResourceChanged();
+		if (dispose != null) dispose.dispose();
+		dispose = null;
+	}
+
+	public static void loadRunWayModel(final String Path)
+	{
+		Model dispose = model_PortalRunWay;
+		ObjLoader loader = new ObjLoader();
+		try
+		{
+			model_PortalRunWay = loader.loadModel(Gdx.files.absolute(Path));
+		}
+		catch (Exception e)
+		{
+			GL_MsgBox.Show(e.toString(), "Fehler", MessageBoxIcon.Error);
+		}
+		CallResourceChanged();
+		if (dispose != null) dispose.dispose();
+		dispose = null;
+	}
+
+	public static void resetRunWayModel()
+	{
+		Model dispose = model_PortalRunWay;
+		model_PortalRunWay = modelBuilder.createBox(dimens * 3, dimens * 2, dimens * 2,
+				new Material(ColorAttribute.createDiffuse(Color.RED)), attributes);
+		CallResourceChanged();
+		if (dispose != null) dispose.dispose();
+		dispose = null;
+	}
+
+	public static void loadPortalLegBottomModel(final String Path)
+	{
+		Model dispose = model_PortalLegBottom;
+		ObjLoader loader = new ObjLoader();
+		try
+		{
+			model_PortalLegBottom = loader.loadModel(Gdx.files.absolute(Path));
+		}
+		catch (Exception e)
+		{
+			GL_MsgBox.Show(e.toString(), "Fehler", MessageBoxIcon.Error);
+		}
+		CallResourceChanged();
+		if (dispose != null) dispose.dispose();
+		dispose = null;
+	}
+
+	public static void resetPortalLegBottomModel()
+	{
+		Model dispose = model_PortalLegBottom;
+		model_PortalLegBottom = modelBuilder.createCylinder(dimens, size, dimens, 16, matBlue, attributes);
+		CallResourceChanged();
+		if (dispose != null) dispose.dispose();
+		dispose = null;
+	}
+
+	public static void loadPortalLegCenterModel(final String Path)
+	{
+		Model dispose = model_PortalLegCenter;
+		ObjLoader loader = new ObjLoader();
+		try
+		{
+			model_PortalLegCenter = loader.loadModel(Gdx.files.absolute(Path));
+		}
+		catch (Exception e)
+		{
+			GL_MsgBox.Show(e.toString(), "Fehler", MessageBoxIcon.Error);
+		}
+		CallResourceChanged();
+		if (dispose != null) dispose.dispose();
+		dispose = null;
+	}
+
+	public static void resetPortalLegCenterModel()
+	{
+		Model dispose = model_PortalLegCenter;
+		model_PortalLegCenter = modelBuilder.createCylinder(dimens, size, dimens, 16, matGreen, attributes);
+		CallResourceChanged();
+		if (dispose != null) dispose.dispose();
+		dispose = null;
+	}
+
+	public static void loadPortalLegTopModel(final String Path)
+	{
+		Model dispose = model_PortalLegTop;
+		ObjLoader loader = new ObjLoader();
+		try
+		{
+			model_PortalLegTop = loader.loadModel(Gdx.files.absolute(Path));
+		}
+		catch (Exception e)
+		{
+			GL_MsgBox.Show(e.toString(), "Fehler", MessageBoxIcon.Error);
+		}
+		CallResourceChanged();
+		if (dispose != null) dispose.dispose();
+		dispose = null;
+	}
+
+	public static void resetPortalLegTopModel()
+	{
+		Model dispose = model_PortalLegTop;
+		model_PortalLegTop = modelBuilder.createCylinder(dimens, size, dimens, 16, matRed, attributes);
+		CallResourceChanged();
+		if (dispose != null) dispose.dispose();
+		dispose = null;
+	}
+
+	public static void loadPortalJibLeftModel(final String Path)
+	{
+		Model dispose = model_PortalJibLeft;
+		ObjLoader loader = new ObjLoader();
+		try
+		{
+			model_PortalJibLeft = loader.loadModel(Gdx.files.absolute(Path));
+		}
+		catch (Exception e)
+		{
+			GL_MsgBox.Show(e.toString(), "Fehler", MessageBoxIcon.Error);
+		}
+		CallResourceChanged();
+		if (dispose != null) dispose.dispose();
+		dispose = null;
+	}
+
+	public static void resetPortalJibLeftModel()
+	{
+		Model dispose = model_PortalJibLeft;
+		model_PortalJibLeft = modelBuilder.createBox(size / 2, dimens, dimens, matBlue, attributes);
+		CallResourceChanged();
+		if (dispose != null) dispose.dispose();
+		dispose = null;
+	}
+
+	public static void loadPortalJibCenterModel(final String Path)
+	{
+		Model dispose = model_PortalJibCenter;
+		ObjLoader loader = new ObjLoader();
+		try
+		{
+			model_PortalJibCenter = loader.loadModel(Gdx.files.absolute(Path));
+		}
+		catch (Exception e)
+		{
+			GL_MsgBox.Show(e.toString(), "Fehler", MessageBoxIcon.Error);
+		}
+		CallResourceChanged();
+		if (dispose != null) dispose.dispose();
+		dispose = null;
+	}
+
+	public static void resetPortalJibCenterModel()
+	{
+		Model dispose = model_PortalJibCenter;
+		model_PortalJibCenter = modelBuilder.createBox(size, dimens, dimens, matGreen, attributes);
+		CallResourceChanged();
+		if (dispose != null) dispose.dispose();
+		dispose = null;
+	}
+
+	public static void loadPortalJibRightModel(final String Path)
+	{
+		Model dispose = model_PortalJibRight;
+		ObjLoader loader = new ObjLoader();
+		try
+		{
+			model_PortalJibRight = loader.loadModel(Gdx.files.absolute(Path));
+		}
+		catch (Exception e)
+		{
+			GL_MsgBox.Show(e.toString(), "Fehler", MessageBoxIcon.Error);
+		}
+		CallResourceChanged();
+		if (dispose != null) dispose.dispose();
+		dispose = null;
+	}
+
+	public static void resetPortalJibRightModel()
+	{
+		Model dispose = model_PortalJibRight;
+		model_PortalJibRight = modelBuilder.createBox(size / 2, dimens, dimens, matRed, attributes);
+		CallResourceChanged();
+		if (dispose != null) dispose.dispose();
+		dispose = null;
 	}
 
 }
