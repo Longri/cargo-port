@@ -13,7 +13,6 @@ import CB_Core.Math.UiSizes;
 
 import com.badlogic.gdx.graphics.Color;
 
-import controls.InstructionBox.ISelected;
 import controls.InstructionBox.IinstructionChanged;
 import de.gdxgame.GameSet;
 
@@ -90,11 +89,9 @@ public class InstructionView extends CB_View_Base
 			float instructionPoolWidth = this.width - sel.getMaxX() - (margin * 4);
 
 			CB_RectF instructionPoolRec = new CB_RectF(0, 0, instructionPoolWidth, instractionPoolHeight);
-			main = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.mainInstructionPool, selectHandler, 0, changedHandler);
-			func1 = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.func1InstructionPool, selectHandler, 1,
-					changedHandler);
-			func2 = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.func2InstructionPool, selectHandler, 2,
-					changedHandler);
+			main = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.mainInstructionPool, 0, changedHandler);
+			func1 = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.func1InstructionPool, 1, changedHandler);
+			func2 = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.func2InstructionPool, 2, changedHandler);
 
 			this.addChild(main);
 			this.addChild(func1);
@@ -115,32 +112,6 @@ public class InstructionView extends CB_View_Base
 			myGameSet.mainInstructionPool = main.pool;
 			myGameSet.func1InstructionPool = func1.pool;
 			myGameSet.func2InstructionPool = func2.pool;
-		}
-	};
-
-	ISelected selectHandler = new ISelected()
-	{
-
-		@Override
-		public void selected(int PoolIndex)
-		{
-			// deselect other
-			switch (PoolIndex)
-			{
-			case 0:
-				func1.deselect();
-				func2.deselect();
-				break;
-			case 1:
-				main.deselect();
-				func2.deselect();
-				break;
-			case 2:
-				main.deselect();
-				func1.deselect();
-				break;
-			}
-
 		}
 	};
 

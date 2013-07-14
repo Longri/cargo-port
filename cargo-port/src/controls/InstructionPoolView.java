@@ -10,7 +10,6 @@ import CB_Core.Math.CB_RectF;
 import CB_Core.Math.UI_Size_Base;
 import Enums.InstructionType;
 import Res.ResourceCache;
-import controls.InstructionBox.ISelected;
 import controls.InstructionBox.IinstructionChanged;
 import controls.InstructionButton.IDelClicked;
 import de.gdxgame.GameInstructionPool;
@@ -21,15 +20,11 @@ public class InstructionPoolView extends CB_View_Base
 	ArrayList<InstructionBox> btn;
 	float wh, margin;
 	CB_RectF boxRec;
-	private int mSelectedIndex = -1;
-
-	private ISelected mSelectHandler;
 	int mPoolIndex;
 
 	private IinstructionChanged mChangedHandler;
 
-	public InstructionPoolView(CB_RectF rec, String Name, GameInstructionPool pool, ISelected selectHandler, int PoolIndex,
-			IinstructionChanged changedHandler)
+	public InstructionPoolView(CB_RectF rec, String Name, GameInstructionPool pool, int PoolIndex, IinstructionChanged changedHandler)
 	{
 		super(rec, Name);
 		this.pool = pool;
@@ -40,7 +35,6 @@ public class InstructionPoolView extends CB_View_Base
 		boxRec = new CB_RectF(0, 0, wh, wh);
 		this.setClickable(true);
 		this.mPoolIndex = PoolIndex;
-		this.mSelectHandler = selectHandler;
 		mChangedHandler = changedHandler;
 	}
 
@@ -55,12 +49,12 @@ public class InstructionPoolView extends CB_View_Base
 		{
 			if (count < 8)
 			{
-				this.addNext(new InstructionBox(boxRec, inst, delClicked, Index, selectHandler, changedHandler));
+				this.addNext(new InstructionBox(boxRec, inst, delClicked, Index, changedHandler));
 				count++;
 			}
 			else
 			{
-				this.addLast(new InstructionBox(boxRec, inst, delClicked, Index, selectHandler, changedHandler));
+				this.addLast(new InstructionBox(boxRec, inst, delClicked, Index, changedHandler));
 				count = 1;
 			}
 			Index++;
@@ -75,6 +69,7 @@ public class InstructionPoolView extends CB_View_Base
 		{
 			// Read Instructions
 			GameInstructionPool newPool = new GameInstructionPool();
+			newPool.clear(); // Constructor beffüllt den Pool schon mit 16 NOP
 			for (GL_View_Base view : childs)
 			{
 				InstructionType type = ((InstructionBox) view).getType();
@@ -87,23 +82,6 @@ public class InstructionPoolView extends CB_View_Base
 		}
 	};
 
-	ISelected selectHandler = new ISelected()
-	{
-
-		@Override
-		public void selected(int PoolIndex)
-		{
-			mSelectedIndex = PoolIndex;
-			int index = 0;
-			for (GL_View_Base child : childs)
-			{
-				((InstructionBox) child).setSelection(index == mSelectedIndex);
-				index++;
-			}
-			if (mSelectHandler != null) mSelectHandler.selected(PoolIndex);
-		}
-	};
-
 	IDelClicked delClicked = new IDelClicked()
 	{
 
@@ -111,7 +89,7 @@ public class InstructionPoolView extends CB_View_Base
 		public void delClickeded(int PoolIndex)
 		{
 			pool.set(PoolIndex, InstructionType.Nop);
-			InstructionPoolView.this.removeChilds();
+			InstructionPoolView.this.removeChildsDirekt();
 			InstructionPoolView.this.RunOnGL(new runOnGL()
 			{
 
@@ -124,7 +102,7 @@ public class InstructionPoolView extends CB_View_Base
 						@Override
 						public void run()
 						{
-							Initial();
+							InstructionPoolView.this.resetInitial();
 						}
 					});
 				}
@@ -136,11 +114,6 @@ public class InstructionPoolView extends CB_View_Base
 	@Override
 	protected void SkinIsChanged()
 	{
-	}
-
-	public void deselect()
-	{
-		selectHandler.selected(-1);
 	}
 
 }

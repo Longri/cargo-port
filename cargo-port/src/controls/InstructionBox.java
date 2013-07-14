@@ -22,26 +22,18 @@ public class InstructionBox extends CB_View_Base
 	private InstructionType type;
 	private IDelClicked mHandler;
 	int mPoolIndex;
-	private ISelected mSelectedHandler;
 	private IinstructionChanged mChangedHandler;
-
-	public interface ISelected
-	{
-		public void selected(int PoolIndex);
-	}
 
 	public interface IinstructionChanged
 	{
 		public void changed();
 	}
 
-	public InstructionBox(CB_RectF rec, InstructionType type, IDelClicked handler, int PoolIndex, ISelected selectedHandler,
-			IinstructionChanged changedHandler)
+	public InstructionBox(CB_RectF rec, InstructionType type, IDelClicked handler, int PoolIndex, IinstructionChanged changedHandler)
 	{
 		super(rec, "");
 		mHandler = handler;
 		mPoolIndex = PoolIndex;
-		mSelectedHandler = selectedHandler;
 		mChangedHandler = changedHandler;
 		this.type = type;
 		this.setOnClickListener(clickListner);
@@ -54,8 +46,6 @@ public class InstructionBox extends CB_View_Base
 		@Override
 		public boolean onClick(GL_View_Base v, int x, int y, int pointer, int button)
 		{
-			if (mSelectedHandler != null) mSelectedHandler.selected(mPoolIndex);
-			isSelected = true;
 			type = InstructionSelect.that.getSelectedInstructionType();
 			addInstructionButton();
 			if (mChangedHandler != null) mChangedHandler.changed();
