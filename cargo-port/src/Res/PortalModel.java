@@ -1,7 +1,5 @@
 package Res;
 
-import java.util.ArrayList;
-
 import CB_Core.GL_UI.render3D;
 import Res.ResourceCache.IResourceChanged;
 
@@ -13,6 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 
 import de.gdxgame.GameCoord;
+import de.gdxgame.ThreadSafeList;
 import de.gdxgame.Views.GameView;
 import de.gdxgame.Views.Actions.AnimationCallBack;
 import de.gdxgame.Views.Actions.AnimationList;
@@ -29,12 +28,11 @@ import de.gdxgame.Views.Actions.AnimationVector3;
 public class PortalModel implements render3D, IResourceChanged
 {
 
+	ThreadSafeList<ModelInstance> mModelList, mLegCenterLeft, mLegCenterRight, mJibCenter;
 	public PortalModel()
 	{
 		ResourceCache.Add(this);
 	}
-
-	ArrayList<ModelInstance> mModelList, mLegCenterLeft, mLegCenterRight, mJibCenter;
 
 	private ModelInstance mLegBottomLeft, mLegTopLeft, mLegBottomRight, mLegTopRight, mJibLeft, mJibRight, mRunWay;
 
@@ -68,14 +66,14 @@ public class PortalModel implements render3D, IResourceChanged
 	@Override
 	public void Initial3D()
 	{
-		mModelList = new ArrayList<ModelInstance>();
+		mModelList = new ThreadSafeList<ModelInstance>();
 
 		int maxField = GameView.that.getMaxGameFieldX();
 		int maxFieldHeight = GameView.that.getMaxGameFieldZ();
 
 		mLegBottomLeft = new ModelInstance(ResourceCache.getPortalLegBottomModel());
 
-		if (mLegCenterLeft == null) mLegCenterLeft = new ArrayList<ModelInstance>();
+		if (mLegCenterLeft == null) mLegCenterLeft = new ThreadSafeList<ModelInstance>();
 		mLegCenterLeft.clear();
 		for (int i = 0; i < maxFieldHeight - 2; i++)
 		{
@@ -86,7 +84,7 @@ public class PortalModel implements render3D, IResourceChanged
 
 		mLegBottomRight = new ModelInstance(ResourceCache.getPortalLegBottomModel());
 
-		if (mLegCenterRight == null) mLegCenterRight = new ArrayList<ModelInstance>();
+		if (mLegCenterRight == null) mLegCenterRight = new ThreadSafeList<ModelInstance>();
 		mLegCenterRight.clear();
 		for (int i = 0; i < maxFieldHeight - 2; i++)
 		{
@@ -96,7 +94,7 @@ public class PortalModel implements render3D, IResourceChanged
 		mLegTopRight = new ModelInstance(ResourceCache.getPortalLegTopModel());
 
 		mJibLeft = new ModelInstance(ResourceCache.getPortalJibLeftModel());
-		if (mJibCenter == null) mJibCenter = new ArrayList<ModelInstance>();
+		if (mJibCenter == null) mJibCenter = new ThreadSafeList<ModelInstance>();
 		mJibCenter.clear();
 		for (int i = 0; i < maxField; i++)
 		{
@@ -231,8 +229,7 @@ public class PortalModel implements render3D, IResourceChanged
 	{
 		AnimationList list = new AnimationList();
 
-		AnimationVector3 ani = new AnimationVector3(mRunWay, GameView.that.getVectorPosition(new GameCoord(start.getX(), start.getY(),
-				start.getZ())), GameView.that.getVectorPosition(new GameCoord(end.getX(), end.getY(), end.getZ())),
+		AnimationVector3 ani = new AnimationVector3(mRunWay, GameView.that.getVectorPosition(start), GameView.that.getVectorPosition(end),
 				GameView.fastAnimation ? GameView.FAST_ANIMATION_TIME : GameView.ANIMATION_TIME);
 		list.add(ani);
 

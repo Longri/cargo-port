@@ -1,11 +1,17 @@
 package de.gdxgame.Views.Actions;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.math.Vector3;
 
-public class AnimationList extends ArrayList<Animation<Vector3>> implements Animation<Vector3>
+import de.gdxgame.ThreadSafeList;
+
+public class AnimationList extends ThreadSafeList<Animation<Vector3>> implements Animation<Vector3>
 {
+
+	public AnimationList()
+	{
+		super();
+
+	}
 
 	/**
 	 * 

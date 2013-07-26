@@ -8,8 +8,9 @@ import com.badlogic.gdx.math.Vector3;
 
 public class AnimationVector3 implements Animation<Vector3>
 {
-	private ModelInstance mModelInstance;
-	private Vector3 mStart, mEnd, mAct;
+	private final ModelInstance mModelInstance;
+	private final Vector3 mStart, mEnd;
+	private Vector3 mAct;
 	private int mDuration;
 	private ReadyHandler mReadyHandler;
 	private AnimationCallBack<Vector3> mAnimationCallBack;
@@ -46,6 +47,8 @@ public class AnimationVector3 implements Animation<Vector3>
 			if (xDiv != 0) mAct.x = mStart.x + ((actTime % this.mDuration) / (this.mDuration / xDiv));
 			if (yDiv != 0) mAct.y = mStart.y + ((actTime % this.mDuration) / (this.mDuration / yDiv));
 			if (zDiv != 0) mAct.z = mStart.z + ((actTime % this.mDuration) / (this.mDuration / zDiv));
+
+			System.out.println(mAct.toString());
 
 			// chk Ready
 			if (actTime + mStatrTime >= mTargetTime)
@@ -101,6 +104,8 @@ public class AnimationVector3 implements Animation<Vector3>
 		mTargetTime = mStatrTime + mDuration;
 		mPlay = true;
 		mstop = false;
+
+		mModelInstance.transform.setToTranslation(mStart);
 	}
 
 	@Override

@@ -312,6 +312,7 @@ public class ResourceCache extends SpriteCache
 
 	public static Model getPortalRunWay()
 	{
+		System.out.print("getRunWayModel");
 		return model_PortalRunWay;
 	}
 

@@ -1,6 +1,5 @@
 package de.gdxgame.Views;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Random;
@@ -34,6 +33,7 @@ import com.badlogic.gdx.math.Vector3;
 import controls.InstructionView;
 import de.gdxgame.GameCoord;
 import de.gdxgame.GameSet;
+import de.gdxgame.ThreadSafeList;
 import de.gdxgame.Views.Actions.Animation;
 import de.gdxgame.Views.Actions.AnimationList;
 import de.gdxgame.Views.Actions.AnimationVector3;
@@ -53,14 +53,14 @@ public class GameView extends CB_View_Base implements render3D, IResourceChanged
 	/**
 	 * Zeit f�r eine Animation von einem Vector n�chsten Vector
 	 */
-	public static final int ANIMATION_TIME = 400;
+	public static final int ANIMATION_TIME = 300;
 	public static final int ANIMATION_WAIT_TIME = 100;
 	public static final int FAST_ANIMATION_TIME = 100;
 	public static final int FAST_ANIMATION_WAIT_TIME = 25;
 
 	public static boolean fastAnimation = false;
 
-	private ArrayList<ModelInstance> ModelList = new ArrayList<ModelInstance>();
+	private ThreadSafeList<ModelInstance> ModelList = new ThreadSafeList<ModelInstance>();
 	private AtomicBoolean waitOfAnimationReady;
 	private GameSet myGameSet;
 

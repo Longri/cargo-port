@@ -10,6 +10,7 @@ import CB_Core.GL_UI.Main.TabMainView;
 import CB_Core.GL_UI.Main.Actions.CB_Action_ShowQuit;
 import CB_Core.Math.CB_RectF;
 import CB_Core.Math.GL_UISizes;
+import de.efects.Explosion;
 import de.gdxgame.Views.Actions.Action_Fast_Play;
 import de.gdxgame.Views.Actions.Action_Load_Model;
 import de.gdxgame.Views.Actions.Action_Play;
@@ -25,6 +26,8 @@ public class MainView extends TabMainView
 	public static MainView that;
 	public static GameView gameView;
 	public static CB_TabView TAB;
+
+	private Explosion ex;
 
 	// ######## Button Actions ###########
 	private Action_Show_PlayView actionShowPlayView = new Action_Show_PlayView();
@@ -99,6 +102,9 @@ public class MainView extends TabMainView
 		// btn5.addAction(new CB_ActionButton(actionDayNight, false));
 		// btn5.addAction(new CB_ActionButton(actionScreenLock, false));
 		btn5.addAction(new CB_ActionButton(actionClose, false, GestureDirection.Down));
+
+		ex = new Explosion();
+		this.addChild(ex);
 
 	}
 
