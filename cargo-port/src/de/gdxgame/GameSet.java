@@ -546,4 +546,12 @@ public class GameSet
 		return returnCode;
 	}
 
+	/**
+	 * makes this level free to play
+	 */
+	public void unlock()
+	{
+		mIsFreeToPlay = true;
+	}
+
 }

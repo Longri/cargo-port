@@ -1,5 +1,7 @@
 package de.gdxgame.Views;
 
+import java.util.ArrayList;
+
 import CB_Core.GL_UI.CB_View_Base;
 import CB_Core.GL_UI.GL_View_Base;
 import CB_Core.GL_UI.SpriteCache;
@@ -13,14 +15,17 @@ import de.gdxgame.Views.Actions.Action_Show_GameView;
 
 public class PlayView extends CB_View_Base
 {
-
+	public static PlayView that;
 	ScrollBox scrollBox;
 	Box content;
+	private int mLastPlayedIndex = -1;
+	private ArrayList<LevelButton> mLevelButtonList;
 
 	public PlayView(CB_RectF rec)
 	{
 		super(rec, "PlayView");
 		this.setBackground(SpriteCache.activityBackground);
+		that = this;
 	}
 
 	@Override
@@ -46,18 +51,20 @@ public class PlayView extends CB_View_Base
 
 		float btnMargin = ((this.width - (ButtonRowCount * buttonRec.getWidth())) / (ButtonRowCount + 1));
 		content.setMargins(btnMargin, btnMargin);
-
+		mLevelButtonList = new ArrayList<LevelButton>();
 		int Index = 0;
 		for (int i = 0; i < ButtonLineCount; i++)
 		{
 
 			for (int j = 0; j < ButtonRowCount; j++)
 			{
-				LevelButton bt = new LevelButton(buttonRec, TestLevels.Levels.get(Index++));
+				LevelButton bt = new LevelButton(Index, buttonRec, TestLevels.Levels.get(Index++));
+				mLevelButtonList.add(bt);
 				bt.setOnClickListener(onClick);
 				content.addNext(bt, -1);
 			}
-			LevelButton bt = new LevelButton(buttonRec, TestLevels.Levels.get(Index++));
+			LevelButton bt = new LevelButton(Index, buttonRec, TestLevels.Levels.get(Index++));
+			mLevelButtonList.add(bt);
 			bt.setOnClickListener(onClick);
 			content.addLast(bt, -1);
 		}
@@ -73,6 +80,7 @@ public class PlayView extends CB_View_Base
 			Action_Show_GameView action = new Action_Show_GameView(bt.getLevel());
 			action.setTab(MainView.that, MainView.TAB);
 			action.CallExecute();
+			mLastPlayedIndex = bt.getIndex();
 			return false;
 		}
 	};
@@ -82,4 +90,18 @@ public class PlayView extends CB_View_Base
 	{
 	}
 
+	public void unlockNextLevel()
+	{
+		int nextLevel = mLastPlayedIndex + 1;
+		if (TestLevels.Levels.size() >= nextLevel)
+		{
+			TestLevels.Levels.get(nextLevel).unlock();
+			mLevelButtonList.get(nextLevel).enable();
+		}
+		else
+		{
+			// TODO Msg (sorry no more levels)
+		}
+
+	}
 }

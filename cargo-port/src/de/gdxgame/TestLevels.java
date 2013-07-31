@@ -113,9 +113,21 @@ public class TestLevels
 	public static MoveableList<GameSet> getLevels()
 	{
 		MoveableList<GameSet> levels = new MoveableList<GameSet>();
+
+		TestLevel1.mIsFreeToPlay = true;
 		levels.add(TestLevel1);
+
+		TestLevel2.mIsFreeToPlay = false;
 		levels.add(TestLevel2);
+
+		TestLevel3.mIsFreeToPlay = false;
 		levels.add(TestLevel3);
 		return levels;
 	}
+
+	public void loadLevels()
+	{
+		// TODO load
+	}
+
 }

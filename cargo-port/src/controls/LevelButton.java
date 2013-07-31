@@ -7,11 +7,13 @@ import de.gdxgame.GameSet;
 
 public class LevelButton extends Button
 {
-	private GameSet mLevel;
+	private final GameSet mLevel;
+	private final int mIndex;
 
-	public LevelButton(CB_RectF rec, GameSet level)
+	public LevelButton(int index, CB_RectF rec, GameSet level)
 	{
 		super(rec, "LevelButton:" + level.getLevelNumber());
+		mIndex = index;
 		mLevel = level;
 		this.setText(String.valueOf(level.getLevelNumber()), Fonts.getCompass(), Fonts.getFontColor());
 		if (level.getIsFreeToPlay()) this.enable();
@@ -22,6 +24,11 @@ public class LevelButton extends Button
 	public GameSet getLevel()
 	{
 		return mLevel;
+	}
+
+	public int getIndex()
+	{
+		return mIndex;
 	}
 
 }

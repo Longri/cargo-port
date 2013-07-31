@@ -10,6 +10,7 @@ import CB_Core.GL_UI.Fonts;
 import CB_Core.GL_UI.render3D;
 import CB_Core.GL_UI.runOnGL;
 import CB_Core.GL_UI.Controls.MessageBox.GL_MsgBox;
+import CB_Core.GL_UI.Controls.MessageBox.GL_MsgBox.OnMsgBoxClickListener;
 import CB_Core.GL_UI.GL_Listener.GL;
 import CB_Core.Log.Logger;
 import CB_Core.Map.Point;
@@ -33,6 +34,7 @@ import com.badlogic.gdx.math.Vector3;
 import controls.InstructionView;
 import de.gdxgame.GameCoord;
 import de.gdxgame.GameSet;
+import de.gdxgame.GdxGame;
 import de.gdxgame.ThreadSafeList;
 import de.gdxgame.Views.Actions.Animation;
 import de.gdxgame.Views.Actions.AnimationList;
@@ -770,7 +772,22 @@ public class GameView extends CB_View_Base implements render3D, IResourceChanged
 					case -1: // Programmende erreicht
 						if (myGameSet.gameAccomplished())
 						{
-							GL_MsgBox.Show("Level gel�st");
+							// show fireWork
+							((GdxGame) (GdxGame.that)).showFireWork();
+							GL_MsgBox.Show("Level gel�st", new OnMsgBoxClickListener()
+							{
+
+								@Override
+								public boolean onClick(int which, Object data)
+								{
+									((GdxGame) (GdxGame.that)).disposeFireWork();
+									// show LevelSelect and unlock next
+									PlayView.that.unlockNextLevel();
+									MainView.actionShowPlayView.Execute();
+									return true;
+								}
+							});
+
 							System.out.println("Level gel�st");
 						}
 						else

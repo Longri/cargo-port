@@ -18,7 +18,7 @@ public class Explosion extends CB_View_Base
 	public Explosion()
 	{
 
-		super(300, 300, 300, 300, "Efect");
+		super(0, 0, 500, 500, "Efect");
 		ParticleEffect bombEffect = new ParticleEffect();
 		bombEffect.load(Gdx.files.classpath("explosion.p"), Gdx.files.classpath(""));
 		bombEffectPool = new ParticleEffectPool(bombEffect, 1, 2);
