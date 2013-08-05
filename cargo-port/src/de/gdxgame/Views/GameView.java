@@ -827,6 +827,10 @@ public class GameView extends CB_View_Base implements render3D, IResourceChanged
 						System.out.println("Kollision ausgel�st");
 						printGameSet();
 						break;
+					case -7: // func1/func2 called
+						break;
+					case -8: // return from func1/func2
+						break;
 					default:
 					}
 				}
