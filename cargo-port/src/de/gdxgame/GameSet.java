@@ -12,7 +12,7 @@ import Enums.InstructionType;
 public class GameSet
 {
 	protected boolean mIsFreeToPlay = false;
-	protected int mLevelNumber = -1;
+	protected int mLevelNumber = 0;
 	public GameFloor startFloor;
 	public GameFloor targetFloor;
 	public GameCrane startCrane;
@@ -39,10 +39,10 @@ public class GameSet
 	public GameSet(int x, int y, int z)
 	{
 		super();
-		this.mLevelDimensions = new GameCoord(x, y, z);
+		create();
+		mLevelDimensions = new GameCoord(x, y, z);
 		startFloor = new GameFloor(x, y, z);
 		targetFloor = new GameFloor(x, y, z);
-		create();
 	}
 
 	protected GameSet()
@@ -73,6 +73,36 @@ public class GameSet
 		func1Stack = 0;
 		func2Stack = 0;
 		gameAccomplished = false;
+	}
+
+	public GameSet(String dimensions, String floor1, String floor2, String crane, String main, String func1, String func2,
+			String maindesign, String func1design, String func2design)
+	{
+		super();
+		create();
+		int x = 0;
+		int y = 0;
+		int z = 0;
+		String str_dimensions[] = dimensions.split("/");
+		if (!str_dimensions[0].isEmpty()) x = Integer.parseInt(str_dimensions[0]);
+		if (!str_dimensions[1].isEmpty()) y = Integer.parseInt(str_dimensions[1]);
+		if (!str_dimensions[2].isEmpty()) z = Integer.parseInt(str_dimensions[2]);
+		mLevelDimensions = new GameCoord(x, y, z);
+		startFloor = new GameFloor(x, y, z);
+		startFloor.setFloor(floor1);
+		targetFloor = new GameFloor(x, y, z);
+		targetFloor.setFloor(floor2);
+		x = 0;
+		y = 0;
+		String str_crane[] = crane.split("/");
+		if (!str_crane[0].isEmpty()) x = Integer.parseInt(str_crane[0]);
+		if (!str_crane[1].isEmpty()) y = Integer.parseInt(str_crane[1]);
+		mainInstructionPool.setInstructionPool(main);
+		func1InstructionPool.setInstructionPool(func1);
+		func2InstructionPool.setInstructionPool(func2);
+		mainInstructionPoolDesign.setInstructionPool(maindesign);
+		func1InstructionPoolDesign.setInstructionPool(func1design);
+		func2InstructionPoolDesign.setInstructionPool(func2design);
 	}
 
 	/**

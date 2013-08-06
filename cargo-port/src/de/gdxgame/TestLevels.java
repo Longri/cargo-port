@@ -12,8 +12,8 @@ public class TestLevels
 			super.create();
 			this.mIsFreeToPlay = true;
 			this.mLevelNumber = -1;
-			this.startFloor.setFloor(";;02020202;20202020");
-			this.targetFloor.setFloor("11111111;;;;;11111111");
+			this.startFloor.setFloor("//02020202/20202020");
+			this.targetFloor.setFloor("11111111/////11111111");
 			this.startCrane.setPosition(0, 0);
 			this.mainInstructionPool.setInstructionPool("66667777");
 			this.func1InstructionPool.setInstructionPool("3335335144454451");
@@ -28,8 +28,8 @@ public class TestLevels
 			super.create();
 			this.mIsFreeToPlay = true;
 			this.mLevelNumber = -2;
-			this.startFloor.setFloor(";;02020202;20202020");
-			this.targetFloor.setFloor(";;01010101;10101010");
+			this.startFloor.setFloor("//02020202/20202020");
+			this.targetFloor.setFloor("//01010101/10101010");
 			this.startCrane.setPosition(0, 0);
 			this.mainInstructionPool.setInstructionPool("666");
 			this.func1InstructionPool.setInstructionPool("3335331444441");
@@ -47,8 +47,8 @@ public class TestLevels
 			super.create();
 			this.mIsFreeToPlay = true;
 			this.mLevelNumber = -3;
-			this.startFloor.setFloor(";;02020202;20202020");
-			this.targetFloor.setFloor(";;01010101;10101010");
+			this.startFloor.setFloor("//02020202/20202020");
+			this.targetFloor.setFloor("//01010101/10101010");
 			this.startCrane.setPosition(0, 0);
 			this.mainInstructionPool.setInstructionPool("6666");
 			this.func1InstructionPool.setInstructionPool("3335331444441");

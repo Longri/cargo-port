@@ -125,7 +125,7 @@ public class GameFloor
 		y = 0;
 		while (k < values.length())
 		{
-			if (values.charAt(k) == ';')
+			if (values.charAt(k) == '/')
 			{
 				y++;
 				if (y >= gameLength) return;
