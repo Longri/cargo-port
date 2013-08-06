@@ -115,7 +115,7 @@ public class GameSet
 	 * 
 	 * @return GameCoord
 	 */
-	public GameCoord getLeveDimensions()
+	public GameCoord getLevelDimensions()
 	{
 		if (mLevelDimensions == null) mLevelDimensions = new GameCoord(0, 0, 0);
 		return mLevelDimensions;

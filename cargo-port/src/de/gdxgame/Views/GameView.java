@@ -592,7 +592,7 @@ public class GameView extends CB_View_Base implements render3D, IResourceChanged
 		myGameSet = level;
 
 		// create game field
-		createGameField(level.getLeveDimensions().getX(), level.getLeveDimensions().getY(), level.getLeveDimensions().getZ(),
+		createGameField(level.getLevelDimensions().getX(), level.getLevelDimensions().getY(), level.getLevelDimensions().getZ(),
 				new ReadyHandler()
 				{
 
