@@ -28,19 +28,22 @@ public class PlayView extends CB_View_Base
 		that = this;
 	}
 
+	private TestLevels levels;
+
 	@Override
 	protected void Initial()
 	{
-		new TestLevels();
+
+		levels = new TestLevels();
 
 		CB_RectF buttonRec = new CB_RectF(0, 0, UI_Size_Base.that.getButtonWidthWide(), UI_Size_Base.that.getButtonWidthWide());
 
 		int ButtonRowCount = (int) (this.getWidth() / (buttonRec.getWidth() + UI_Size_Base.that.getMargin()));
-		int ButtonLineCount = (TestLevels.Levels.size() - 1) / ButtonRowCount;
+		int ButtonLineCount = (levels.Levels.size() - 1) / ButtonRowCount;
 		if (ButtonLineCount == 0)
 		{
 			ButtonLineCount = 1;
-			ButtonRowCount = TestLevels.Levels.size() - 1;
+			ButtonRowCount = levels.Levels.size() - 1;
 		}
 
 		scrollBox = new ScrollBox(this);
@@ -60,12 +63,12 @@ public class PlayView extends CB_View_Base
 
 			for (int j = 0; j < ButtonRowCount; j++)
 			{
-				LevelButton bt = new LevelButton(Index, buttonRec, TestLevels.Levels.get(Index++));
+				LevelButton bt = new LevelButton(Index, buttonRec, levels.Levels.get(Index++));
 				mLevelButtonList.add(bt);
 				bt.setOnClickListener(onClick);
 				content.addNext(bt, -1);
 			}
-			LevelButton bt = new LevelButton(Index, buttonRec, TestLevels.Levels.get(Index++));
+			LevelButton bt = new LevelButton(Index, buttonRec, levels.Levels.get(Index++));
 			mLevelButtonList.add(bt);
 			bt.setOnClickListener(onClick);
 			content.addLast(bt, -1);
@@ -95,9 +98,9 @@ public class PlayView extends CB_View_Base
 	public void unlockNextLevel()
 	{
 		int nextLevel = mLastPlayedIndex + 1;
-		if (TestLevels.Levels.size() >= nextLevel)
+		if (levels.Levels.size() >= nextLevel)
 		{
-			TestLevels.Levels.get(nextLevel).unlock();
+			levels.Levels.get(nextLevel).unlock();
 			mLevelButtonList.get(nextLevel).enable();
 		}
 		else

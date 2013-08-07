@@ -10,88 +10,90 @@ import CB_Core.Util.MoveableList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
-public final class TestLevels
+public class TestLevels
 {
+
+	public MoveableList<GameSet> Levels; // = getLevels();
 
 	public TestLevels()
 	{
-		Levels = getLevels();
+		// Levels = getLevels();
+		Levels = new MoveableList<GameSet>();
+		loadLevels();
 	}
 
-	private final static GameSet TestLevel1 = new GameSet(8, 6, 2)
-	{
+	// private final static GameSet TestLevel1 = new GameSet(8, 6, 2)
+	// {
+	//
+	// @Override
+	// protected void create()
+	// {
+	// super.create();
+	// this.mIsFreeToPlay = true;
+	// this.mLevelNumber = -1;
+	// this.startFloor.setFloor("//02020202/20202020");
+	// this.targetFloor.setFloor("11111111/////11111111");
+	// this.startCrane.setPosition(0, 0);
+	// this.mainInstructionPool.setInstructionPool("66667777");
+	// this.func1InstructionPool.setInstructionPool("3335335144454451");
+	// this.func2InstructionPool.setInstructionPool("3353335244544452");
+	// }
+	// };
+	//
+	// private final static GameSet TestLevel2 = new GameSet(8, 6, 2)
+	// {
+	// protected void create()
+	// {
+	// super.create();
+	// this.mIsFreeToPlay = true;
+	// this.mLevelNumber = -2;
+	// this.startFloor.setFloor("//02020202/20202020");
+	// this.targetFloor.setFloor("//01010101/10101010");
+	// this.startCrane.setPosition(0, 0);
+	// this.mainInstructionPool.setInstructionPool("666");
+	// this.func1InstructionPool.setInstructionPool("3335331444441");
+	// this.mainInstructionPoolDesign.setInstructionPool("6666");
+	// this.func1InstructionPoolDesign.setInstructionPool("3335331444441");
+	//
+	// }
+	// };
+	//
+	// private final static GameSet TestLevel3 = new GameSet(8, 6, 2)
+	// {
+	// protected void create()
+	// {
+	// super.create();
+	// this.mIsFreeToPlay = true;
+	// this.mLevelNumber = -3;
+	// this.startFloor.setFloor("//02020202/20202020");
+	// this.targetFloor.setFloor("//01010101/10101010");
+	// this.startCrane.setPosition(0, 0);
+	// this.mainInstructionPool.setInstructionPool("6666");
+	// this.func1InstructionPool.setInstructionPool("3335331444441");
+	// this.mainInstructionPoolDesign.setInstructionPool("6666");
+	// this.func1InstructionPoolDesign.setInstructionPool("3335331444441");
+	// this.startCrane.setPosition(0, 0);
+	// }
+	//
+	// };
+	//
+	// public static MoveableList<GameSet> getLevels()
+	// {
+	// MoveableList<GameSet> levels = new MoveableList<GameSet>();
+	//
+	// TestLevel1.mIsFreeToPlay = true;
+	// levels.add(TestLevel1);
+	//
+	// TestLevel2.mIsFreeToPlay = false;
+	// levels.add(TestLevel2);
+	//
+	// TestLevel3.mIsFreeToPlay = false;
+	// levels.add(TestLevel3);
+	//
+	// return levels;
+	// }
 
-		@Override
-		protected void create()
-		{
-			super.create();
-			this.mIsFreeToPlay = true;
-			this.mLevelNumber = -1;
-			this.startFloor.setFloor("//02020202/20202020");
-			this.targetFloor.setFloor("11111111/////11111111");
-			this.startCrane.setPosition(0, 0);
-			this.mainInstructionPool.setInstructionPool("66667777");
-			this.func1InstructionPool.setInstructionPool("3335335144454451");
-			this.func2InstructionPool.setInstructionPool("3353335244544452");
-		}
-	};
-
-	private final static GameSet TestLevel2 = new GameSet(8, 6, 2)
-	{
-		protected void create()
-		{
-			super.create();
-			this.mIsFreeToPlay = true;
-			this.mLevelNumber = -2;
-			this.startFloor.setFloor("//02020202/20202020");
-			this.targetFloor.setFloor("//01010101/10101010");
-			this.startCrane.setPosition(0, 0);
-			this.mainInstructionPool.setInstructionPool("666");
-			this.func1InstructionPool.setInstructionPool("3335331444441");
-			this.mainInstructionPoolDesign.setInstructionPool("6666");
-			this.func1InstructionPoolDesign.setInstructionPool("3335331444441");
-
-		}
-	};
-
-	private final static GameSet TestLevel3 = new GameSet(8, 6, 2)
-	{
-		protected void create()
-		{
-			super.create();
-			this.mIsFreeToPlay = true;
-			this.mLevelNumber = -3;
-			this.startFloor.setFloor("//02020202/20202020");
-			this.targetFloor.setFloor("//01010101/10101010");
-			this.startCrane.setPosition(0, 0);
-			this.mainInstructionPool.setInstructionPool("6666");
-			this.func1InstructionPool.setInstructionPool("3335331444441");
-			this.mainInstructionPoolDesign.setInstructionPool("6666");
-			this.func1InstructionPoolDesign.setInstructionPool("3335331444441");
-			this.startCrane.setPosition(0, 0);
-		}
-
-	};
-
-	public static MoveableList<GameSet> Levels = getLevels();
-
-	public static MoveableList<GameSet> getLevels()
-	{
-		MoveableList<GameSet> levels = new MoveableList<GameSet>();
-
-		TestLevel1.mIsFreeToPlay = true;
-		levels.add(TestLevel1);
-
-		TestLevel2.mIsFreeToPlay = false;
-		levels.add(TestLevel2);
-
-		TestLevel3.mIsFreeToPlay = false;
-		levels.add(TestLevel3);
-
-		return levels;
-	}
-
-	public static void loadLevels()
+	public void loadLevels()
 	{
 		int levelnumber = 0;
 		String dimensions = "";
@@ -108,7 +110,7 @@ public final class TestLevels
 		boolean freetoplay = true;
 		String temp;
 		String temparray[];
-		int k = 8;
+		int k = 7;
 		FileHandle fileHandle = Gdx.files.classpath("standard.lvl");
 		InputStream inputStream = fileHandle.read();
 		String line = "";
@@ -119,15 +121,16 @@ public final class TestLevels
 			{
 				line = line.trim();
 				line = line.toLowerCase();
+				if (line.isEmpty()) continue;
 				if (line.charAt(0) == ';') continue;
 				temparray = line.split(";");
 				line = temparray[0];
 				line = line.trim();
 				if (line.startsWith("[level"))
 				{
-					if (k != 8) // last level not complete, abort this level
+					if (k != 7) // last level not complete, abort that level
 					{
-						k = 8;
+						k = 7;
 						continue;
 					}
 					temp = line.substring(6);
@@ -142,7 +145,7 @@ public final class TestLevels
 					else
 					// this level has no ID, abort this level and read until next level
 					{
-						k = 8;
+						k = 7;
 						// ###todo read to next "["
 						continue;
 					}
@@ -167,7 +170,7 @@ public final class TestLevels
 					break;
 				case 4: // we've read crane, now read designer's solution
 					temp = line;
-					temparray = temp.split("/");
+					temparray = temp.split("/", -1);
 					maindesign = temparray[0];
 					func1design = temparray[1];
 					func2design = temparray[2];
@@ -175,7 +178,7 @@ public final class TestLevels
 					break;
 				case 5: // we've read designer's solution, now read player's solution
 					temp = line;
-					temparray = temp.split("/");
+					temparray = temp.split("/", -1);
 					main = temparray[0];
 					func1 = temparray[1];
 					func2 = temparray[2];
@@ -183,13 +186,10 @@ public final class TestLevels
 					break;
 				case 6: // we've read player's solution, now read wether level is solved
 					temp = line;
-					if (Integer.parseInt(temp) == 0)
-					;
+					if (Integer.parseInt(temp) == 0) solved = false;
 					else
-						;
-					k++;
-					break;
-				case 7:
+						solved = true;
+					// all read, let's create the GameSet
 					GameSet level;
 					level = new GameSet(dimensions, floor1, floor2, crane, main, func1, func2, maindesign, func1design, func2design);
 					level.mLevelNumber = levelnumber;
