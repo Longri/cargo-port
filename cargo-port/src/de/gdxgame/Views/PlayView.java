@@ -31,6 +31,8 @@ public class PlayView extends CB_View_Base
 	@Override
 	protected void Initial()
 	{
+		new TestLevels();
+
 		CB_RectF buttonRec = new CB_RectF(0, 0, UI_Size_Base.that.getButtonWidthWide(), UI_Size_Base.that.getButtonWidthWide());
 
 		int ButtonRowCount = (int) (this.getWidth() / (buttonRec.getWidth() + UI_Size_Base.that.getMargin()));

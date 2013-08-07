@@ -10,11 +10,18 @@ import CB_Core.Util.MoveableList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
-public class TestLevels
+public final class TestLevels
 {
+
+	public TestLevels()
+	{
+		Levels = getLevels();
+	}
 
 	private final static GameSet TestLevel1 = new GameSet(8, 6, 2)
 	{
+
+		@Override
 		protected void create()
 		{
 			super.create();
@@ -84,7 +91,7 @@ public class TestLevels
 		return levels;
 	}
 
-	public void loadLevels()
+	public static void loadLevels()
 	{
 		int levelnumber = 0;
 		String dimensions = "";

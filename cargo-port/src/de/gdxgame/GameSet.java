@@ -39,10 +39,10 @@ public class GameSet
 	public GameSet(int x, int y, int z)
 	{
 		super();
-		create();
 		mLevelDimensions = new GameCoord(x, y, z);
 		startFloor = new GameFloor(x, y, z);
 		targetFloor = new GameFloor(x, y, z);
+		create();
 	}
 
 	protected GameSet()
@@ -168,8 +168,8 @@ public class GameSet
 	}
 
 	/**
-	 * Diese Methode f�hrt die n�chste Instruktion aus der Menge der Instruktionen aus. Sie aktualisiert die Objekte currentCrane (aktuelle
-	 * Portalkranposition) und currentFloor (aktueller Zustand der Lagerfl�che)
+	 * Diese Methode f�hrt die n�chste Instruktion aus der Menge der Instruktionen aus. Sie aktualisiert die Objekte currentCrane
+	 * (aktuelle Portalkranposition) und currentFloor (aktueller Zustand der Lagerfl�che)
 	 * 
 	 * @return 0 normaler Zug -1 Programmende erreicht (gameAccomplished true/false) -2 NOP-Code (runInstruction erneut aufrufen) -3 Randzug
 	 *         -4 Aufnahme/Ablegen -5 leere Aufnahme -6 Zug l�st Kollision aus -7 Funktionsaufruf func1/func2 -8 Funktionsende func1/func2
@@ -585,8 +585,8 @@ public class GameSet
 	}
 
 	/**
-	 * Diese Methode f�hrt die n�chste Instruktion aus der Menge der Instruktionen aus. Sie aktualisiert die Objekte currentCrane (aktuelle
-	 * Portalkranposition) und currentFloor (aktueller Zustand der Lagerfl�che)
+	 * Diese Methode f�hrt die n�chste Instruktion aus der Menge der Instruktionen aus. Sie aktualisiert die Objekte currentCrane
+	 * (aktuelle Portalkranposition) und currentFloor (aktueller Zustand der Lagerfl�che)
 	 * 
 	 * @return 0 normaler Zug -1 Programmende erreicht (gameAccomplished true/false) -2 NOP-Code (runInstruction erneut aufrufen) -3 Randzug
 	 *         -4 Aufnahme/Ablegen -5 leere Aufnahme -6 Zug l�st Kollision aus -7 Funktionsaufruf func1/func2 -8 Funktionsende func1/func2
