@@ -98,14 +98,14 @@ public class PlayView extends CB_View_Base
 	public void unlockNextLevel()
 	{
 		int nextLevel = mLastPlayedIndex + 1;
-		if (levels.Levels.size() >= nextLevel)
+		if (levels.Levels.size() > nextLevel)
 		{
 			levels.Levels.get(nextLevel).unlock();
 			mLevelButtonList.get(nextLevel).enable();
 		}
 		else
 		{
-			// TODO Msg (sorry no more levels)
+			// TODO Msg (ooooooohh, sorry no more levels)
 		}
 
 	}

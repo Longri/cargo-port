@@ -83,7 +83,7 @@ public class GameSet
 		int x = 0;
 		int y = 0;
 		int z = 0;
-		String str_dimensions[] = dimensions.split("/");
+		String str_dimensions[] = dimensions.split("/", -1);
 		if (!str_dimensions[0].isEmpty()) x = Integer.parseInt(str_dimensions[0]);
 		if (!str_dimensions[1].isEmpty()) y = Integer.parseInt(str_dimensions[1]);
 		if (!str_dimensions[2].isEmpty()) z = Integer.parseInt(str_dimensions[2]);
@@ -94,7 +94,7 @@ public class GameSet
 		targetFloor.setFloor(floor2);
 		x = 0;
 		y = 0;
-		String str_crane[] = crane.split("/");
+		String str_crane[] = crane.split("/", -1);
 		if (!str_crane[0].isEmpty()) x = Integer.parseInt(str_crane[0]);
 		if (!str_crane[1].isEmpty()) y = Integer.parseInt(str_crane[1]);
 		startCrane.setPosition(x, y);
