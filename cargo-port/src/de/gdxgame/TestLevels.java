@@ -145,8 +145,31 @@ public class TestLevels
 		{
 			System.err.println("Error: " + e);
 		}
+	}
 
-		String FilePath = Gdx.files.getLocalStoragePath() + "/.cargoport/TestLevel.lvl";
-		FileHandle WriteFileHandle = Gdx.files.absolute(FilePath);
+	public void readSavedGame()
+	{
+		Levels.clear();
+		String FilePath = Gdx.files.getLocalStoragePath() + "/.cargoport/saved.lvl";
+		FileHandle fileHandle = Gdx.files.absolute(FilePath);
+		InputStream inputStream = fileHandle.read();
+	}
+
+	public void writeSavedGame()
+	{
+		String FilePath = Gdx.files.getLocalStoragePath() + "/.cargoport/saved.lvl";
+		FileHandle fileHandle = Gdx.files.absolute(FilePath);
+		for (GameSet gs : Levels)
+		{
+			fileHandle.writeString("[level " + Integer.toString(gs.getLevelNumber()) + "]\n", false);
+			fileHandle.writeString("", true);
+			fileHandle.writeString("", true);
+			fileHandle.writeString("", true);
+			fileHandle.writeString("", true);
+			fileHandle.writeString("", true);
+			fileHandle.writeString("", true);
+			fileHandle.writeString("", true);
+		}
+
 	}
 }
