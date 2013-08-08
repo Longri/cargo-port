@@ -145,5 +145,8 @@ public class TestLevels
 		{
 			System.err.println("Error: " + e);
 		}
+
+		String FilePath = Gdx.files.getLocalStoragePath() + "/.cargoport/TestLevel.lvl";
+		FileHandle WriteFileHandle = Gdx.files.absolute(FilePath);
 	}
 }

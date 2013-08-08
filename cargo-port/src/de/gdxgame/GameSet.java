@@ -1,6 +1,7 @@
 package de.gdxgame;
 
 import Enums.InstructionType;
+import de.gdxgame.GameInstructionPool.PoolType;
 
 /**
  * Enth?llt alle Infos eines Game Levels<br>
@@ -31,9 +32,9 @@ public class GameSet
 	public GameCoord hookAnimationStartCoord;
 	public GameCoord hookAnimationTargetCoord;
 	public InstructionType currentInstruction;
-	private int currentInstructionPool;
-	private int func1Stack;
-	private int func2Stack;
+	private PoolType currentInstructionPool;
+	private PoolType func1Stack;
+	private PoolType func2Stack;
 	private boolean gameAccomplished;
 
 	public GameSet(int x, int y, int z)
@@ -56,12 +57,12 @@ public class GameSet
 		startCrane = new GameCrane();
 		currentFloor = new GameFloor();
 		currentCrane = new GameCrane();
-		mainInstructionPool = new GameInstructionPool();
-		func1InstructionPool = new GameInstructionPool();
-		func2InstructionPool = new GameInstructionPool();
-		mainInstructionPoolDesign = new GameInstructionPool();
-		func1InstructionPoolDesign = new GameInstructionPool();
-		func2InstructionPoolDesign = new GameInstructionPool();
+		mainInstructionPool = new GameInstructionPool(PoolType.main);
+		func1InstructionPool = new GameInstructionPool(PoolType.func1);
+		func2InstructionPool = new GameInstructionPool(PoolType.func2);
+		mainInstructionPoolDesign = new GameInstructionPool(PoolType.main);
+		func1InstructionPoolDesign = new GameInstructionPool(PoolType.func1);
+		func2InstructionPoolDesign = new GameInstructionPool(PoolType.func2);
 		boxAnimationStartCoord = new GameCoord();
 		boxAnimationTargetCoord = new GameCoord();
 		craneAnimationStartCoord = new GameCoord();
@@ -69,9 +70,9 @@ public class GameSet
 		hookAnimationStartCoord = new GameCoord();
 		hookAnimationTargetCoord = new GameCoord();
 		currentInstruction = InstructionType.Nop;
-		currentInstructionPool = 0;
-		func1Stack = 0;
-		func2Stack = 0;
+		currentInstructionPool = PoolType.main;
+		func1Stack = PoolType.main;
+		func2Stack = PoolType.main;
 		gameAccomplished = false;
 	}
 
@@ -164,7 +165,7 @@ public class GameSet
 		hookAnimationStartCoord.setNull();
 		hookAnimationTargetCoord.setNull();
 		currentInstruction = InstructionType.Nop;
-		currentInstructionPool = 0;
+		currentInstructionPool = PoolType.main;
 		gameAccomplished = false;
 	}
 
@@ -188,7 +189,7 @@ public class GameSet
 		hookAnimationTargetCoord.setNull();
 		switch (currentInstructionPool)
 		{
-		case 0:
+		case main:
 			instructionCode = mainInstructionPool.getNextInstruction();
 			if (instructionCode == InstructionType.nothing)
 			{
@@ -198,7 +199,7 @@ public class GameSet
 				returnCode = -1;
 			}
 			break;
-		case 1:
+		case func1:
 			instructionCode = func1InstructionPool.getNextInstruction();
 			if (instructionCode == InstructionType.nothing)
 			{
@@ -207,7 +208,7 @@ public class GameSet
 				returnCode = -8;
 			}
 			break;
-		case 2:
+		case func2:
 			instructionCode = func2InstructionPool.getNextInstruction();
 			if (instructionCode == InstructionType.nothing)
 			{
@@ -569,13 +570,13 @@ public class GameSet
 		case Func1: // Funktion 1 aufrufen
 			func1Stack = currentInstructionPool;
 			func1InstructionPool.resetInstructionPointer();
-			currentInstructionPool = 1;
+			currentInstructionPool = PoolType.func1;
 			returnCode = -7;
 			break;
 		case Func2: // Funktion 2 aufrufen
 			func2Stack = currentInstructionPool;
 			func2InstructionPool.resetInstructionPointer();
-			currentInstructionPool = 2;
+			currentInstructionPool = PoolType.func2;
 			returnCode = -7;
 			break;
 		default:
@@ -599,7 +600,7 @@ public class GameSet
 		InstructionType instructionCode = InstructionType.nothing;
 		switch (currentInstructionPool)
 		{
-		case 0:
+		case main:
 			instructionCode = mainInstructionPoolDesign.getNextInstruction();
 			if (instructionCode == InstructionType.nothing)
 			{
@@ -609,7 +610,7 @@ public class GameSet
 				returnCode = -1;
 			}
 			break;
-		case 1:
+		case func1:
 			instructionCode = func1InstructionPoolDesign.getNextInstruction();
 			if (instructionCode == InstructionType.nothing)
 			{
@@ -618,7 +619,7 @@ public class GameSet
 				returnCode = -8;
 			}
 			break;
-		case 2:
+		case func2:
 			instructionCode = func2InstructionPoolDesign.getNextInstruction();
 			if (instructionCode == InstructionType.nothing)
 			{
@@ -781,13 +782,13 @@ public class GameSet
 		case Func1: // Funktion 1 aufrufen
 			func1Stack = currentInstructionPool;
 			func1InstructionPoolDesign.resetInstructionPointer();
-			currentInstructionPool = 1;
+			currentInstructionPool = PoolType.func1;
 			returnCode = -7;
 			break;
 		case Func2: // Funktion 2 aufrufen
 			func2Stack = currentInstructionPool;
 			func2InstructionPoolDesign.resetInstructionPointer();
-			currentInstructionPool = 2;
+			currentInstructionPool = PoolType.func2;
 			returnCode = -7;
 			break;
 		default:
@@ -851,4 +852,36 @@ public class GameSet
 		return false;
 	}
 
+	public PoolType getCurrentInstructionPoolType()
+	{
+		return currentInstructionPool;
+	}
+
+	public GameInstructionPool getPool(PoolType poolType)
+	{
+		switch (poolType)
+		{
+		case main:
+			return mainInstructionPool;
+		case func1:
+			return func1InstructionPool;
+		case func2:
+			return func2InstructionPool;
+		}
+		return null;
+	}
+
+	public int getInstructionIndex()
+	{
+		switch (currentInstructionPool)
+		{
+		case main:
+			return mainInstructionPool.getInstructionPointer();
+		case func1:
+			return func1InstructionPool.getInstructionPointer();
+		case func2:
+			return func2InstructionPool.getInstructionPointer();
+		}
+		return -1;
+	}
 }

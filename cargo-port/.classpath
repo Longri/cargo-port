@@ -8,6 +8,6 @@
 	<classpathentry exported="true" kind="lib" path="libs/CB_Locator.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/CB_Translation.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/CB_Utils.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/CB_UI.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/CB_UI.jar" sourcepath="C:/@work/Longri/SVN&apos;s/Cachebox/trunk/CB_UI/src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

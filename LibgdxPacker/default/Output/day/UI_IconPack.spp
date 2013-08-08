@@ -5,392 +5,392 @@ filter: Linear,Linear
 repeat: none
 1to4bubble
   rotate: false
-  xy: 1, 611
+  xy: 1, 604
   size: 178, 190
   orig: 178, 190
   offset: 0, 0
   index: -1
 1to4bubble-flip
   rotate: false
-  xy: 210, 742
+  xy: 210, 735
   size: 178, 190
   orig: 178, 190
   offset: 0, 0
   index: -1
 5bubble
   rotate: false
-  xy: 1, 419
+  xy: 1, 412
   size: 178, 190
   orig: 178, 190
   offset: 0, 0
   index: -1
 5bubble-flip
   rotate: false
-  xy: 199, 550
+  xy: 199, 543
   size: 178, 190
   orig: 178, 190
   offset: 0, 0
   index: -1
+DelAll
+  rotate: false
+  xy: 390, 849
+  size: 88, 76
+  orig: 88, 76
+  offset: 0, 0
+  index: -1
+FastPlay
+  rotate: false
+  xy: 181, 407
+  size: 88, 76
+  orig: 88, 76
+  offset: 0, 0
+  index: -1
+Home
+  rotate: false
+  xy: 370, 426
+  size: 88, 76
+  orig: 88, 76
+  offset: 0, 0
+  index: -1
 Inst1
   rotate: false
-  xy: 390, 856
+  xy: 271, 391
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
 Inst2
   rotate: false
-  xy: 181, 414
+  xy: 361, 348
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
 Inst3
   rotate: false
-  xy: 370, 433
+  xy: 1, 334
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
 Inst4
   rotate: false
-  xy: 271, 398
+  xy: 91, 334
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
 Inst5
   rotate: false
-  xy: 361, 355
+  xy: 181, 329
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
 Inst6
   rotate: false
-  xy: 1, 341
+  xy: 271, 313
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
 Inst7
   rotate: false
-  xy: 91, 341
+  xy: 361, 270
+  size: 88, 76
+  orig: 88, 76
+  offset: 0, 0
+  index: -1
+InstBack-Disabled
+  rotate: false
+  xy: 1, 256
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
 InstBack-Focus
   rotate: false
-  xy: 181, 336
+  xy: 91, 256
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
 InstBack-Select
   rotate: false
-  xy: 181, 336
+  xy: 91, 256
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
 InstBack-Normal
   rotate: false
-  xy: 271, 320
+  xy: 181, 251
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
 InstBack-Pressed
   rotate: false
-  xy: 361, 277
+  xy: 271, 235
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
 InstClose
   rotate: false
-  xy: 483, 969
+  xy: 483, 962
   size: 21, 21
   orig: 21, 21
   offset: 0, 0
   index: -1
 Nav
   rotate: false
-  xy: 91, 263
+  xy: 1, 178
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
 Nav-pressed
   rotate: false
-  xy: 1, 263
+  xy: 361, 192
+  size: 88, 76
+  orig: 88, 76
+  offset: 0, 0
+  index: -1
+Pause
+  rotate: false
+  xy: 91, 178
+  size: 88, 76
+  orig: 88, 76
+  offset: 0, 0
+  index: -1
+Play
+  rotate: false
+  xy: 181, 173
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
 Selection
   rotate: false
-  xy: 480, 866
+  xy: 480, 859
   size: 16, 13
   orig: 16, 13
   offset: 0, 0
   index: -1
 Selection-Left
   rotate: false
-  xy: 181, 771
+  xy: 181, 764
   size: 16, 30
   orig: 16, 30
   offset: 0, 0
   index: -1
 Selection-Right
   rotate: false
-  xy: 181, 739
+  xy: 181, 732
   size: 16, 30
   orig: 16, 30
   offset: 0, 0
   index: -1
 Selection-set
   rotate: false
-  xy: 483, 992
+  xy: 483, 985
   size: 22, 30
   orig: 22, 30
   offset: 0, 0
   index: -1
+Skip
+  rotate: false
+  xy: 271, 157
+  size: 88, 76
+  orig: 88, 76
+  offset: 0, 0
+  index: -1
 activity-back
   rotate: false
-  xy: 1, 32
+  xy: 1, 25
   size: 84, 87
   orig: 84, 87
   offset: 0, 0
   index: -1
 activity-border
   rotate: false
-  xy: 87, 96
-  size: 84, 87
-  orig: 84, 87
-  offset: 0, 0
-  index: -1
-btn-disabled
-  rotate: false
-  xy: 87, 7
-  size: 84, 87
-  orig: 84, 87
-  offset: 0, 0
-  index: -1
-btn-normal
-  rotate: false
-  xy: 173, 91
-  size: 84, 87
-  orig: 84, 87
-  offset: 0, 0
-  index: -1
-btn-pressed
-  rotate: false
-  xy: 173, 2
+  xy: 357, 25
   size: 84, 87
   orig: 84, 87
   offset: 0, 0
   index: -1
 button-list-back
   rotate: false
-  xy: 1, 934
+  xy: 1, 927
   size: 480, 88
   orig: 480, 88
   offset: 0, 0
   index: -1
 cache
   rotate: false
-  xy: 271, 242
+  xy: 87, 100
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
 cache-pressed
   rotate: false
-  xy: 181, 258
+  xy: 361, 114
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
 check-disable
   rotate: false
-  xy: 333, 7
+  xy: 443, 46
   size: 64, 66
   orig: 64, 66
   offset: 0, 0
   index: -1
 chk-icon
   rotate: false
-  xy: 451, 338
+  xy: 451, 331
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 chk-icon-disable
   rotate: false
-  xy: 460, 406
+  xy: 460, 399
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 cm-icon
   rotate: false
-  xy: 480, 881
+  xy: 480, 874
   size: 19, 42
   orig: 19, 42
   offset: 0, 0
   index: -1
 cm-icon-filterd
   rotate: false
-  xy: 483, 925
+  xy: 483, 918
   size: 19, 42
   orig: 19, 42
   offset: 0, 0
   index: -1
 db
   rotate: false
-  xy: 1, 185
+  xy: 87, 22
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
 db-pressed
   rotate: false
-  xy: 361, 199
+  xy: 177, 95
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
 dialog-center
   rotate: false
-  xy: 460, 489
+  xy: 460, 482
   size: 51, 20
   orig: 51, 20
   offset: 0, 0
   index: -1
 dialog-footer
   rotate: false
-  xy: 460, 456
+  xy: 460, 449
   size: 51, 13
   orig: 51, 13
   offset: 0, 0
   index: -1
 dialog-header
   rotate: false
-  xy: 460, 471
+  xy: 460, 464
   size: 51, 16
   orig: 51, 16
   offset: 0, 0
   index: -1
 dialog-title
   rotate: false
-  xy: 451, 388
+  xy: 451, 381
   size: 53, 16
   orig: 53, 16
   offset: 0, 0
   index: -1
 listrec-first
   rotate: false
-  xy: 390, 741
+  xy: 390, 734
   size: 113, 113
   orig: 113, 113
   offset: 0, 0
   index: -1
 listrec-header
   rotate: false
-  xy: 181, 492
+  xy: 181, 485
   size: 113, 56
   orig: 113, 56
   offset: 0, 0
   index: -1
 listrec-pressed
   rotate: false
-  xy: 1, 803
+  xy: 1, 796
   size: 207, 129
   orig: 207, 129
   offset: 0, 0
   index: -1
 listrec-secend
   rotate: false
-  xy: 379, 626
+  xy: 379, 619
   size: 113, 113
   orig: 113, 113
   offset: 0, 0
   index: -1
 listrec-selected
   rotate: false
-  xy: 379, 511
+  xy: 379, 504
   size: 113, 113
   orig: 113, 113
   offset: 0, 0
   index: -1
 misc
   rotate: false
-  xy: 181, 180
+  xy: 177, 17
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
 misc-pressed
   rotate: false
-  xy: 91, 185
+  xy: 267, 79
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
   index: -1
-progress
-  rotate: false
-  xy: 259, 75
-  size: 84, 87
-  orig: 84, 87
-  offset: 0, 0
-  index: -1
 selection-input-icon
   rotate: false
-  xy: 506, 982
+  xy: 506, 975
   size: 5, 8
   orig: 5, 8
   offset: 0, 0
   index: -1
-spinner-triangle
-  rotate: false
-  xy: 399, 32
-  size: 84, 87
-  orig: 84, 87
-  offset: 0, 0
-  index: -1
 tf-copy
   rotate: false
-  xy: 296, 476
+  xy: 296, 469
   size: 72, 72
   orig: 72, 72
   offset: 0, 0
   index: -1
 tf-cut
   rotate: false
-  xy: 451, 288
+  xy: 451, 281
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-tf-paste
-  rotate: false
-  xy: 259, 1
-  size: 72, 72
-  orig: 72, 72
-  offset: 0, 0
-  index: -1
-tool
-  rotate: false
-  xy: 361, 121
-  size: 88, 76
-  orig: 88, 76
-  offset: 0, 0
-  index: -1
 tool-pressed
   rotate: false
-  xy: 271, 164
+  xy: 267, 1
   size: 88, 76
   orig: 88, 76
   offset: 0, 0
@@ -402,50 +402,99 @@ filter: Linear,Linear
 repeat: none
 RadioButtonBack
   rotate: false
-  xy: 173, 181
+  xy: 345, 123
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 RadioButtonSet
   rotate: false
-  xy: 173, 115
+  xy: 411, 191
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
+btn-disabled
+  rotate: false
+  xy: 1, 168
+  size: 84, 87
+  orig: 84, 87
+  offset: 0, 0
+  index: -1
+btn-normal
+  rotate: false
+  xy: 1, 79
+  size: 84, 87
+  orig: 84, 87
+  offset: 0, 0
+  index: -1
+btn-pressed
+  rotate: false
+  xy: 87, 168
+  size: 84, 87
+  orig: 84, 87
+  offset: 0, 0
+  index: -1
 check-off
   rotate: false
-  xy: 1, 1
+  xy: 345, 189
   size: 64, 66
   orig: 64, 66
   offset: 0, 0
   index: -1
 check-on
   rotate: false
-  xy: 87, 90
+  xy: 165, 11
   size: 64, 66
   orig: 64, 66
   offset: 0, 0
   index: -1
+progress
+  rotate: false
+  xy: 87, 79
+  size: 84, 87
+  orig: 84, 87
+  offset: 0, 0
+  index: -1
+spinner-triangle
+  rotate: false
+  xy: 173, 168
+  size: 84, 87
+  orig: 84, 87
+  offset: 0, 0
+  index: -1
 text-field-back
   rotate: false
-  xy: 1, 69
+  xy: 259, 168
   size: 84, 87
   orig: 84, 87
   offset: 0, 0
   index: -1
 text-field-back-focus
   rotate: false
-  xy: 1, 158
+  xy: 173, 79
   size: 84, 87
   orig: 84, 87
   offset: 0, 0
   index: -1
+tf-paste
+  rotate: false
+  xy: 91, 5
+  size: 72, 72
+  orig: 72, 72
+  offset: 0, 0
+  index: -1
 toggle-led-gr
   rotate: false
-  xy: 87, 158
+  xy: 259, 79
   size: 84, 87
   orig: 84, 87
+  offset: 0, 0
+  index: -1
+tool
+  rotate: false
+  xy: 1, 1
+  size: 88, 76
+  orig: 88, 76
   offset: 0, 0
   index: -1

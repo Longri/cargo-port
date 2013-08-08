@@ -41,6 +41,7 @@ public class ResourceCache extends SpriteCache
 	private static Material matGreen;
 	private static Material matRed;
 	private static long attributes;
+	public static ButtonSprites btnSpritesHome;
 
 	public interface IResourceChanged
 	{
@@ -187,14 +188,9 @@ public class ResourceCache extends SpriteCache
 
 	protected static void loadButtnSprites()
 	{
-		CacheList = new ButtonSprites(getThemedSprite("db"), getThemedSprite("db-pressed"));
-
-		Cache = new ButtonSprites(getThemedSprite("cache"), getThemedSprite("cache-pressed"));
-		Nav = new ButtonSprites(getThemedSprite("Nav"), getThemedSprite("Nav-pressed"));
-		Tool = new ButtonSprites(getThemedSprite("tool"), getThemedSprite("tool-pressed"));
-		Misc = new ButtonSprites(getThemedSprite("misc"), getThemedSprite("misc-pressed"));
-		// QuickButton = new ButtonSprites(getThemedSprite("button"), getThemedSprite("btn-pressed"));
-
+		SpriteCache.loadButtnSprites();
+		btnSpritesHome = new ButtonSprites(getThemedSprite("InstBack-Normal"), getThemedSprite("InstBack-Pressed"),
+				getThemedSprite("InstBack-Disabled"), getThemedSprite("InstBack-Focus"));
 	}
 
 	protected static void createDrawables()

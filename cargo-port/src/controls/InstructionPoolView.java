@@ -13,6 +13,7 @@ import Res.ResourceCache;
 import controls.InstructionBox.IinstructionChanged;
 import controls.InstructionButton.IDelClicked;
 import de.gdxgame.GameInstructionPool;
+import de.gdxgame.GameInstructionPool.PoolType;
 
 public class InstructionPoolView extends CB_View_Base
 {
@@ -21,12 +22,13 @@ public class InstructionPoolView extends CB_View_Base
 	float wh, margin;
 	CB_RectF boxRec;
 	int mPoolIndex;
-
+	private final PoolType mPoolType;
 	private IinstructionChanged mChangedHandler;
 
 	public InstructionPoolView(CB_RectF rec, String Name, GameInstructionPool pool, int PoolIndex, IinstructionChanged changedHandler)
 	{
 		super(rec, Name);
+		mPoolType = pool.getPoolType();
 		this.pool = pool;
 		this.setBackground(ResourceCache.activityBackground);
 		this.margin = UI_Size_Base.that.getMargin();
@@ -68,7 +70,7 @@ public class InstructionPoolView extends CB_View_Base
 		public void changed()
 		{
 			// Read Instructions
-			GameInstructionPool newPool = new GameInstructionPool();
+			GameInstructionPool newPool = new GameInstructionPool(mPoolType);
 			newPool.clear(); // Constructor beffüllt den Pool schon mit 16 NOP
 			for (GL_View_Base view : childs)
 			{

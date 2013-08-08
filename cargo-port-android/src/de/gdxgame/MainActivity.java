@@ -1,6 +1,5 @@
 package de.gdxgame;
 
-import CB_Core.Config;
 import CB_Core.GlobalCore;
 import CB_Core.Events.platformConector;
 import CB_Core.Events.platformConector.IQuit;
@@ -57,7 +56,7 @@ public class MainActivity extends AndroidApplication
 
 		// Initial Config
 		String workPath = "./cargo_port";
-		Config.Initialize(workPath, workPath + "/cachebox.config");
+		// Config.Initialize(workPath, workPath + "/cachebox.config");
 
 		new UiSizes();
 		UiSizes.that.initial(ui);

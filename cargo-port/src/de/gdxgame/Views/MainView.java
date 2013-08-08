@@ -1,6 +1,5 @@
 package de.gdxgame.Views;
 
-import CB_Core.GL_UI.SpriteCache;
 import CB_Core.GL_UI.Main.CB_ActionButton;
 import CB_Core.GL_UI.Main.CB_ActionButton.GestureDirection;
 import CB_Core.GL_UI.Main.CB_Button;
@@ -10,6 +9,7 @@ import CB_Core.GL_UI.Main.TabMainView;
 import CB_Core.GL_UI.Main.Actions.CB_Action_ShowQuit;
 import CB_Core.Math.CB_RectF;
 import CB_Core.Math.GL_UISizes;
+import Res.ResourceCache;
 import de.gdxgame.Views.Actions.Action_Fast_Play;
 import de.gdxgame.Views.Actions.Action_Load_Model;
 import de.gdxgame.Views.Actions.Action_Play;
@@ -68,11 +68,24 @@ public class MainView extends TabMainView
 
 		TAB = new CB_TabView(rec, "Phone Tab");
 
-		CB_Button btn1 = new CB_Button(btnRec, "Button1", SpriteCache.CacheList);
-		CB_Button btn2 = new CB_Button(btnRec, "Button2", SpriteCache.Cache);
-		CB_Button btn3 = new CB_Button(btnRec, "Button3", SpriteCache.Nav);
-		CB_Button btn4 = new CB_Button(btnRec, "Button4", SpriteCache.Tool);
-		CB_Button btn5 = new CB_Button(btnRec, "Button5", SpriteCache.Misc);
+		CB_Button btn1 = new CB_Button(btnRec, "Button1", ResourceCache.btnSpritesHome);
+		CB_Button btn2 = new CB_Button(btnRec, "Button2", ResourceCache.btnSpritesHome);
+		CB_Button btn3 = new CB_Button(btnRec, "Button3", ResourceCache.btnSpritesHome);
+		CB_Button btn4 = new CB_Button(btnRec, "Button4", ResourceCache.btnSpritesHome);
+		CB_Button btn5 = new CB_Button(btnRec, "Button5", ResourceCache.btnSpritesHome);
+		CB_Button btn6 = new CB_Button(btnRec, "Button6", ResourceCache.btnSpritesHome);
+		CB_Button btn7 = new CB_Button(btnRec, "Button7", ResourceCache.Misc);
+
+		// set Button Overlays
+		{
+			btn1.addOverlayDrawable(ResourceCache.getSpriteDrawable("Home"));
+			btn2.addOverlayDrawable(ResourceCache.getSpriteDrawable("Play"));
+			btn3.addOverlayDrawable(ResourceCache.getSpriteDrawable("FastPlay"));
+			btn4.addOverlayDrawable(ResourceCache.getSpriteDrawable("Pause"));
+			btn5.addOverlayDrawable(ResourceCache.getSpriteDrawable("Skip"));
+			btn6.addOverlayDrawable(ResourceCache.getSpriteDrawable("DelAll"));
+
+		}
 
 		CB_ButtonList btnList = new CB_ButtonList();
 		btnList.addButton(btn1);
@@ -80,6 +93,8 @@ public class MainView extends TabMainView
 		btnList.addButton(btn3);
 		btnList.addButton(btn4);
 		btnList.addButton(btn5);
+		btnList.addButton(btn6);
+		btnList.addButton(btn7);
 
 		TAB.addButtonList(btnList);
 

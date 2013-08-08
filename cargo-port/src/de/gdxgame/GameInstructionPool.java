@@ -5,19 +5,26 @@ import Enums.InstructionType;
 
 /**
  * Die Klasse GameInstructionPool beschreibt eine Menge von Instruktionen. Es sind maximal 16 Instruktionen m�glich. Die Instruktionen
- * k�nnen sein: 0 NOP 1 in X-Richtung vor 2 in X-Richtung zur�ck 3 in Y-Richtung vor 4 in Y-Richtung zur�ck 5 Aufnehmen/Ablegen Portalkran 6
- * Aufruf Funktion 1 7 Aufruf Funktion 2
+ * k�nnen sein: 0 NOP 1 in X-Richtung vor 2 in X-Richtung zur�ck 3 in Y-Richtung vor 4 in Y-Richtung zur�ck 5 Aufnehmen/Ablegen
+ * Portalkran 6 Aufruf Funktion 1 7 Aufruf Funktion 2
  * 
- * @author Lars Streblow
+ * @author Lars Streblow, Longri
  */
 public class GameInstructionPool extends MoveableList<InstructionType>
 {
 
 	private static final long serialVersionUID = -2685722265871835712L;
 	private int instructionPointer;
+	private final PoolType mType;
 
-	public GameInstructionPool()
+	public enum PoolType
 	{
+		main, func1, func2
+	}
+
+	public GameInstructionPool(PoolType type)
+	{
+		mType = type;
 		for (int i = 0; i < 16; i++)
 		{
 			this.add(InstructionType.Nop);
@@ -76,5 +83,15 @@ public class GameInstructionPool extends MoveableList<InstructionType>
 			k++;
 		}
 
+	}
+
+	public PoolType getPoolType()
+	{
+		return mType;
+	}
+
+	public int getInstructionPointer()
+	{
+		return instructionPointer;
 	}
 }

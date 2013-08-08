@@ -35,6 +35,7 @@ public class InstructionView extends CB_View_Base
 	private boolean isShowing = false;
 	private GameSet myGameSet;
 	private InstructionSelect sel;
+	private InstructionSliderContent sliderContent;
 
 	private InstructionPoolView main, func1, func2;
 
@@ -47,7 +48,7 @@ public class InstructionView extends CB_View_Base
 
 		slideButton = new Button("");
 		slideButton.setWidth(this.width);
-		slideButton.setHeight(UiSizes.that.getButtonHeight() / 2);
+		slideButton.setHeight(UiSizes.that.getButtonHeight() * 1.2f);
 		slideButton.setOnClickListener(new OnClickListener()
 		{
 
@@ -59,6 +60,21 @@ public class InstructionView extends CB_View_Base
 			}
 		});
 		this.addChild(slideButton);
+
+		sliderContent = new InstructionSliderContent(slideButton.copy(), name);
+		sliderContent.setZeroPos();
+		slideButton.addChild(sliderContent);
+		sliderContent.setOnClickListener(new OnClickListener()
+		{
+
+			@Override
+			public boolean onClick(GL_View_Base arg0, int arg1, int arg2, int arg3, int arg4)
+			{
+				ToggleView();
+				return true;
+			}
+		});
+		if (level != null && level.mainInstructionPool != null) sliderContent.setActInstractionPool(level.mainInstructionPool);
 
 		rec.setHeight(this.height - slideButton.getHeight());
 		sel = new InstructionSelect(this, "select");
@@ -76,6 +92,8 @@ public class InstructionView extends CB_View_Base
 
 	public void setGameSet(GameSet gameSet)
 	{
+		if (gameSet != null && gameSet.mainInstructionPool != null) sliderContent.setActInstractionPool(gameSet.mainInstructionPool);
+
 		myGameSet = gameSet;
 		float margin = UI_Size_Base.that.getMargin();
 

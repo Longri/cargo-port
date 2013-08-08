@@ -13,5 +13,6 @@
 	<classpathentry kind="lib" path="libs/CB_UI.jar"/>
 	<classpathentry kind="lib" path="libs/CB_Utils.jar"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="lib" path="libs/CB_Core.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

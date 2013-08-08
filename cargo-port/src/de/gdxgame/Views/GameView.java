@@ -31,8 +31,10 @@ import com.badlogic.gdx.graphics.g3d.lights.Lights;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import controls.InstructionSliderContent;
 import controls.InstructionView;
 import de.gdxgame.GameCoord;
+import de.gdxgame.GameInstructionPool.PoolType;
 import de.gdxgame.GameSet;
 import de.gdxgame.GdxGame;
 import de.gdxgame.ThreadSafeList;
@@ -73,6 +75,7 @@ public class GameView extends CB_View_Base implements render3D, IResourceChanged
 	private Lights lights;
 	private AnimationList mAnimationList = new AnimationList();
 	private GameCoord mGameFieldDimensions;
+	private PoolType mLastPlayitPoolType;
 
 	private float GameFieldWidth = 0;
 	private float GameFieldHight = 0;
@@ -761,6 +764,16 @@ public class GameView extends CB_View_Base implements render3D, IResourceChanged
 						}
 					}
 					returnCode = myGameSet.runInstruction();
+
+					{// set visual of instraction on InstractionPoolView-Slider
+						if (mLastPlayitPoolType != myGameSet.getCurrentInstructionPoolType())
+						{// change PoolType
+							mLastPlayitPoolType = myGameSet.getCurrentInstructionPoolType();
+							InstructionSliderContent.that.setActInstractionPool(myGameSet.getPool(mLastPlayitPoolType));
+						}
+						InstructionSliderContent.that.setActInstractionIndex(myGameSet.getInstructionIndex());
+					}
+
 					System.out.println("instructionCode: " + myGameSet.currentInstruction);
 					System.out.println("returnCode: " + returnCode);
 					switch (returnCode)
