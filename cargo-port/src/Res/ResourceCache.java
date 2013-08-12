@@ -94,10 +94,10 @@ public class ResourceCache extends SpriteCache
 			{
 				model_Box = new G3dModelLoader(new UBJsonReader()).loadModel(Gdx.files.internal("./cube.g3db"));
 			}
-			else if (Gdx.files.absolute("./cube.obj").exists())
+			else if (Gdx.files.classpath("./cube.obj").exists())
 			{
 				ObjLoader loader = new ObjLoader();
-				model_Box = loader.loadModel(Gdx.files.internal("./cube.obj"));
+				model_Box = loader.loadModel(Gdx.files.classpath("./cube.obj"));
 			}
 			else
 			{
