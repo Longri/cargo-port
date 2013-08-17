@@ -15,6 +15,7 @@ import CB_Core.Math.UiSizes;
 import CB_Core.TranslationEngine.Translation;
 import Res.ResourceCache;
 
+import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.HAlignment;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
@@ -189,7 +190,7 @@ public class splash extends TabMainView
 	private void ini_Translations()
 	{
 		Logger.DEBUG("ini_Translations");
-		new Translation("data", true);
+		new Translation("data", FileType.Internal);
 		try
 		{
 			Translation.LoadTranslation("data/lang/en-GB/strings.ini");

@@ -85,7 +85,14 @@ public class redFireWorks extends CB_View_Base
 		if (isDisposed) return;
 		float delta = Gdx.graphics.getDeltaTime();
 
-		if (System.currentTimeMillis() > nextEffect) addEffect();
+		try
+		{
+			if (System.currentTimeMillis() > nextEffect) addEffect();
+		}
+		catch (Exception e)
+		{
+			// if effectpool not initial try next
+		}
 
 		// Update and draw effects:
 		for (int i = effects.size - 1; i >= 0; i--)

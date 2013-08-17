@@ -6,7 +6,7 @@
 	<classpathentry exported="true" kind="lib" path="libs/gdx.jar" sourcepath="libs/gdx-sources.jar"/>
 	<classpathentry kind="lib" path="libs/CB_Core.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/CB_Locator.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/CB_Translation.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/CB_Translation.jar" sourcepath="C:/@work/Longri/SVN&apos;s/Cachebox/trunk/CB_Translation_Base/src"/>
 	<classpathentry exported="true" kind="lib" path="libs/CB_Utils.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/CB_UI.jar" sourcepath="C:/@work/Longri/SVN&apos;s/Cachebox/trunk/CB_UI/src"/>
 	<classpathentry kind="output" path="bin"/>

@@ -9,6 +9,7 @@ import javax.swing.filechooser.FileFilter;
 
 import CB_Core.Config;
 import CB_Core.GlobalCore;
+import CB_Core.Plattform;
 import CB_Core.Events.platformConector;
 import CB_Core.Events.platformConector.ICallUrl;
 import CB_Core.Events.platformConector.IHardwarStateListner;
@@ -32,6 +33,8 @@ public class Main
 {
 	public static void main(String[] args)
 	{
+		GlobalCore.platform = Plattform.Desktop;
+
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "cargo-port";
 		cfg.useGL20 = true;
