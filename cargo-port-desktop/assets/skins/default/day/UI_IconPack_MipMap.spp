@@ -220,6 +220,34 @@ activity-border
   orig: 84, 87
   offset: 0, 0
   index: -1
+arrow-down
+  rotate: false
+  xy: 451, 218
+  size: 32, 11
+  orig: 32, 11
+  offset: 0, 0
+  index: -1
+arrow-left
+  rotate: false
+  xy: 181, 665
+  size: 11, 31
+  orig: 11, 31
+  offset: 0, 0
+  index: -1
+arrow-right
+  rotate: false
+  xy: 181, 698
+  size: 11, 32
+  orig: 11, 32
+  offset: 0, 0
+  index: -1
+arrow-up
+  rotate: false
+  xy: 451, 205
+  size: 32, 11
+  orig: 32, 11
+  offset: 0, 0
+  index: -1
 button-list-back
   rotate: false
   xy: 1, 927

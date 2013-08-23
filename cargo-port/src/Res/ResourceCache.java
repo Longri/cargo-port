@@ -200,6 +200,32 @@ public class ResourceCache extends SpriteCacheBase
 			Icons.add(getThemedSprite("cm-icon-filterd")); // 65
 		}
 
+		if (Arrows == null) Arrows = new ArrayList<Sprite>();
+		synchronized (Arrows)
+		{
+
+			float scale = UI_Size_Base.that.getScale();
+
+			Arrows.clear();
+			Arrows.add(getThemedSprite("arrow-Compass")); // 0
+			Arrows.add(getThemedSprite("arrow-Compass-Trans")); // 1
+			Arrows.add(getThemedSprite("arrow-GPS")); // 2
+			Arrows.add(getThemedSprite("arrow-GPS-Trans")); // 3
+			Arrows.add(getThemedSprite("target-arrow")); // 4
+			Arrows.add(getThemedSprite("track-line", scale)); // 5
+			Arrows.add(getThemedSprite("arrow-down")); // 6
+			Arrows.add(getThemedSprite("arrow-up")); // 7
+			Arrows.add(getThemedSprite("arrow-left")); // 8
+			Arrows.add(getThemedSprite("arrow-right")); // 9
+			Arrows.add(getThemedSprite("track-point", scale)); // 10
+			Arrows.add(getThemedSprite("ambilwarna-arrow-right")); // 11
+			Arrows.add(getThemedSprite("ambilwarna-arrow-down")); // 12
+			Arrows.add(getThemedSprite("draw-line", scale)); // 13
+			Arrows.add(getThemedSprite("draw-point", scale)); // 14
+			Arrows.add(getThemedSprite("arrow-Compass-car")); // 15
+
+		}
+
 	}
 
 	private static void loadDefaultUi()
