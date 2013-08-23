@@ -1,7 +1,7 @@
 package de.efects;
 
-import CB_Core.GL_UI.CB_View_Base;
-import CB_Core.GL_UI.GL_Listener.GL;
+import CB_UI_Base.GL_UI.CB_View_Base;
+import CB_UI_Base.GL_UI.GL_Listener.GL;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;

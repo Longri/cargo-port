@@ -2,9 +2,9 @@ package de.efects;
 
 import java.util.Random;
 
-import CB_Core.GL_UI.CB_View_Base;
-import CB_Core.GL_UI.runOnGL;
-import CB_Core.GL_UI.GL_Listener.GL;
+import CB_UI_Base.GL_UI.CB_View_Base;
+import CB_UI_Base.GL_UI.runOnGL;
+import CB_UI_Base.GL_UI.GL_Listener.GL;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -88,24 +88,23 @@ public class redFireWorks extends CB_View_Base
 		try
 		{
 			if (System.currentTimeMillis() > nextEffect) addEffect();
+
+			// Update and draw effects:
+			for (int i = effects.size - 1; i >= 0; i--)
+			{
+				PooledEffect effect = effects.get(i);
+				effect.draw(batch, delta);
+				GL.that.renderOnce("efect");
+				if (effect.isComplete())
+				{
+					effect.free();
+					effects.removeIndex(i);
+				}
+			}
 		}
 		catch (Exception e)
 		{
 			// if effectpool not initial try next
-		}
-
-		// Update and draw effects:
-		for (int i = effects.size - 1; i >= 0; i--)
-		{
-			PooledEffect effect = effects.get(i);
-			effect.draw(batch, delta);
-			GL.that.renderOnce("efect");
-			if (effect.isComplete())
-			{
-				effect.free();
-				effects.removeIndex(i);
-			}
-
 		}
 
 	}

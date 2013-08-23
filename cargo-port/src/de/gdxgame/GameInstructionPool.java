@@ -1,6 +1,6 @@
 package de.gdxgame;
 
-import CB_Core.Util.MoveableList;
+import CB_Utils.Util.MoveableList;
 import Enums.InstructionType;
 
 /**

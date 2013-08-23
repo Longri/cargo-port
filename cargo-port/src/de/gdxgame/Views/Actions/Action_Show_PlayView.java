@@ -1,8 +1,8 @@
 package de.gdxgame.Views.Actions;
 
-import CB_Core.GL_UI.CB_View_Base;
-import CB_Core.GL_UI.Main.Actions.CB_Action_ShowView;
-import CB_Core.GL_UI.Menu.Menu;
+import CB_UI_Base.GL_UI.CB_View_Base;
+import CB_UI_Base.GL_UI.Main.Actions.CB_Action_ShowView;
+import CB_UI_Base.GL_UI.Menu.Menu;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 

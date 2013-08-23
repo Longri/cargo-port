@@ -1,6 +1,6 @@
 package controls;
 
-import CB_Core.GL_UI.ButtonSprites;
+import CB_UI_Base.GL_UI.ButtonSprites;
 import Res.ResourceCache;
 
 public class InstBtnSprites extends ButtonSprites

@@ -7,21 +7,21 @@ import java.util.TimerTask;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
-import CB_Core.Config;
-import CB_Core.GlobalCore;
-import CB_Core.Plattform;
-import CB_Core.Events.platformConector;
-import CB_Core.Events.platformConector.ICallUrl;
-import CB_Core.Events.platformConector.IHardwarStateListner;
-import CB_Core.Events.platformConector.IQuit;
-import CB_Core.Events.platformConector.IgetFileListner;
-import CB_Core.Events.platformConector.IgetFileReturnListner;
-import CB_Core.Events.platformConector.IgetFolderListner;
-import CB_Core.Events.platformConector.IgetFolderReturnListner;
-import CB_Core.GL_UI.GL_Listener.GL;
-import CB_Core.GL_UI.GL_Listener.GL_Listener_Interface;
-import CB_Core.Math.Size;
-import CB_Core.Math.devicesSizes;
+import CB_UI_Base.Config;
+import CB_UI_Base.Plattform;
+import CB_UI_Base.Events.platformConector;
+import CB_UI_Base.Events.platformConector.ICallUrl;
+import CB_UI_Base.Events.platformConector.IHardwarStateListner;
+import CB_UI_Base.Events.platformConector.IQuit;
+import CB_UI_Base.Events.platformConector.IgetFileListner;
+import CB_UI_Base.Events.platformConector.IgetFileReturnListner;
+import CB_UI_Base.Events.platformConector.IgetFolderListner;
+import CB_UI_Base.Events.platformConector.IgetFolderReturnListner;
+import CB_UI_Base.GL_UI.GL_Listener.GL;
+import CB_UI_Base.GL_UI.GL_Listener.GL_Listener_Interface;
+import CB_UI_Base.Math.Size;
+import CB_UI_Base.Math.devicesSizes;
+import CB_Utils.Config_Core;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -33,7 +33,7 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		GlobalCore.platform = Plattform.Desktop;
+		Global.platform = Plattform.Desktop;
 
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "cargo-port";
@@ -42,10 +42,14 @@ public class Main
 		cfg.height = 768;
 
 		// Initial Config
-		String workPath = "./cargo_port";
+		new Config();
+
+		// Read Config
+		String workPath = "./cachebox";
+		Config_Core.WorkPath = workPath;
 		Config.Initialize(workPath, workPath + "/cachebox.config");
 
-		Config.settings.SkinFolder.setValue("default");
+		Settings.SkinFolder.setValue("default");
 
 		devicesSizes ui = new devicesSizes();
 
@@ -209,9 +213,9 @@ public class Main
 			}
 		});
 
-		DesktopClipboard dcb = new DesktopClipboard();
-
-		if (dcb != null) GlobalCore.setDefaultClipboard(dcb);
+		// DesktopClipboard dcb = new DesktopClipboard();
+		//
+		// if (dcb != null) GlobalCore.setDefaultClipboard(dcb);
 
 		platformConector.setCallUrlListner(new ICallUrl()
 		{

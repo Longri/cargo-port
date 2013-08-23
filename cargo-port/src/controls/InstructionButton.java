@@ -1,9 +1,9 @@
 package controls;
 
-import CB_Core.GL_UI.GL_View_Base;
-import CB_Core.GL_UI.Controls.Image;
-import CB_Core.GL_UI.Controls.ImageButton;
-import CB_Core.Math.UI_Size_Base;
+import CB_UI_Base.GL_UI.GL_View_Base;
+import CB_UI_Base.GL_UI.Controls.Image;
+import CB_UI_Base.GL_UI.Controls.ImageButton;
+import CB_UI_Base.Math.UI_Size_Base;
 import Enums.InstructionType;
 import Res.ResourceCache;
 
@@ -16,8 +16,8 @@ public class InstructionButton extends ImageButton
 	InstructionType type;
 	boolean markToDelete;
 	Image deleteImage;
-	private IDelClicked mHandler;
-	private int mPoolIndex;
+	private final IDelClicked mHandler;
+	private final int mPoolIndex;
 	private boolean mDeleteDisabled = false;
 
 	public interface IDelClicked
@@ -81,7 +81,7 @@ public class InstructionButton extends ImageButton
 
 	}
 
-	private OnClickListener deleteClick = new OnClickListener()
+	private final OnClickListener deleteClick = new OnClickListener()
 	{
 
 		@Override
@@ -92,7 +92,7 @@ public class InstructionButton extends ImageButton
 		}
 	};
 
-	private OnClickListener longClick = new OnClickListener()
+	private final OnClickListener longClick = new OnClickListener()
 	{
 
 		@Override
@@ -113,6 +113,7 @@ public class InstructionButton extends ImageButton
 		}
 	};
 
+	@Override
 	public void render(SpriteBatch batch)
 	{
 		if (type == InstructionType.Nop || type == InstructionType.nothing) return;

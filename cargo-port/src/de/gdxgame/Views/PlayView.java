@@ -2,13 +2,13 @@ package de.gdxgame.Views;
 
 import java.util.ArrayList;
 
-import CB_Core.GL_UI.CB_View_Base;
-import CB_Core.GL_UI.GL_View_Base;
-import CB_Core.GL_UI.SpriteCache;
-import CB_Core.GL_UI.Controls.Box;
-import CB_Core.GL_UI.Controls.ScrollBox;
-import CB_Core.Math.CB_RectF;
-import CB_Core.Math.UI_Size_Base;
+import CB_UI_Base.GL_UI.CB_View_Base;
+import CB_UI_Base.GL_UI.GL_View_Base;
+import CB_UI_Base.GL_UI.SpriteCacheBase;
+import CB_UI_Base.GL_UI.Controls.Box;
+import CB_UI_Base.GL_UI.Controls.ScrollBox;
+import CB_UI_Base.Math.CB_RectF;
+import CB_UI_Base.Math.UI_Size_Base;
 import controls.LevelButton;
 import de.gdxgame.TestLevels;
 import de.gdxgame.Views.Actions.Action_Show_GameView;
@@ -24,7 +24,7 @@ public class PlayView extends CB_View_Base
 	public PlayView(CB_RectF rec)
 	{
 		super(rec, "PlayView");
-		this.setBackground(SpriteCache.activityBackground);
+		this.setBackground(SpriteCacheBase.activityBackground);
 		that = this;
 	}
 
@@ -75,7 +75,7 @@ public class PlayView extends CB_View_Base
 		}
 	}
 
-	private OnClickListener onClick = new OnClickListener()
+	private final OnClickListener onClick = new OnClickListener()
 	{
 
 		@Override

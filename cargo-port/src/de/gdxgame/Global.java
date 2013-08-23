@@ -5,7 +5,7 @@ package de.gdxgame;
  * 
  * @author Longri
  */
-public class Global
+public class Global extends CB_UI_Base.Global
 {
 	public static final int CurrentRevision = 1;
 	public static final String CurrentVersion = "0.1.";

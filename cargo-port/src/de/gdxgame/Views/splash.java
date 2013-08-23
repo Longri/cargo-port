@@ -2,17 +2,16 @@ package de.gdxgame.Views;
 
 import java.io.IOException;
 
-import CB_Core.GL_UI.Fonts;
-import CB_Core.GL_UI.Activitys.SelectDB;
-import CB_Core.GL_UI.Controls.Image;
-import CB_Core.GL_UI.Controls.Label;
-import CB_Core.GL_UI.Controls.ProgressBar;
-import CB_Core.GL_UI.GL_Listener.GL;
-import CB_Core.GL_UI.Main.TabMainView;
-import CB_Core.Log.Logger;
-import CB_Core.Math.CB_RectF;
-import CB_Core.Math.UiSizes;
-import CB_Core.TranslationEngine.Translation;
+import CB_Translation_Base.TranslationEngine.Translation;
+import CB_UI_Base.GL_UI.Fonts;
+import CB_UI_Base.GL_UI.Controls.Image;
+import CB_UI_Base.GL_UI.Controls.Label;
+import CB_UI_Base.GL_UI.Controls.ProgressBar;
+import CB_UI_Base.GL_UI.GL_Listener.GL;
+import CB_UI_Base.GL_UI.Main.MainViewBase;
+import CB_UI_Base.Math.CB_RectF;
+import CB_UI_Base.Math.UiSizes;
+import CB_Utils.Log.Logger;
 import Res.ResourceCache;
 
 import com.badlogic.gdx.Files.FileType;
@@ -28,7 +27,7 @@ import de.gdxgame.GdxGame;
 import de.gdxgame.Global;
 import de.gdxgame.LasifantAnimation;
 
-public class splash extends TabMainView
+public class splash extends MainViewBase
 {
 	private final long SPLASH_MIN_SHOW_TIME = 5000;
 
@@ -46,7 +45,6 @@ public class splash extends TabMainView
 	LasifantAnimation Lasifant;
 
 	Label descTextView;
-	SelectDB selectDBDialog;
 
 	int step = 0;
 	boolean switcher = false;
@@ -256,11 +254,11 @@ public class splash extends TabMainView
 		GL.setIsInitial();
 	}
 
+	@Override
 	public void dispose()
 	{
 		this.removeChildsDirekt();
 
-		if (selectDBDialog != null) selectDBDialog.dispose();
 		if (descTextView != null) descTextView.dispose();
 		if (GC_Logo != null) GC_Logo.dispose();
 		if (FX2_Logo != null) FX2_Logo.dispose();
@@ -270,7 +268,6 @@ public class splash extends TabMainView
 		if (progress != null) progress.dispose();
 		if (atlas != null) atlas.dispose();
 
-		selectDBDialog = null;
 		descTextView = null;
 		GC_Logo = null;
 		FX2_Logo = null;

@@ -2,12 +2,12 @@ package controls;
 
 import java.util.ArrayList;
 
-import CB_Core.GL_UI.CB_View_Base;
-import CB_Core.GL_UI.GL_View_Base;
-import CB_Core.GL_UI.runOnGL;
-import CB_Core.GL_UI.GL_Listener.GL;
-import CB_Core.Math.CB_RectF;
-import CB_Core.Math.UI_Size_Base;
+import CB_UI_Base.GL_UI.CB_View_Base;
+import CB_UI_Base.GL_UI.GL_View_Base;
+import CB_UI_Base.GL_UI.runOnGL;
+import CB_UI_Base.GL_UI.GL_Listener.GL;
+import CB_UI_Base.Math.CB_RectF;
+import CB_UI_Base.Math.UI_Size_Base;
 import Enums.InstructionType;
 import Res.ResourceCache;
 import controls.InstructionBox.IinstructionChanged;
@@ -23,7 +23,7 @@ public class InstructionPoolView extends CB_View_Base
 	CB_RectF boxRec;
 	int mPoolIndex;
 	private final PoolType mPoolType;
-	private IinstructionChanged mChangedHandler;
+	private final IinstructionChanged mChangedHandler;
 
 	public InstructionPoolView(CB_RectF rec, String Name, GameInstructionPool pool, int PoolIndex, IinstructionChanged changedHandler)
 	{

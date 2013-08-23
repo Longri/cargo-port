@@ -1,25 +1,23 @@
 package de.gdxgame.Views;
 
-import CB_Core.GL_UI.Main.CB_ActionButton;
-import CB_Core.GL_UI.Main.CB_ActionButton.GestureDirection;
-import CB_Core.GL_UI.Main.CB_Button;
-import CB_Core.GL_UI.Main.CB_ButtonList;
-import CB_Core.GL_UI.Main.CB_TabView;
-import CB_Core.GL_UI.Main.TabMainView;
-import CB_Core.GL_UI.Main.Actions.CB_Action_ShowQuit;
-import CB_Core.Math.CB_RectF;
-import CB_Core.Math.GL_UISizes;
+import CB_UI_Base.GL_UI.Main.CB_ActionButton;
+import CB_UI_Base.GL_UI.Main.CB_ActionButton.GestureDirection;
+import CB_UI_Base.GL_UI.Main.CB_Button;
+import CB_UI_Base.GL_UI.Main.CB_ButtonList;
+import CB_UI_Base.GL_UI.Main.CB_TabView;
+import CB_UI_Base.GL_UI.Main.MainViewBase;
+import CB_UI_Base.Math.CB_RectF;
+import CB_UI_Base.Math.GL_UISizes;
 import Res.ResourceCache;
 import de.gdxgame.Views.Actions.Action_Fast_Play;
 import de.gdxgame.Views.Actions.Action_Load_Model;
 import de.gdxgame.Views.Actions.Action_Play;
-import de.gdxgame.Views.Actions.Action_ShowQuit;
 import de.gdxgame.Views.Actions.Action_Show_PlayView;
 
 /**
  * @author Longri
  */
-public class MainView extends TabMainView
+public class MainView extends MainViewBase
 {
 
 	public static MainView that;
@@ -28,10 +26,9 @@ public class MainView extends TabMainView
 
 	// ######## Button Actions ###########
 	public static Action_Show_PlayView actionShowPlayView = new Action_Show_PlayView();
-	public static CB_Action_ShowQuit actionClose = new Action_ShowQuit();
-	private Action_Play actionPlay = new Action_Play();
-	private Action_Fast_Play actionFastPlay = new Action_Fast_Play();
-	private Action_Load_Model actionLoadModel = new Action_Load_Model();
+	private final Action_Play actionPlay = new Action_Play();
+	private final Action_Fast_Play actionFastPlay = new Action_Fast_Play();
+	private final Action_Load_Model actionLoadModel = new Action_Load_Model();
 
 	// ######## Views ###########
 	public static PlayView mPlayView;

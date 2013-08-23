@@ -1,12 +1,10 @@
 package de.gdxgame;
 
-import CB_Core.GlobalCore;
-import CB_Core.Events.platformConector;
-import CB_Core.Events.platformConector.IQuit;
-import CB_Core.GL_UI.GL_Listener.GL;
-import CB_Core.Math.Size;
-import CB_Core.Math.UiSizes;
-import CB_Core.Math.devicesSizes;
+import CB_UI_Base.Events.platformConector;
+import CB_UI_Base.Events.platformConector.IQuit;
+import CB_UI_Base.GL_UI.GL_Listener.GL;
+import CB_UI_Base.Math.Size;
+import CB_UI_Base.Math.devicesSizes;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -52,7 +50,7 @@ public class MainActivity extends AndroidApplication
 		ui.TB_IconSize = res.getDimensionPixelSize(R.dimen.TB_icon_Size);
 		ui.isLandscape = false;
 
-		GlobalCore.displayDensity = ui.Density;
+		Global.displayDensity = ui.Density;
 
 		// Initial Config
 		String workPath = "./cargo_port";

@@ -9,10 +9,9 @@
 	<classpathentry exported="true" kind="lib" path="libs/gdx-freetype-natives.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdx-freetype.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/cargo-port"/>
-	<classpathentry kind="lib" path="libs/CB_Locator.jar"/>
 	<classpathentry kind="lib" path="libs/CB_Translation.jar"/>
-	<classpathentry kind="lib" path="libs/CB_UI.jar"/>
 	<classpathentry kind="lib" path="libs/CB_Utils.jar"/>
 	<classpathentry kind="lib" path="libs/gdx.jar"/>
+	<classpathentry kind="lib" path="libs/CB_UI_Base.jar" sourcepath="C:/@work/Longri/SVN&apos;s/Cachebox/trunk/CB_UI_Base"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

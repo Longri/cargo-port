@@ -1,8 +1,8 @@
 package de.gdxgame.Views.Actions;
 
-import CB_Core.GL_UI.SpriteCache;
-import CB_Core.GL_UI.SpriteCache.IconName;
-import CB_Core.GL_UI.Main.Actions.CB_Action;
+import CB_UI_Base.GL_UI.SpriteCacheBase;
+import CB_UI_Base.GL_UI.SpriteCacheBase.IconName;
+import CB_UI_Base.GL_UI.Main.Actions.CB_Action;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -31,7 +31,7 @@ public class Action_Fast_Play extends CB_Action
 	@Override
 	public Sprite getIcon()
 	{
-		return SpriteCache.Icons.get(IconName.cacheList_7.ordinal());
+		return SpriteCacheBase.Icons.get(IconName.cacheList_7.ordinal());
 	}
 
 }

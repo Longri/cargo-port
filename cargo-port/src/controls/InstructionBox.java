@@ -1,9 +1,9 @@
 package controls;
 
-import CB_Core.GL_UI.CB_View_Base;
-import CB_Core.GL_UI.GL_View_Base;
-import CB_Core.Math.CB_RectF;
-import CB_Core.Math.UI_Size_Base;
+import CB_UI_Base.GL_UI.CB_View_Base;
+import CB_UI_Base.GL_UI.GL_View_Base;
+import CB_UI_Base.Math.CB_RectF;
+import CB_UI_Base.Math.UI_Size_Base;
 import Enums.InstructionType;
 import Res.ResourceCache;
 
@@ -20,9 +20,9 @@ public class InstructionBox extends CB_View_Base
 
 	private boolean isSelected = false;
 	private InstructionType type;
-	private IDelClicked mHandler;
+	private final IDelClicked mHandler;
 	int mPoolIndex;
-	private IinstructionChanged mChangedHandler;
+	private final IinstructionChanged mChangedHandler;
 
 	public interface IinstructionChanged
 	{
@@ -77,7 +77,7 @@ public class InstructionBox extends CB_View_Base
 		this.addChild(btn);
 	}
 
-	private IDelClicked delClicked = new IDelClicked()
+	private final IDelClicked delClicked = new IDelClicked()
 	{
 
 		@Override

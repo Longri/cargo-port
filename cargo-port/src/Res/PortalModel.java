@@ -1,6 +1,6 @@
 package Res;
 
-import CB_Core.GL_UI.render3D;
+import CB_UI_Base.GL_UI.render3D;
 import Res.ResourceCache.IResourceChanged;
 
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -29,6 +29,7 @@ public class PortalModel implements render3D, IResourceChanged
 {
 
 	ThreadSafeList<ModelInstance> mModelList, mLegCenterLeft, mLegCenterRight, mJibCenter;
+
 	public PortalModel()
 	{
 		ResourceCache.Add(this);

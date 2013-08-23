@@ -1,9 +1,9 @@
 package controls;
 
-import CB_Core.GL_UI.CB_View_Base;
-import CB_Core.GL_UI.GL_View_Base;
-import CB_Core.Math.CB_RectF;
-import CB_Core.Math.UI_Size_Base;
+import CB_UI_Base.GL_UI.CB_View_Base;
+import CB_UI_Base.GL_UI.GL_View_Base;
+import CB_UI_Base.Math.CB_RectF;
+import CB_UI_Base.Math.UI_Size_Base;
 import Enums.InstructionType;
 
 /**
@@ -40,7 +40,7 @@ public class InstructionSelect extends CB_View_Base
 		return selectedType;
 	}
 
-	private OnClickListener click = new OnClickListener()
+	private final OnClickListener click = new OnClickListener()
 	{
 
 		@Override

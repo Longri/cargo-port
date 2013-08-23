@@ -5,16 +5,16 @@ import java.util.LinkedHashMap;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import CB_Core.GL_UI.CB_View_Base;
-import CB_Core.GL_UI.Fonts;
-import CB_Core.GL_UI.render3D;
-import CB_Core.GL_UI.runOnGL;
-import CB_Core.GL_UI.Controls.MessageBox.GL_MsgBox;
-import CB_Core.GL_UI.Controls.MessageBox.GL_MsgBox.OnMsgBoxClickListener;
-import CB_Core.GL_UI.GL_Listener.GL;
-import CB_Core.Log.Logger;
-import CB_Core.Map.Point;
-import CB_Core.Math.CB_RectF;
+import CB_UI_Base.GL_UI.CB_View_Base;
+import CB_UI_Base.GL_UI.Fonts;
+import CB_UI_Base.GL_UI.render3D;
+import CB_UI_Base.GL_UI.runOnGL;
+import CB_UI_Base.GL_UI.Controls.MessageBox.GL_MsgBox;
+import CB_UI_Base.GL_UI.Controls.MessageBox.GL_MsgBox.OnMsgBoxClickListener;
+import CB_UI_Base.GL_UI.GL_Listener.GL;
+import CB_UI_Base.Math.CB_RectF;
+import CB_Utils.Log.Logger;
+import CB_Utils.Math.Point;
 import Res.PortalModel;
 import Res.ResourceCache;
 import Res.ResourceCache.IResourceChanged;
@@ -64,16 +64,16 @@ public class GameView extends CB_View_Base implements render3D, IResourceChanged
 
 	public static boolean fastAnimation = false;
 
-	private ThreadSafeList<ModelInstance> ModelList = new ThreadSafeList<ModelInstance>();
+	private final ThreadSafeList<ModelInstance> ModelList = new ThreadSafeList<ModelInstance>();
 	private AtomicBoolean waitOfAnimationReady;
 	private GameSet myGameSet;
 
-	private PortalModel mPortalModel = new PortalModel();
+	private final PortalModel mPortalModel = new PortalModel();
 	private ModelInstance[][] GameField = new ModelInstance[1][1];
 	private Vector3[][][] GameFieldPositions = new Vector3[1][1][1];
 	private ModelInstance[][][] GameVectorModels = new ModelInstance[1][1][1];
 	private Lights lights;
-	private AnimationList mAnimationList = new AnimationList();
+	private final AnimationList mAnimationList = new AnimationList();
 	private GameCoord mGameFieldDimensions;
 	private PoolType mLastPlayitPoolType;
 
@@ -89,14 +89,14 @@ public class GameView extends CB_View_Base implements render3D, IResourceChanged
 
 	private InputState inputState = InputState.Idle;
 	// speicher, welche Finger-Pointer aktuell gedr�ckt sind
-	private HashMap<Integer, Point> fingerDown = new LinkedHashMap<Integer, Point>();
+	private final HashMap<Integer, Point> fingerDown = new LinkedHashMap<Integer, Point>();
 	private KineticPan kineticPan = null;
 
 	float viewAngle = 0;
 	float zoom = 80;
 	float lastZoom = 80;
 
-	private InstructionView mInstractionView;
+	private final InstructionView mInstractionView;
 
 	/**
 	 * Constructor
@@ -510,8 +510,8 @@ public class GameView extends CB_View_Base implements render3D, IResourceChanged
 		private boolean fertig;
 		// benutze den Abstand der letzten 5 Positions�nderungen
 		final int anzPoints = 3;
-		private int[] x = new int[anzPoints];
-		private int[] y = new int[anzPoints];
+		private final int[] x = new int[anzPoints];
+		private final int[] y = new int[anzPoints];
 		private int diffX;
 		private int diffY;
 		private long startTs;

@@ -1,12 +1,12 @@
 package controls;
 
-import CB_Core.GL_UI.CB_View_Base;
-import CB_Core.GL_UI.GL_View_Base;
-import CB_Core.GL_UI.Controls.Label;
-import CB_Core.GL_UI.Controls.List.Adapter;
-import CB_Core.GL_UI.Controls.List.H_ListView;
-import CB_Core.GL_UI.Controls.List.ListViewItemBase;
-import CB_Core.Math.CB_RectF;
+import CB_UI_Base.GL_UI.CB_View_Base;
+import CB_UI_Base.GL_UI.GL_View_Base;
+import CB_UI_Base.GL_UI.Controls.Label;
+import CB_UI_Base.GL_UI.Controls.List.Adapter;
+import CB_UI_Base.GL_UI.Controls.List.H_ListView;
+import CB_UI_Base.GL_UI.Controls.List.ListViewItemBase;
+import CB_UI_Base.Math.CB_RectF;
 import Enums.InstructionType;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,8 +18,8 @@ public class InstructionSliderContent extends CB_View_Base
 	public static InstructionSliderContent that;
 	private GameInstructionPool mActPool;
 	private int mSelectedInstractionIndex = -1;
-	private H_ListView mListView;
-	private Label mPoolTypeLabel;
+	private final H_ListView mListView;
+	private final Label mPoolTypeLabel;
 
 	public InstructionSliderContent(CB_RectF rec, String Name)
 	{

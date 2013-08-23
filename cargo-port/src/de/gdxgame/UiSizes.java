@@ -1,8 +1,8 @@
 package de.gdxgame;
 
-import CB_Core.Math.UI_Size_Base;
+import CB_UI_Base.Math.UI_Size_Base;
 
-public class UiSizes extends CB_Core.Math.UiSizes
+public class UiSizes extends CB_UI_Base.Math.UiSizes
 {
 	public static UI_Size_Base that;
 
@@ -17,4 +17,5 @@ public class UiSizes extends CB_Core.Math.UiSizes
 	{
 		super.instanzeInitial();
 	}
+
 }

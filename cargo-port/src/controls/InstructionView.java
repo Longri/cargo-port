@@ -1,26 +1,26 @@
 package controls;
 
-import CB_Core.GL_UI.CB_View_Base;
-import CB_Core.GL_UI.GL_View_Base;
-import CB_Core.GL_UI.Handler;
-import CB_Core.GL_UI.SpriteCache;
-import CB_Core.GL_UI.runOnGL;
-import CB_Core.GL_UI.Controls.Button;
-import CB_Core.GL_UI.GL_Listener.GL;
-import CB_Core.Math.CB_RectF;
-import CB_Core.Math.UI_Size_Base;
-import CB_Core.Math.UiSizes;
+import CB_UI_Base.GL_UI.CB_View_Base;
+import CB_UI_Base.GL_UI.GL_View_Base;
+import CB_UI_Base.GL_UI.Handler;
+import CB_UI_Base.GL_UI.SpriteCacheBase;
+import CB_UI_Base.GL_UI.runOnGL;
+import CB_UI_Base.GL_UI.Controls.Button;
+import CB_UI_Base.GL_UI.GL_Listener.GL;
+import CB_UI_Base.Math.CB_RectF;
+import CB_UI_Base.Math.UI_Size_Base;
 
 import com.badlogic.gdx.graphics.Color;
 
 import controls.InstructionBox.IinstructionChanged;
 import de.gdxgame.GameSet;
+import de.gdxgame.UiSizes;
 
 public class InstructionView extends CB_View_Base
 {
 	private final int ANIMATION_TIME = 50;// 50;
 
-	private Handler handler = new Handler();
+	private final Handler handler = new Handler();
 	private Button slideButton;
 	private boolean swipeUp = false;
 	private boolean swipeDown = false;
@@ -42,7 +42,7 @@ public class InstructionView extends CB_View_Base
 	public InstructionView(CB_RectF rec, GameSet level)
 	{
 		super(rec, "InstractionView");
-		this.setBackground(SpriteCache.activityBackground);
+		this.setBackground(SpriteCacheBase.activityBackground);
 		this.setColorFilter(new Color(1f, 1f, 1f, 0.6f));
 		this.myGameSet = level;
 
