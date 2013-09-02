@@ -322,6 +322,7 @@ public class GameView extends CB_View_Base implements render3D, IResourceChanged
 		myCam.fieldOfView = zoom;
 		myCam.rotateAround(new Vector3(GameFieldWidth / 2, 0, GameFieldDepth / 2), Vector3.Y, viewAngle);
 		myCam.update();
+
 		viewAngle = 0;
 		return myCam;
 	}

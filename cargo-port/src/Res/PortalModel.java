@@ -95,6 +95,7 @@ public class PortalModel implements render3D, IResourceChanged
 		mLegTopRight = new ModelInstance(ResourceCache.getPortalLegTopModel());
 
 		mJibLeft = new ModelInstance(ResourceCache.getPortalJibLeftModel());
+
 		if (mJibCenter == null) mJibCenter = new ThreadSafeList<ModelInstance>();
 		mJibCenter.clear();
 		for (int i = 0; i < maxField; i++)
