@@ -13,11 +13,13 @@ import de.gdxgame.Settings;
 public class Config extends Config_Core implements Settings
 {
 
-	final public SettingsClass settings = new SettingsClass();
-
-	public Config()
+	public Config(String workPath)
 	{
+		super(workPath);
+		settings = new SettingsClass();
 	}
+
+	final public SettingsClass settings;
 
 	public static String ConfigName = "";
 

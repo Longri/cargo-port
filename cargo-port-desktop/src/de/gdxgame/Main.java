@@ -40,12 +40,11 @@ public class Main
 		cfg.useGL20 = true;
 		cfg.width = 1024;
 		cfg.height = 768;
-
-		// Initial Config
-		new Config();
-
 		// Read Config
 		String workPath = "./cachebox";
+		// Initial Config
+		new Config(workPath);
+
 		Config_Core.WorkPath = workPath;
 		Config.Initialize(workPath, workPath + "/cachebox.config");
 

@@ -148,13 +148,13 @@ public class InstructionSliderContent extends CB_View_Base
 	public void setActInstractionIndex(int index)
 	{
 		mListView.setSelection(index);
-		int last = mListView.getFirstVisiblePosition();
-		int first = mListView.getLastVisiblePosition();
-
-		if (!(first <= index && last >= index))
-		{
-			mListView.scrollToItem(ListBaseAdapter.getCount());
-		}
+		// int last = mListView.getFirstVisiblePosition();
+		// int first = mListView.getFirstAndLastVisibleIndex();
+		//
+		// if (!(first <= index && last >= index))
+		// {
+		// mListView.scrollToItem(ListBaseAdapter.getCount());
+		// }
 		// {
 		// ArrayList<Float> mPosDefault = mListView.getItemPosList();
 		// if (mPosDefault == null) return;
