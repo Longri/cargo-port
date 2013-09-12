@@ -10,6 +10,8 @@
 	<classpathentry exported="true" kind="lib" path="libs/gdx-freetype.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/cargo-port"/>
 	<classpathentry kind="lib" path="libs/gdx.jar"/>
-	<classpathentry kind="lib" path="libs/CB_Base.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CB_Translation_Base"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CB_Ui_Base"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CB_Utils"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

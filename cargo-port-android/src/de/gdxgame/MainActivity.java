@@ -1,5 +1,6 @@
 package de.gdxgame;
 
+import CB_UI_Base.Plattform;
 import CB_UI_Base.Events.platformConector;
 import CB_UI_Base.Events.platformConector.IQuit;
 import CB_UI_Base.GL_UI.GL_Listener.GL;
@@ -51,6 +52,8 @@ public class MainActivity extends AndroidApplication
 		ui.isLandscape = false;
 
 		Global.displayDensity = ui.Density;
+
+		Global.platform = Plattform.Android;
 
 		// Initial Config
 		String workPath = "./cargo_port";

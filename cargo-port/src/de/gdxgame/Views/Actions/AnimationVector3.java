@@ -27,6 +27,12 @@ public class AnimationVector3 implements Animation<Vector3>
 
 	public AnimationVector3(ModelInstance model, Vector3 start, Vector3 end, int duration)
 	{
+		if (start == null || end == null)
+		{
+			start = new Vector3();
+			end = new Vector3();
+		}
+
 		mModelInstance = model;
 		mStart = new Vector3(start.cpy());
 		mEnd = new Vector3(end.cpy());
