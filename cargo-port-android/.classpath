@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="libs/gdx.jar"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="lib" path="libs/CB_Base.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
