@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import CB_UI_Base.GL_UI.CB_View_Base;
 import CB_UI_Base.GL_UI.GL_View_Base;
 import CB_UI_Base.GL_UI.SpriteCacheBase;
+import CB_UI_Base.GL_UI.runOnGL;
 import CB_UI_Base.GL_UI.Controls.Box;
 import CB_UI_Base.GL_UI.Controls.ScrollBox;
+import CB_UI_Base.GL_UI.GL_Listener.GL;
 import CB_UI_Base.Math.CB_RectF;
 import CB_UI_Base.Math.UI_Size_Base;
 import controls.LevelButton;
@@ -39,7 +41,9 @@ public class PlayView extends CB_View_Base
 		CB_RectF buttonRec = new CB_RectF(0, 0, UI_Size_Base.that.getButtonWidthWide(), UI_Size_Base.that.getButtonWidthWide());
 
 		int ButtonRowCount = (int) (this.getWidth() / (buttonRec.getWidth() + UI_Size_Base.that.getMargin()));
-		int ButtonLineCount = (levels.Levels.size() - 1) / ButtonRowCount;
+		float lineCount = ((float) levels.Levels.size() - 1) / ButtonRowCount;
+		lineCount += (lineCount % 2);
+		int ButtonLineCount = (int) lineCount;
 		if (ButtonLineCount == 0)
 		{
 			ButtonLineCount = 1;
@@ -47,32 +51,49 @@ public class PlayView extends CB_View_Base
 		}
 
 		scrollBox = new ScrollBox(this);
+		scrollBox.setZeroPos();
 		content = new Box(this, "");
 		content.setHeight(ButtonLineCount * (buttonRec.getHeight() + UI_Size_Base.that.getMargin()));
+		content.setZeroPos();
 		scrollBox.addChild(content);
 		this.addChild(scrollBox);
 
-		content.initRow(true);
+		// content.initRow(true);
+		content.initRow();
 
 		float btnMargin = ((this.width - (ButtonRowCount * buttonRec.getWidth())) / (ButtonRowCount + 1));
 		content.setMargins(btnMargin, btnMargin);
+		content.setBorders(btnMargin, 0);
 		mLevelButtonList = new ArrayList<LevelButton>();
-		int Index = 0;
+		int Index = -1;
 		for (int i = 0; i < ButtonLineCount; i++)
 		{
 
-			for (int j = 0; j < ButtonRowCount; j++)
+			for (int j = 0; j < ButtonRowCount - 1; j++)
 			{
-				LevelButton bt = new LevelButton(Index, buttonRec, levels.Levels.get(Index++));
+				if (levels.Levels.size() - 1 <= Index++) break;
+				LevelButton bt = new LevelButton(Index, buttonRec, levels.Levels.get(Index));
 				mLevelButtonList.add(bt);
 				bt.setOnClickListener(onClick);
 				content.addNext(bt, -1);
 			}
-			LevelButton bt = new LevelButton(Index, buttonRec, levels.Levels.get(Index++));
+			if (levels.Levels.size() - 1 <= Index++) break;
+			LevelButton bt = new LevelButton(Index, buttonRec, levels.Levels.get(Index));
 			mLevelButtonList.add(bt);
 			bt.setOnClickListener(onClick);
 			content.addLast(bt, -1);
 		}
+
+		GL.that.RunOnGL(new runOnGL()
+		{
+
+			@Override
+			public void run()
+			{
+				GL.that.renderOnce("PlayView inital()");
+			}
+		});
+		GL.that.renderOnce("PlayView inital()");
 	}
 
 	private final OnClickListener onClick = new OnClickListener()

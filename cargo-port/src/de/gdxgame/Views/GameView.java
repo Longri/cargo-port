@@ -129,6 +129,8 @@ public class GameView extends CB_View_Base implements render3D, IResourceChanged
 		super.onShow();
 		GL.that.register3D(this);
 		GL.that.addRenderView(this, GL.FRAME_RATE_FAST_ACTION);
+		mInstractionView.onShow();
+		mInstractionView.ActionUp();
 	}
 
 	@Override
