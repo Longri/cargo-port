@@ -3,7 +3,6 @@ package controls;
 import CB_UI_Base.GL_UI.CB_View_Base;
 import CB_UI_Base.GL_UI.GL_View_Base;
 import CB_UI_Base.Math.CB_RectF;
-import CB_UI_Base.Math.UI_Size_Base;
 import Enums.InstructionType;
 import Res.ResourceCache;
 
@@ -69,10 +68,11 @@ public class InstructionBox extends CB_View_Base
 	private void addInstructionButton()
 	{
 		this.removeChilds();
-		float btH = UI_Size_Base.that.getButtonHeight() / 2;
+		float btH = this.height * 0.85f;
+		float btHHalf = btH / 2;
 
-		InstructionButton btn = new InstructionButton(type, delClicked, mPoolIndex);
-		btn.setPos(this.halfWidth - btH, this.halfHeight - btH);
+		InstructionButton btn = new InstructionButton(type, delClicked, mPoolIndex, btH);
+		btn.setPos(this.halfWidth - btHHalf, this.halfHeight - btHHalf);
 		btn.setOnClickListener(clickListner);
 		this.addChild(btn);
 	}

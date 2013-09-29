@@ -3,7 +3,7 @@ package controls;
 import CB_UI_Base.GL_UI.CB_View_Base;
 import CB_UI_Base.GL_UI.GL_View_Base;
 import CB_UI_Base.Math.CB_RectF;
-import CB_UI_Base.Math.UI_Size_Base;
+import CB_UI_Base.Math.UiSizes;
 import Enums.InstructionType;
 
 /**
@@ -16,17 +16,21 @@ public class InstructionSelect extends CB_View_Base
 	public static InstructionSelect that;
 
 	InstructionButton instBtnArray[] = new InstructionButton[7];
-
 	InstructionType selectedType;
+	float margin;
 
 	public InstructionSelect(CB_RectF rec, String Name)
 	{
 
 		super(rec, Name);
 		that = this;
+		margin = UiSizes.that.getMargin();
+		int Anzahl = instBtnArray.length;
+		float btnHeight = (this.height - ((Anzahl + 2) * margin)) / Anzahl;
+
 		for (int i = 0; i < instBtnArray.length; i++)
 		{
-			instBtnArray[i] = new InstructionButton(InstructionType.values()[i + 1], null, -1);
+			instBtnArray[i] = new InstructionButton(InstructionType.values()[i + 1], null, -1, btnHeight);
 			instBtnArray[i].setOnClickListener(click);
 			instBtnArray[i].disableDelete();
 			this.addChild(instBtnArray[i]);
@@ -60,14 +64,14 @@ public class InstructionSelect extends CB_View_Base
 	@Override
 	protected void Initial()
 	{
-		this.setWidth(instBtnArray[0].getWidth() + UI_Size_Base.that.getMargin());
-		float horiMargin = (this.getHeight() - (instBtnArray[0].getHeight() * (instBtnArray.length + 1))) / (instBtnArray.length + 1);
-		float yPos = horiMargin * 2;
+		this.setWidth(instBtnArray[0].getWidth() + margin);
+
+		float yPos = margin;
 		for (int i = 0; i < instBtnArray.length; i++)
 		{
-			instBtnArray[i].setX(UI_Size_Base.that.getMargin());
+			instBtnArray[i].setX(margin);
 			instBtnArray[i].setY(yPos);
-			yPos += horiMargin + instBtnArray[i].getHeight();
+			yPos += instBtnArray[i].getHeight() + margin;
 		}
 	}
 

@@ -31,7 +31,6 @@ import com.badlogic.gdx.graphics.g3d.lights.Lights;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-import controls.InstructionSliderContent;
 import controls.InstructionView;
 import de.gdxgame.GameCoord;
 import de.gdxgame.GameInstructionPool.PoolType;
@@ -768,12 +767,12 @@ public class GameView extends CB_View_Base implements render3D, IResourceChanged
 					returnCode = myGameSet.runInstruction();
 
 					{// set visual of instraction on InstractionPoolView-Slider
-						if (mLastPlayitPoolType != myGameSet.getCurrentInstructionPoolType())
+						// if (mLastPlayitPoolType != myGameSet.getCurrentInstructionPoolType())
 						{// change PoolType
-							mLastPlayitPoolType = myGameSet.getCurrentInstructionPoolType();
-							InstructionSliderContent.that.setActInstractionPool(myGameSet.getPool(mLastPlayitPoolType));
+							// mLastPlayitPoolType = myGameSet.getCurrentInstructionPoolType();
+							// InstructionSliderContent.that.setActInstractionPool(myGameSet.getPool(mLastPlayitPoolType));
 						}
-						InstructionSliderContent.that.setActInstractionIndex(myGameSet.getInstructionIndex());
+						// InstructionSliderContent.that.setActInstractionIndex(myGameSet.getInstructionIndex());
 					}
 
 					System.out.println("instructionCode: " + myGameSet.currentInstruction);

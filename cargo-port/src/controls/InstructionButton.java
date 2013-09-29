@@ -3,7 +3,6 @@ package controls;
 import CB_UI_Base.GL_UI.GL_View_Base;
 import CB_UI_Base.GL_UI.Controls.Image;
 import CB_UI_Base.GL_UI.Controls.ImageButton;
-import CB_UI_Base.Math.UI_Size_Base;
 import Enums.InstructionType;
 import Res.ResourceCache;
 
@@ -25,12 +24,13 @@ public class InstructionButton extends ImageButton
 		public void delClickeded(int poolIndex);
 	}
 
-	public InstructionButton(InstructionType instructionType, IDelClicked handler, int PoolIndex)
+	public InstructionButton(InstructionType instructionType, IDelClicked handler, int PoolIndex, float Height)
 	{
 		super("");
 		mHandler = handler;
 		mPoolIndex = PoolIndex;
-		setWidth(UI_Size_Base.that.getButtonHeight());
+		setWidth(Height);
+		setHeight(Height);
 		type = instructionType;
 
 		float wh = this.width / 3.6f;

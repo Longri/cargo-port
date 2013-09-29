@@ -31,9 +31,9 @@ public class InstructionPoolView extends CB_View_Base
 		mPoolType = pool.getPoolType();
 		this.pool = pool;
 		this.setBackground(ResourceCache.activityBackground);
-		this.margin = UI_Size_Base.that.getMargin();
+		this.margin = UI_Size_Base.that.getMargin() / 2;
 		this.setMargins(margin, margin);
-		this.wh = (this.height / 2) - (margin * 3);
+		this.wh = (this.height / 2) - (margin * 2);
 		boxRec = new CB_RectF(0, 0, wh, wh);
 		this.setClickable(true);
 		this.mPoolIndex = PoolIndex;
@@ -43,8 +43,9 @@ public class InstructionPoolView extends CB_View_Base
 	@Override
 	protected void Initial()
 	{
-
-		this.initRow();
+		// this.bottomBorder = this.margin;
+		// this.initRow();
+		this.initRow(true, this.height);
 		int count = 1;
 		int Index = 0;
 		for (InstructionType inst : pool)

@@ -15,7 +15,7 @@ import de.gdxgame.GameInstructionPool;
 
 public class InstructionSliderContent extends CB_View_Base
 {
-	public static InstructionSliderContent that;
+	// public static InstructionSliderContent that;
 	private GameInstructionPool mActPool;
 	private int mSelectedInstractionIndex = -1;
 	private final H_ListView mListView;
@@ -24,7 +24,7 @@ public class InstructionSliderContent extends CB_View_Base
 	public InstructionSliderContent(CB_RectF rec, String Name)
 	{
 		super(rec, Name);
-		that = this;
+		// that = this;
 		mPoolTypeLabel = new Label(0, 0, this.getHeight(), this.getHeight(), "");
 		this.addChild(mPoolTypeLabel);
 
@@ -73,12 +73,12 @@ public class InstructionSliderContent extends CB_View_Base
 	{
 		InstructionButton mButton;
 
-		public static final CB_RectF mButtonRec = (new InstructionButton(InstructionType.Nop, null, -1).copy());
+		public static final CB_RectF mButtonRec = (new InstructionButton(InstructionType.Nop, null, -1, 75).copy());
 
 		public InstructionListViewItem(int Index, InstructionType instructionType)
 		{
 			super(mButtonRec, Index, instructionType.toString());
-			mButton = new InstructionButton(instructionType, null, Index);
+			mButton = new InstructionButton(instructionType, null, Index, 75);
 			mButton.disableDelete();
 			mButton.setOnClickListener(click);
 			this.addChild(mButton);
@@ -116,7 +116,7 @@ public class InstructionSliderContent extends CB_View_Base
 		@Override
 		public boolean onClick(GL_View_Base v, int x, int y, int pointer, int button)
 		{
-			InstructionSliderContent.that.click(0, 0, 0, 0);
+			// InstructionSliderContent.that.click(0, 0, 0, 0);
 			return true;
 		}
 	};
