@@ -9,7 +9,7 @@ public class Global extends CB_UI_Base.Global
 {
 	public static final int CurrentRevision = 1;
 	public static final String CurrentVersion = "0.1.";
-	public static final String VersionPrefix = "alpha";
+	public static final String VersionPrefix = "Test";
 
 	public static final String br = System.getProperty("line.separator");
 	public static final String fs = System.getProperty("file.separator");
@@ -23,6 +23,12 @@ public class Global extends CB_UI_Base.Global
 		final String ret = "Version: " + CurrentVersion + String.valueOf(CurrentRevision) + "  "
 				+ (VersionPrefix.equals("") ? "" : "(" + VersionPrefix + ")");
 		return ret;
+	}
+
+	@Override
+	protected String getVersionPrefix()
+	{
+		return VersionPrefix;
 	}
 
 }

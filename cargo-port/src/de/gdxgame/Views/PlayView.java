@@ -77,7 +77,11 @@ public class PlayView extends CB_View_Base
 				bt.setOnClickListener(onClick);
 				content.addNext(bt, -1);
 			}
-			if (levels.Levels.size() - 1 <= Index++) break;
+			if (levels.Levels.size() - 1 <= Index++)
+			{
+				if (!content.RowIsFinalise()) content.FinaliseRow(-1);
+				break;
+			}
 			LevelButton bt = new LevelButton(Index, buttonRec, levels.Levels.get(Index));
 			mLevelButtonList.add(bt);
 			bt.setOnClickListener(onClick);

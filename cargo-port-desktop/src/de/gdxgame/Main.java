@@ -3,6 +3,7 @@ package de.gdxgame;
 import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
@@ -55,7 +56,7 @@ public class Main
 		devicesSizes ui = new devicesSizes();
 
 		ui.Window = new Size(cfg.width, cfg.height);
-		ui.Density = 1.5f;
+		ui.Density = 0.7f; // 1.5
 		ui.RefSize = 64;
 		ui.TextSize_Normal = 52;
 		ui.ButtonTextSize = 50;
@@ -83,6 +84,8 @@ public class Main
 		GL.listenerInterface = new GL_Listener_Interface()
 		{
 
+			AtomicBoolean isContinous = new AtomicBoolean(false);
+
 			@Override
 			public void RequestRender(String requestName)
 			{
@@ -92,13 +95,21 @@ public class Main
 			@Override
 			public void RenderDirty()
 			{
+				isContinous.set(false);
 				App.getGraphics().setContinuousRendering(false);
 			}
 
 			@Override
 			public void RenderContinous()
 			{
+				isContinous.set(true);
 				App.getGraphics().setContinuousRendering(true);
+			}
+
+			@Override
+			public boolean isContinous()
+			{
+				return isContinous.get();
 			}
 		};
 
