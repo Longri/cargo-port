@@ -4,9 +4,9 @@ import CB_UI_Base.GL_UI.render3D;
 import Res.ResourceCache.IResourceChanged;
 
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.lights.Lights;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 
@@ -44,7 +44,8 @@ public class PortalModel implements render3D, IResourceChanged
 	@Override
 	public void render3d(ModelBatch modelBatch)
 	{
-		Lights lights = GameView.that.getLights();
+
+		Environment lights = GameView.that.getLights();
 
 		for (ModelInstance inst : mModelList)
 		{

@@ -42,6 +42,7 @@ public class Main
 		cfg.width = 800;
 		cfg.height = 600;
 		cfg.resizable = false;
+		cfg.samples = 4;
 
 		// Read Config
 		String workPath = "./cachebox";

@@ -24,10 +24,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.lights.DirectionalLight;
-import com.badlogic.gdx.graphics.g3d.lights.Lights;
+import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
@@ -71,7 +71,7 @@ public class GameView extends CB_View_Base implements render3D, IResourceChanged
 	private ModelInstance[][] GameField = new ModelInstance[1][1];
 	private Vector3[][][] GameFieldPositions = new Vector3[1][1][1];
 	private ModelInstance[][][] GameVectorModels = new ModelInstance[1][1][1];
-	private Lights lights;
+	private Environment lights;
 	private final AnimationList mAnimationList = new AnimationList();
 	private GameCoord mGameFieldDimensions;
 	private PoolType mLastPlayitPoolType;
@@ -165,8 +165,8 @@ public class GameView extends CB_View_Base implements render3D, IResourceChanged
 	public void Initial3D()
 	{
 
-		lights = new Lights();
-		lights.ambientLight.set(0.4f, 0.4f, 0.4f, 1f);
+		lights = new Environment();
+
 		lights.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
 
 		is3DInitial = true;
@@ -659,7 +659,7 @@ public class GameView extends CB_View_Base implements render3D, IResourceChanged
 		return GameFieldPositions[0][0].length;
 	}
 
-	public Lights getLights()
+	public Environment getLights()
 	{
 		return lights;
 	}
