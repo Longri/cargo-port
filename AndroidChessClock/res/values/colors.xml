@@ -1,0 +1,5 @@
+    <resources>
+        <color name="app_white">#EEEEEE</color>
+        <color name="app_black">#111111</color>
+        <color name="app_pause">#CCCC77</color>
+    </resources>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceCategory android:title="Spielzeit">
+	<EditTextPreference
+	    android:inputType="number"
+		android:negativeButtonText="Abbruch"
+		android:positiveButtonText="OK"
+		android:dialogTitle="Zeit für Weiß (Min)"
+		android:title="Startzeit für Weiß setzen"
+		android:summary="Geben Sie die Zeit ein, mit der Weiß startet."
+		android:defaultValue="10"
+		android:selectable="true"
+		android:enabled="true"
+		android:key="prefTimeW">
+	</EditTextPreference>
+	<EditTextPreference
+	    android:inputType="number"
+	    android:negativeButtonText="Abbruch"
+	    android:positiveButtonText="OK"
+	    android:dialogTitle="Zeit für Schwarz (Min)"
+	    android:title="Startzeit für Schwarz setzen"
+	    android:summary="Geben Sie die Zeit ein, mit der Schwarz startet."
+	    android:defaultValue="10"
+	    android:selectable="true"
+	    android:enabled="true"
+	    android:key="prefTimeB">
+	</EditTextPreference>
+</PreferenceCategory>
+<PreferenceCategory android:title="Zeitkontrolle">
+    <ListPreference
+        android:entries="@array/delayTypes"
+        android:negativeButtonText="Abbruch"
+        android:positiveButtonText="OK"
+        android:dialogTitle="Zeitverzögerungsart"
+        android:entryValues="@array/delayVals"
+        android:selectable="true"
+        android:summary="Stellen Sie die Zeitverzögerungsart für das Spiel ein."
+        android:enabled="true"
+        android:title="Zeitverzögerungsart einstellen"
+        android:key="prefDelay"
+        android:defaultValue="None">
+    </ListPreference>
+	<EditTextPreference
+	    android:inputType="number"
+	    android:key="prefDelayTime"
+	    android:summary="Geben Sie die Zeitverzögerung pro Zug ein."
+	    android:title="Zeitverzögerung eingeben"
+	    android:enabled="true"
+	    android:defaultValue="0"
+	    android:selectable="true"
+	    android:negativeButtonText="Abbruch"
+	    android:positiveButtonText="OK"
+	    android:dialogTitle="Zeitverzögerung (Sek)">
+	</EditTextPreference>
+</PreferenceCategory>
+<PreferenceCategory android:title="Weitere Optionen">
+    <RingtonePreference
+        android:showSilent="true"
+        android:enabled="true"
+        android:ringtoneType="ringtone|notification|alarm|all"
+        android:showDefault="true"
+        android:title="Signalton"
+        android:summary="Wählen Sie den Signalton aus, der ertönt, wenn die Zeit abgelaufen ist."
+        android:key="prefAlertSound">
+    </RingtonePreference>
+	<CheckBoxPreference
+	    android:title="Haptisches Feedback"
+	    android:enabled="true"
+	    android:selectable="true"
+	    android:defaultValue="false"
+	    android:summary="Das Gerät vibriert leicht, wenn eine Schaltfläche gedrückt wird."
+	    android:summaryOn="Haptisches Feedback ist an."
+	    android:summaryOff="Haptisches Feedback ist aus."
+	    android:key="prefHaptic">
+    </CheckBoxPreference>
+</PreferenceCategory>
+</PreferenceScreen>

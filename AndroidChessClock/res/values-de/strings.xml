@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">AndroidChessClock</string>
+	<string name="action_settings">Optionen</string>
+	<string name="action_reset_clocks">Rücksetzen</string>
+	<string name="action_help">Hilfe</string>
+	<string name="action_about">Über</string>
+	<string name="pause">||</string>
+	<string name="help_title">Hilfe</string>
+	<string name="about_title">Über diese App</string>
+	<string name="reset_question">Beide Uhren zurückstellen?</string>
+	<string name="reset_yes">Ja</string>
+	<string name="reset_no">Nein</string>
+		
+	<string-array name="delayTypes">
+		<item>Keine</item>
+		<item>Fischer</item>
+		<item>Bronstein</item>
+	</string-array>
+
+	<string-array name="delayVals">
+		<item>None</item>
+		<item>Fischer</item>
+		<item>Bronstein</item>
+	</string-array>
+
+</resources>
