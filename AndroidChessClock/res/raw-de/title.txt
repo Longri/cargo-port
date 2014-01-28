@@ -1,2 +1,0 @@
-<h2>AndroidChessClock</h2>
-<b>Kurzanleitung</b>
