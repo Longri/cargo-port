@@ -6,7 +6,7 @@ import CB_UI_Base.GL_UI.Controls.ImageButton;
 import Enums.InstructionType;
 import Res.ResourceCache;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
@@ -33,9 +33,9 @@ public class InstructionButton extends ImageButton
 		setHeight(Height);
 		type = instructionType;
 
-		float wh = this.width / 3.6f;
+		float wh = this.getWidth() / 3.6f;
 
-		deleteImage = new Image(this.width - wh, this.height - wh, wh, wh, "");
+		deleteImage = new Image(this.getWidth() - wh, this.getHeight() - wh, wh, wh, "");
 		deleteImage.setDrawable(new SpriteDrawable(ResourceCache.getThemedSprite("InstClose")));
 		this.addChild(deleteImage);
 		deleteImage.setVisible(false);
@@ -114,7 +114,7 @@ public class InstructionButton extends ImageButton
 	};
 
 	@Override
-	public void render(SpriteBatch batch)
+	public void render(Batch batch)
 	{
 		if (type == InstructionType.Nop || type == InstructionType.nothing) return;
 		super.render(batch);

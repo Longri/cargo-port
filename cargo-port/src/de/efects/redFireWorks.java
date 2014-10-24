@@ -3,14 +3,14 @@ package de.efects;
 import java.util.Random;
 
 import CB_UI_Base.GL_UI.CB_View_Base;
-import CB_UI_Base.GL_UI.runOnGL;
+import CB_UI_Base.GL_UI.IRunOnGL;
 import CB_UI_Base.GL_UI.GL_Listener.GL;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 
 public class redFireWorks extends CB_View_Base
@@ -25,7 +25,7 @@ public class redFireWorks extends CB_View_Base
 
 		super(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), "Efect");
 
-		GL.that.RunOnGL(new runOnGL()
+		GL.that.RunOnGL(new IRunOnGL()
 		{
 
 			@Override
@@ -80,7 +80,7 @@ public class redFireWorks extends CB_View_Base
 	}
 
 	@Override
-	public void render(SpriteBatch batch)
+	public void render(Batch batch)
 	{
 		if (isDisposed) return;
 		float delta = Gdx.graphics.getDeltaTime();
@@ -94,7 +94,7 @@ public class redFireWorks extends CB_View_Base
 			{
 				PooledEffect effect = effects.get(i);
 				effect.draw(batch, delta);
-				GL.that.renderOnce("efect");
+				GL.that.renderOnce();
 				if (effect.isComplete())
 				{
 					effect.free();

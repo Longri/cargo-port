@@ -9,7 +9,7 @@ import CB_UI_Base.GL_UI.Controls.List.ListViewItemBase;
 import CB_UI_Base.Math.CB_RectF;
 import Enums.InstructionType;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 
 import de.gdxgame.GameInstructionPool;
 
@@ -29,7 +29,7 @@ public class InstructionSliderContent extends CB_View_Base
 		this.addChild(mPoolTypeLabel);
 
 		mListView = new H_ListView(rec, "ListView_" + Name);
-		mListView.setWidth(this.width - mPoolTypeLabel.getWidth());
+		mListView.setWidth(this.getWidth() - mPoolTypeLabel.getWidth());
 		mListView.setZeroPos();
 		mListView.setX(mPoolTypeLabel.getMaxX());
 
@@ -85,7 +85,7 @@ public class InstructionSliderContent extends CB_View_Base
 		}
 
 		@Override
-		public void render(SpriteBatch batch)
+		public void render(Batch batch)
 		{
 			if (mButton.isFocused() != isSelected)
 			{

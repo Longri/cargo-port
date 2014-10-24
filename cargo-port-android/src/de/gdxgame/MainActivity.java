@@ -1,11 +1,11 @@
 package de.gdxgame;
 
-import CB_UI_Base.Plattform;
 import CB_UI_Base.Events.platformConector;
 import CB_UI_Base.Events.platformConector.IQuit;
 import CB_UI_Base.GL_UI.GL_Listener.GL;
 import CB_UI_Base.Math.Size;
 import CB_UI_Base.Math.devicesSizes;
+import CB_Utils.Plattform;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -29,7 +29,6 @@ public class MainActivity extends AndroidApplication
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 		AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
-		cfg.useGL20 = true;
 		cfg.numSamples = 4;
 
 		Resources res = this.getResources();
@@ -54,7 +53,7 @@ public class MainActivity extends AndroidApplication
 
 		Global.displayDensity = ui.Density;
 
-		Global.platform = Plattform.Android;
+		Plattform.used = Plattform.Android;
 
 		// Initial Config
 		String workPath = "./cargo_port";

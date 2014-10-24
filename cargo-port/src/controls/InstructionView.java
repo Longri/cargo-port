@@ -3,8 +3,8 @@ package controls;
 import CB_UI_Base.GL_UI.CB_View_Base;
 import CB_UI_Base.GL_UI.GL_View_Base;
 import CB_UI_Base.GL_UI.Handler;
+import CB_UI_Base.GL_UI.IRunOnGL;
 import CB_UI_Base.GL_UI.SpriteCacheBase;
-import CB_UI_Base.GL_UI.runOnGL;
 import CB_UI_Base.GL_UI.Controls.Button;
 import CB_UI_Base.GL_UI.GL_Listener.GL;
 import CB_UI_Base.Math.CB_RectF;
@@ -33,6 +33,7 @@ public class InstructionView extends CB_View_Base
 	private float touchYoffset = 0;
 	private float yPos = 0;
 	private boolean isShowing = false;
+
 	private GameSet myGameSet;
 	private InstructionSelect sel;
 
@@ -41,13 +42,16 @@ public class InstructionView extends CB_View_Base
 	public InstructionView(CB_RectF rec, GameSet level)
 	{
 		super(rec, "InstractionView");
+		this.setClickable(true);
 		this.setBackground(SpriteCacheBase.activityBackground);
+		setSliderPos(this.getHeight() - 30);
 		this.setColorFilter(new Color(1f, 1f, 1f, 0.6f));
 		this.myGameSet = level;
 
 		slideButton = new Button("");
-		slideButton.setWidth(this.width);
+		slideButton.setWidth(this.getWidth());
 		slideButton.setHeight(UiSizes.that.getButtonHeight() * 0.45f);
+		slideButton.setHeight(UiSizes.that.getButtonHeight());
 		slideButton.setOnClickListener(new OnClickListener()
 		{
 
@@ -61,7 +65,7 @@ public class InstructionView extends CB_View_Base
 		this.addChild(slideButton);
 
 		CB_RectF selRec = this.copy();
-		selRec.setHeight(this.height - slideButton.getHeight());
+		selRec.setHeight(this.getHeight() - slideButton.getHeight());
 		sel = new InstructionSelect(selRec, "select");
 		sel.setZeroPos();
 		sel.setY(slideButton.getMaxY());
@@ -87,8 +91,8 @@ public class InstructionView extends CB_View_Base
 
 		if (myGameSet != null)
 		{
-			float instractionPoolHeight = (this.height - slideButton.getMaxY()) / 3 - (margin * 4);
-			float instructionPoolWidth = this.width - sel.getMaxX() - (margin * 4);
+			float instractionPoolHeight = (this.getHeight() - slideButton.getMaxY()) / 3 - (margin * 4);
+			float instructionPoolWidth = this.getWidth() - sel.getMaxX() - (margin * 4);
 
 			CB_RectF instructionPoolRec = new CB_RectF(0, 0, instructionPoolWidth, instractionPoolHeight);
 			main = new InstructionPoolView(instructionPoolRec, "mainPool", myGameSet.mainInstructionPool, 0, changedHandler);
@@ -120,7 +124,7 @@ public class InstructionView extends CB_View_Base
 	@Override
 	public void onShow()
 	{
-		setSliderPos(height - slideButton.getHeight() - this.getTopHeight());
+		setSliderPos(getHeight() - slideButton.getHeight() - this.getTopHeight());
 		isShowing = false;
 	}
 
@@ -200,16 +204,16 @@ public class InstructionView extends CB_View_Base
 			}
 			else
 			{
-				startAnimationTo((int) (height - slideButton.getHeight() - this.getTopHeight()));
+				startAnimationTo((int) (getHeight() - slideButton.getHeight() - this.getTopHeight()));
 			}
 			swipeUp = swipeDown = false;
 
 		}
 		else
 		{
-			if (yPos > height * 0.7)
+			if (yPos > getHeight() * 0.7)
 			{
-				startAnimationTo(height - slideButton.getHeight() - this.getTopHeight());
+				startAnimationTo(getHeight() - slideButton.getHeight() - this.getTopHeight());
 			}
 			else
 			{
@@ -297,8 +301,7 @@ public class InstructionView extends CB_View_Base
 
 	private void setPos_onUI(final float newValue)
 	{
-
-		this.RunOnGL(new runOnGL()
+		GL.that.RunIfInitial(new IRunOnGL()
 		{
 
 			@Override
@@ -307,7 +310,6 @@ public class InstructionView extends CB_View_Base
 				setSliderPos(newValue);
 			}
 		});
-
 	}
 
 	private void setSliderPos(float value)
@@ -317,7 +319,7 @@ public class InstructionView extends CB_View_Base
 		yPos = value;
 		this.setY(value);
 
-		GL.that.renderOnce(this.name);
+		GL.that.renderOnce();
 
 	}
 

@@ -26,7 +26,7 @@ public class InstructionSelect extends CB_View_Base
 		that = this;
 		margin = UiSizes.that.getMargin();
 		int Anzahl = instBtnArray.length;
-		float btnHeight = (this.height - ((Anzahl + 2) * margin)) / Anzahl;
+		float btnHeight = (this.getHeight() - ((Anzahl + 2) * margin)) / Anzahl;
 
 		for (int i = 0; i < instBtnArray.length; i++)
 		{

@@ -3,13 +3,32 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="assets"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry exported="true" kind="lib" path="libs/gdx-backend-lwjgl.jar" sourcepath="libs/gdx-backend-lwjgl-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/gdx-backend-lwjgl-natives.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/gdx-natives.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/gdx-freetype-natives.jar"/>
-	<classpathentry exported="true" kind="lib" path="libs/gdx-freetype.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/cargo-port"/>
-	<classpathentry kind="lib" path="libs/gdx.jar"/>
-	<classpathentry kind="lib" path="libs/CB_Base.jar"/>
+	<classpathentry kind="lib" path="libs/commons-logging-1.1.3.jar"/>
+	<classpathentry kind="lib" path="libs/gdx-1.0.0.jar"/>
+	<classpathentry kind="lib" path="libs/gdx-backend-lwjgl-1.0.0.jar" sourcepath="C:/@Work/Longri/Gits/LIBGDX/backends/gdx-backend-lwjgl"/>
+	<classpathentry kind="lib" path="libs/gdx-freetype-1.0.0.jar"/>
+	<classpathentry kind="lib" path="libs/gdx-freetype-platform-1.0.0-natives-desktop.jar"/>
+	<classpathentry kind="lib" path="libs/gdx-platform-1.0.0-natives-desktop.jar"/>
+	<classpathentry kind="lib" path="libs/httpclient-4.0-alpha1.jar"/>
+	<classpathentry kind="lib" path="libs/httpcore-4.0-alpha5.jar"/>
+	<classpathentry kind="lib" path="libs/jinput-2.0.5.jar"/>
+	<classpathentry kind="lib" path="libs/jinput-platform-2.0.5-natives-linux.jar"/>
+	<classpathentry kind="lib" path="libs/jinput-platform-2.0.5-natives-osx.jar"/>
+	<classpathentry kind="lib" path="libs/jinput-platform-2.0.5-natives-windows.jar"/>
+	<classpathentry kind="lib" path="libs/jlayer-1.0.1-gdx.jar"/>
+	<classpathentry kind="lib" path="libs/jorbis-0.0.17.jar"/>
+	<classpathentry kind="lib" path="libs/jutils-1.0.0.jar"/>
+	<classpathentry kind="lib" path="libs/kxml2-2.3.0.jar"/>
+	<classpathentry kind="lib" path="libs/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl_util-2.9.1.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-2.9.1.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-platform-2.9.1-natives-linux.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-platform-2.9.1-natives-osx.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl-platform-2.9.1-natives-windows.jar"/>
+	<classpathentry kind="lib" path="libs/sqlite-jdbc-3.7.15-SNAPSHOT-2.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CB_Translation_Base"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CB_UI_Base"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CB_Utils"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

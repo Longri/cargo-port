@@ -1,5 +1,6 @@
 package controls;
 
+import CB_UI_Base.GL_UI.COLOR;
 import CB_UI_Base.GL_UI.Fonts;
 import CB_UI_Base.GL_UI.Controls.Button;
 import CB_UI_Base.Math.CB_RectF;
@@ -15,7 +16,7 @@ public class LevelButton extends Button
 		super(rec, "LevelButton:" + level.getLevelNumber());
 		mIndex = index;
 		mLevel = level;
-		this.setText(String.valueOf(level.getLevelNumber()), Fonts.getCompass(), Fonts.getFontColor());
+		this.setText(String.valueOf(level.getLevelNumber()), Fonts.getCompass(), COLOR.getFontColor());
 		if (level.getIsFreeToPlay()) this.enable();
 		else
 			this.disable();

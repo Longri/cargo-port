@@ -1,6 +1,6 @@
 package de.gdxgame.Views.Actions;
 
-import CB_UI_Base.GL_UI.runOnGL;
+import CB_UI_Base.GL_UI.IRunOnGL;
 import CB_UI_Base.GL_UI.GL_Listener.GL;
 
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
@@ -70,7 +70,7 @@ public class AnimationVector3 implements Animation<Vector3>
 						@Override
 						public void run()
 						{
-							GL.that.RunOnGL(new runOnGL()
+							GL.that.RunOnGL(new IRunOnGL()
 							{
 
 								@Override

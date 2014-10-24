@@ -129,7 +129,7 @@ public class splash extends MainViewBase
 	{
 
 		float ref = UiSizes.that.getWindowHeight() / 13;
-		CB_RectF CB_LogoRec = new CB_RectF(this.halfWidth - (ref * 2.5f), this.height - ((ref * 5) / 4.11f) - ref, ref * 5,
+		CB_RectF CB_LogoRec = new CB_RectF(this.getHalfWidth() - (ref * 2.5f), this.getHeight() - ((ref * 5) / 4.11f) - ref, ref * 5,
 				(ref * 5) / 4.11f);
 
 		// CB_Logo = new Image(CB_LogoRec, "CB_Logo");
@@ -138,7 +138,7 @@ public class splash extends MainViewBase
 
 		String VersionString = Global.getVersionString();
 		TextBounds bounds = Fonts.getNormal().getMultiLineBounds(VersionString + Global.br + Global.br + Global.splashMsg);
-		descTextView = new Label(0, CB_LogoRec.getY() - ref - bounds.height, this.width, bounds.height + 10, "DescLabel");
+		descTextView = new Label(0, CB_LogoRec.getY() - ref - bounds.height, this.getWidth(), bounds.height + 10, "DescLabel");
 		// HAlignment.CENTER funktioniert (hier) (noch) nicht, es kommt rechtsbündig raus
 		descTextView.setWrappedText(VersionString + Global.br + Global.br + Global.splashMsg);
 		descTextView.setHAlignment(HAlignment.CENTER);
@@ -149,7 +149,7 @@ public class splash extends MainViewBase
 
 		float ProgressHeight = Math.max(ProgressBack.getBottomHeight() + ProgressBack.getTopHeight(), ref / 1.5f);
 
-		progress = new ProgressBar(new CB_RectF(0, 0, this.width, ProgressHeight), "Splash.ProgressBar");
+		progress = new ProgressBar(new CB_RectF(0, 0, this.getWidth(), ProgressHeight), "Splash.ProgressBar");
 
 		progress.setBackground(ProgressBack);
 		progress.setProgressFill(ProgressFill);
@@ -160,7 +160,7 @@ public class splash extends MainViewBase
 		CB_RectF rec_Mapsforge_Logo = new CB_RectF(200, 50, logoCalcRef, logoCalcRef / 1.142f);
 		CB_RectF rec_FX2_Logo = new CB_RectF(rec_Mapsforge_Logo);
 		float w = logoCalcRef * 2.892655367231638f;
-		CB_RectF rec_LibGdx_Logo = new CB_RectF(this.halfWidth - (w / 2), 50, w, w);
+		CB_RectF rec_LibGdx_Logo = new CB_RectF(this.getHalfWidth() - (w / 2), 50, w, w);
 
 		rec_FX2_Logo.setX(400);
 

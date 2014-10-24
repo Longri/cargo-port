@@ -60,7 +60,7 @@ public class MainView extends MainViewBase
 		CB_RectF rec = this.copy();
 		rec.setWidth(GL_UISizes.UI_Left.getWidth());
 
-		rec.setHeight(this.height);
+		rec.setHeight(this.getHeight());
 		rec.setPos(0, 0);
 
 		TAB = new CB_TabView(rec, "Phone Tab");

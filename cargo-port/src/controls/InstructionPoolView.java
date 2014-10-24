@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import CB_UI_Base.GL_UI.CB_View_Base;
 import CB_UI_Base.GL_UI.GL_View_Base;
-import CB_UI_Base.GL_UI.runOnGL;
+import CB_UI_Base.GL_UI.IRunOnGL;
 import CB_UI_Base.GL_UI.GL_Listener.GL;
 import CB_UI_Base.Math.CB_RectF;
 import CB_UI_Base.Math.UI_Size_Base;
@@ -33,7 +33,7 @@ public class InstructionPoolView extends CB_View_Base
 		this.setBackground(ResourceCache.activityBackground);
 		this.margin = UI_Size_Base.that.getMargin() / 2;
 		this.setMargins(margin, margin);
-		this.wh = (this.height / 2) - (margin * 2);
+		this.wh = (this.getHeight() / 2) - (margin * 2);
 		boxRec = new CB_RectF(0, 0, wh, wh);
 		this.setClickable(true);
 		this.mPoolIndex = PoolIndex;
@@ -45,11 +45,12 @@ public class InstructionPoolView extends CB_View_Base
 	{
 		// this.bottomBorder = this.margin;
 		// this.initRow();
-		this.initRow(true, this.height);
+		this.initRow(true, this.getHeight());
 		int count = 1;
 		int Index = 0;
-		for (InstructionType inst : pool)
+		for (int i = 0; i < pool.size(); i++)
 		{
+			InstructionType inst = pool.get(i);
 			if (count < 8)
 			{
 				this.addNext(new InstructionBox(boxRec, inst, delClicked, Index, changedHandler));
@@ -73,8 +74,9 @@ public class InstructionPoolView extends CB_View_Base
 			// Read Instructions
 			GameInstructionPool newPool = new GameInstructionPool(mPoolType);
 			newPool.clear(); // Constructor beffüllt den Pool schon mit 16 NOP
-			for (GL_View_Base view : childs)
+			for (int i = 0; i < childs.size(); i++)
 			{
+				GL_View_Base view = childs.get(i);
 				InstructionType type = ((InstructionBox) view).getType();
 				newPool.add(type);
 				newPool.trimToSize();
@@ -93,13 +95,14 @@ public class InstructionPoolView extends CB_View_Base
 		{
 			pool.set(PoolIndex, InstructionType.Nop);
 			InstructionPoolView.this.removeChildsDirekt();
-			InstructionPoolView.this.RunOnGL(new runOnGL()
+
+			GL.that.RunOnGL(new IRunOnGL()
 			{
 
 				@Override
 				public void run()
 				{
-					GL.that.RunOnGL(new runOnGL()
+					GL.that.RunOnGL(new IRunOnGL()
 					{
 
 						@Override

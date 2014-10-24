@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 
 import de.gdxgame.GameCoord;
 import de.gdxgame.ThreadSafeList;
-import de.gdxgame.Views.GameView;
+import de.gdxgame.Views.View_3D;
 import de.gdxgame.Views.Actions.AnimationCallBack;
 import de.gdxgame.Views.Actions.AnimationList;
 import de.gdxgame.Views.Actions.AnimationVector3;
@@ -45,7 +45,7 @@ public class PortalModel implements render3D, IResourceChanged
 	public void render3d(ModelBatch modelBatch)
 	{
 
-		Environment lights = GameView.that.getLights();
+		Environment lights = View_3D.that.getLights();
 
 		for (ModelInstance inst : mModelList)
 		{
@@ -70,8 +70,8 @@ public class PortalModel implements render3D, IResourceChanged
 	{
 		mModelList = new ThreadSafeList<ModelInstance>();
 
-		int maxField = GameView.that.getMaxGameFieldX();
-		int maxFieldHeight = GameView.that.getMaxGameFieldZ();
+		int maxField = View_3D.that.getMaxGameFieldX();
+		int maxFieldHeight = View_3D.that.getMaxGameFieldZ();
 
 		mLegBottomLeft = new ModelInstance(ResourceCache.getPortalLegBottomModel());
 
@@ -137,7 +137,7 @@ public class PortalModel implements render3D, IResourceChanged
 
 		// set Runway
 		{
-			Vector3 vec3 = GameView.that.getVectorPosition(vector);
+			Vector3 vec3 = View_3D.that.getVectorPosition(vector);
 			if (vec3 != null) mRunWay.transform.setToTranslation(vec3);
 		}
 
@@ -145,7 +145,7 @@ public class PortalModel implements render3D, IResourceChanged
 		{
 			vector.setZ(0);
 			vector.setX(0);
-			Vector3 vec3 = GameView.that.getVectorPosition(vector);
+			Vector3 vec3 = View_3D.that.getVectorPosition(vector);
 			setPositionDependencys(vec3);
 
 		}
@@ -218,9 +218,9 @@ public class PortalModel implements render3D, IResourceChanged
 
 	private AnimationList animateRunWay(GameCoord start, GameCoord end)
 	{
-		AnimationVector3 ani = new AnimationVector3(mRunWay, GameView.that.getVectorPosition(new GameCoord(start.getX(), start.getY(),
-				start.getZ())), GameView.that.getVectorPosition(new GameCoord(end.getX(), end.getY(), end.getZ())),
-				GameView.fastAnimation ? GameView.FAST_ANIMATION_TIME : GameView.ANIMATION_TIME);
+		AnimationVector3 ani = new AnimationVector3(mRunWay, View_3D.that.getVectorPosition(new GameCoord(start.getX(), start.getY(), start
+				.getZ())), View_3D.that.getVectorPosition(new GameCoord(end.getX(), end.getY(), end.getZ())),
+				View_3D.fastAnimation ? View_3D.FAST_ANIMATION_TIME : View_3D.ANIMATION_TIME);
 
 		AnimationList list = new AnimationList();
 		list.add(ani);
@@ -232,21 +232,21 @@ public class PortalModel implements render3D, IResourceChanged
 	{
 		AnimationList list = new AnimationList();
 
-		AnimationVector3 ani = new AnimationVector3(mRunWay, GameView.that.getVectorPosition(start), GameView.that.getVectorPosition(end),
-				GameView.fastAnimation ? GameView.FAST_ANIMATION_TIME : GameView.ANIMATION_TIME);
+		AnimationVector3 ani = new AnimationVector3(mRunWay, View_3D.that.getVectorPosition(start), View_3D.that.getVectorPosition(end),
+				View_3D.fastAnimation ? View_3D.FAST_ANIMATION_TIME : View_3D.ANIMATION_TIME);
 		list.add(ani);
 
 		// Animate Left Lower corner and set Dependencys
 		start.setZ(0);
 		start.setX(0);
-		Vector3 vecStart = GameView.that.getVectorPosition(start);
+		Vector3 vecStart = View_3D.that.getVectorPosition(start);
 
 		end.setZ(0);
 		end.setX(0);
-		Vector3 vecEnd = GameView.that.getVectorPosition(end);
+		Vector3 vecEnd = View_3D.that.getVectorPosition(end);
 
-		AnimationVector3 ani2 = new AnimationVector3(mLegBottomLeft, vecStart, vecEnd,
-				GameView.fastAnimation ? GameView.FAST_ANIMATION_TIME : GameView.ANIMATION_TIME);
+		AnimationVector3 ani2 = new AnimationVector3(mLegBottomLeft, vecStart, vecEnd, View_3D.fastAnimation ? View_3D.FAST_ANIMATION_TIME
+				: View_3D.ANIMATION_TIME);
 
 		ani2.setAnimationCallBack(new AnimationCallBack<Vector3>()
 		{

@@ -6,7 +6,7 @@ import CB_UI_Base.Math.CB_RectF;
 import Enums.InstructionType;
 import Res.ResourceCache;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 import controls.InstructionButton.IDelClicked;
@@ -68,11 +68,11 @@ public class InstructionBox extends CB_View_Base
 	private void addInstructionButton()
 	{
 		this.removeChilds();
-		float btH = this.height * 0.85f;
+		float btH = this.getHeight() * 0.85f;
 		float btHHalf = btH / 2;
 
 		InstructionButton btn = new InstructionButton(type, delClicked, mPoolIndex, btH);
-		btn.setPos(this.halfWidth - btHHalf, this.halfHeight - btHHalf);
+		btn.setPos(this.getHalfWidth() - btHHalf, this.getHalfHeight() - btHHalf);
 		btn.setOnClickListener(clickListner);
 		this.addChild(btn);
 	}
@@ -93,17 +93,17 @@ public class InstructionBox extends CB_View_Base
 	}
 
 	@Override
-	public void render(SpriteBatch batch)
+	public void render(Batch batch)
 	{
 		super.render(batch);
 		if (boxDrawable == null || boxDrawableSelected == null) Initial();
 		if (isSelected)
 		{
-			boxDrawableSelected.draw(batch, 0, 0, width, height);
+			boxDrawableSelected.draw(batch, 0, 0, getWidth(), getHeight());
 		}
 		else
 		{
-			boxDrawable.draw(batch, 0, 0, width, height);
+			boxDrawable.draw(batch, 0, 0, getWidth(), getHeight());
 		}
 	}
 

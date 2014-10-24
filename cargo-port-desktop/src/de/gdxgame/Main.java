@@ -9,7 +9,6 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 import CB_UI_Base.Config;
-import CB_UI_Base.Plattform;
 import CB_UI_Base.Events.platformConector;
 import CB_UI_Base.Events.platformConector.ICallUrl;
 import CB_UI_Base.Events.platformConector.IHardwarStateListner;
@@ -23,6 +22,7 @@ import CB_UI_Base.GL_UI.GL_Listener.GL_Listener_Interface;
 import CB_UI_Base.Math.Size;
 import CB_UI_Base.Math.devicesSizes;
 import CB_Utils.Config_Core;
+import CB_Utils.Plattform;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -34,11 +34,10 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		Global.platform = Plattform.Desktop;
+		Plattform.used = Plattform.Desktop;
 
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "cargo-port";
-		cfg.useGL20 = true;
 		cfg.width = 800;
 		cfg.height = 600;
 		cfg.resizable = false;
@@ -88,12 +87,6 @@ public class Main
 			AtomicBoolean isContinous = new AtomicBoolean(false);
 
 			@Override
-			public void RequestRender(String requestName)
-			{
-				App.getGraphics().requestRendering();
-			}
-
-			@Override
 			public void RenderDirty()
 			{
 				isContinous.set(false);
@@ -111,6 +104,12 @@ public class Main
 			public boolean isContinous()
 			{
 				return isContinous.get();
+			}
+
+			@Override
+			public void RequestRender()
+			{
+				App.getGraphics().requestRendering();
 			}
 		};
 
@@ -261,5 +260,4 @@ public class Main
 		});
 
 	}
-
 }
